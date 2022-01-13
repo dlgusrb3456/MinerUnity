@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class MainScript : MonoBehaviour
 {
     [Header("Login & Register")]
@@ -15,6 +17,12 @@ public class MainScript : MonoBehaviour
     {
   
     }
+
+    public void moveRegister()
+    {
+        SceneManager.LoadScene("register");
+    }
+
 
     void Error(string errorCode)
     {
