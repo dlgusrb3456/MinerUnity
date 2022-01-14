@@ -21,6 +21,12 @@ EditorBuildSettings:
     path: Assets/Scenes/nickName.unity
     guid: 6bfe474957671c1419234a6f749df250
   - enabled: 1
-    path: Assets/Scenes/chooseMap.unity
-    guid: 9447a734e88fbdd49b464bd59279b68c
+    path: Assets/Scenes/modifyPW.unity
+    guid: c563c322e85483748ae37656bfe1a716
+  - enabled: 1
+    path: Assets/Scenes/FindPW.unity
+    guid: f14465459e6eb4843b58a15865eead46
+  - enabled: 1
+    path: Assets/Scenes/FindID.unity
+    guid: b6ef843b3472aaa43aee515869e2a186
   m_configObjects: {}

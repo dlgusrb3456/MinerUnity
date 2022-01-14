@@ -22,7 +22,10 @@ public class MainScript : MonoBehaviour
     {
         SceneManager.LoadScene("register");
     }
-
+    public void moveFindID()
+    {
+        SceneManager.LoadScene("FindID");
+    }
 
 
     void Error(string errorCode)

@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InputField_nickName: {fileID: 842510965}
+  Text_duplicateCheck: {fileID: 1123006955}
   ID: 
 --- !u!1 &149600997
 GameObject:
