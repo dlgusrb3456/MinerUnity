@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/register.unity
     guid: def78f882e27e0e4d9993e8441a55842
+  - enabled: 1
+    path: Assets/Scenes/serviceCheck.unity
+    guid: daf63805d04329541ac6e030d5f1bb24
+  - enabled: 1
+    path: Assets/Scenes/nickName.unity
+    guid: 6bfe474957671c1419234a6f749df250
   m_configObjects: {}

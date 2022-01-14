@@ -21,7 +21,11 @@ public class MainRegister : MonoBehaviour
     public Text PWcodeCheckText;
     public Text PhoneNumCheck;
     public Text finalRegister;
+    public Text Text_alert_agree;
 
+
+    public GameObject alertPanel;
+    public Toggle toggle;
 
     private string checkID = "";
     private bool isIDcheck = false;
@@ -31,7 +35,7 @@ public class MainRegister : MonoBehaviour
     private bool isPhoneCheck = false;
     private string sendCode = "Miner";
     private bool isCodeCheck = false;
-
+    private bool updateStop = false;
 
     public void IDduplicateCheck()
     {
@@ -66,6 +70,7 @@ public class MainRegister : MonoBehaviour
         {
             //sendCode = api에서 사용자에게 보낸 코드 네자리 받아와서 저장하기.
             sendCode = "1234";
+            isPhoneCheck = true;
             PhoneNumCheck.color = Color.clear;
         }
 
@@ -90,11 +95,17 @@ public class MainRegister : MonoBehaviour
     {
         if(checkID == IDfield.text)
         {
-            if(checkPhoneNum == PhoneNumfield.text)
+            IDText.text = "사용 가능한 아이디입니다";
+            IDText.color = Color.green;
+            if (checkPhoneNum == PhoneNumfield.text)
             {
-                if(isIDcheck && PWconfitioncheck && PWconfirmcheck && isPhoneCheck && isCodeCheck)
+                PhoneNumCheck.color = Color.clear;
+                if (isIDcheck && PWconfitioncheck && PWconfirmcheck && isPhoneCheck && isCodeCheck)
                 {
                     //서비스 약관 확인 화면으로 이동.
+                    updateStop = true;
+                    alertPanel.gameObject.SetActive(true);
+                    
                 }
                 else
                 {
@@ -115,6 +126,28 @@ public class MainRegister : MonoBehaviour
         }
     }
 
+    public void close()
+    {
+        alertPanel.gameObject.SetActive(false);
+    }
+
+    public void agreeConfirm()
+    {
+        if (toggle.isOn)
+        {
+            //닉네임 입력 화면으로 이동
+            //api에 id, pw, 전화번호 넘겨서 회원가입 진행
+            PlayerPrefs.SetString("id", checkID); //id PlayersPrefs로 저장
+            //화면 이동 후 사용자가 정한 닉네임, id 값이랑 같이 넘겨서 닉네임 저장.
+            SceneManager.LoadScene("nickName");
+        }
+        else
+        {
+            //경고문구 보여주기.
+            Text_alert_agree.color = Color.red;
+        }
+    }
+
 
     public void goBack()
     {
@@ -124,52 +157,56 @@ public class MainRegister : MonoBehaviour
 
     void Start()
     {
-        
+        alertPanel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(PWfield.text != "")
+        if (!updateStop)
         {
-            if (PWfield.text.Length < 10) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
+            if (PWfield.text != "")
             {
-                PWconditionText.text = "비밀번호는 10자리 이상입니다";
-                PWconditionText.color = Color.red;
-                PWconfitioncheck = false;
+                if (PWfield.text.Length < 10) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
+                {
+                    PWconditionText.text = "비밀번호는 10자리 이상입니다";
+                    PWconditionText.color = Color.red;
+                    PWconfitioncheck = false;
+                }
+                else
+                {
+                    PWconditionText.text = "사용 가능한 비밀번호입니다";
+                    PWconditionText.color = Color.green;
+                    PWconfitioncheck = true;
+                }
             }
             else
             {
-                PWconditionText.text = "사용 가능한 비밀번호입니다";
-                PWconditionText.color = Color.green;
-                PWconfitioncheck = true;
+                PWconditionText.color = Color.clear;
             }
-        }
-        else
-        {
-            PWconditionText.color = Color.clear;
-        }
 
 
 
-        if(PWCheckfield.text != "")
-        {
-            if(PWfield.text != PWCheckfield.text)
+            if (PWCheckfield.text != "")
             {
-                PWcheckText.text = "비밀번호가 일치하지 않습니다";
-                PWcheckText.color = Color.red;
-                PWconfirmcheck = false;
+                if (PWfield.text != PWCheckfield.text)
+                {
+                    PWcheckText.text = "비밀번호가 일치하지 않습니다";
+                    PWcheckText.color = Color.red;
+                    PWconfirmcheck = false;
+                }
+                else
+                {
+                    PWcheckText.text = "비밀번호 확인 완료";
+                    PWcheckText.color = Color.green;
+                    PWconfirmcheck = true;
+                }
             }
             else
             {
-                PWcheckText.text = "비밀번호 확인 완료";
-                PWcheckText.color = Color.green;
-                PWconfirmcheck = true;
+                PWcheckText.color = Color.clear;
             }
         }
-        else
-        {
-            PWcheckText.color = Color.clear;
-        }
+      
     }
 }

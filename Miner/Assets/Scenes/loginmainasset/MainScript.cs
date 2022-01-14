@@ -24,6 +24,7 @@ public class MainScript : MonoBehaviour
     }
 
 
+
     void Error(string errorCode)
     {
         switch(errorCode)
