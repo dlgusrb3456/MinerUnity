@@ -17,6 +17,7 @@ public class modifyPW : MonoBehaviour
     public Text Text_Buttonmodify;
 
     public GameObject alertPanel;
+    public GameObject blackPanel;
 
     private bool PWconfitioncheck = false;
     private bool PWconfirmcheck = false;
@@ -50,7 +51,7 @@ public class modifyPW : MonoBehaviour
             string modifyPW = InputField_PWconfirm.text;
 
             //api로 해당 ID의 PW를 modifyPW로 변경.
-
+            blackPanel.gameObject.SetActive(true);
             alertPanel.gameObject.SetActive(true);
         }
         else
@@ -61,6 +62,7 @@ public class modifyPW : MonoBehaviour
     void Start()
     {
         alertPanel.gameObject.SetActive(false);
+        blackPanel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

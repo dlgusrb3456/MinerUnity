@@ -67,6 +67,7 @@ public class FindPW : MonoBehaviour
         if(InputField_emailCode.text == code)
         {
             //비밀번호 재설정 화면으로 넘어가기
+            code = "miner";
             Text_emailCode.color = Color.clear;
             PlayerPrefs.SetString("modifyID", checkID);
             SceneManager.LoadScene("modifyPW");

@@ -18,6 +18,8 @@ public class FindID : MonoBehaviour
 
 
     public GameObject alertPanel;
+    public GameObject blackPanel;
+
 
     private string checkPhoneNum = "Miner";
     private string code = "1234";
@@ -72,10 +74,12 @@ public class FindID : MonoBehaviour
     {
         if (PhoneCodefield.text == code)
         {
+            code = "miner";
             Text_PhonecodeField.color = Color.clear;
             string getEmail = "dlgu*******@naver.com"; //api 통신을 통해 받아온 email.
             //SceneManager.LoadScene("modifyPW"); => 
             Text_UserId.text = getEmail;
+            blackPanel.gameObject.SetActive(true);
             alertPanel.gameObject.SetActive(true);
         }
         else
@@ -89,6 +93,7 @@ public class FindID : MonoBehaviour
     void Start()
     {
         alertPanel.gameObject.SetActive(false);
+        blackPanel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

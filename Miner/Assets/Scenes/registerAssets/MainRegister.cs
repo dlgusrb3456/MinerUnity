@@ -103,6 +103,7 @@ public class MainRegister : MonoBehaviour
                 if (isIDcheck && PWconfitioncheck && PWconfirmcheck && isPhoneCheck && isCodeCheck)
                 {
                     //서비스 약관 확인 화면으로 이동.
+                    sendCode = "miner";
                     updateStop = true;
                     alertPanel.gameObject.SetActive(true);
                     
