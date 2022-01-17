@@ -41,6 +41,7 @@ public class MainScript : MonoBehaviour
             default:
                 break;
         }
+
     }
 
     public void Login()
