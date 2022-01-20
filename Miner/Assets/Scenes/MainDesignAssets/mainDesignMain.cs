@@ -66,7 +66,7 @@ public class mainDesignMain : MonoBehaviour
             Debug.Log(file.transform.GetChild(0).name);
             file.transform.GetChild(0).GetComponent<Text>().text = Map.localMaps[i].name;
             file.transform.GetChild(1).GetComponent<Text>().text = Map.localMaps[i].lastClearDate;
-            file.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(dotdotdot);
+            //file.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(dotdotdot);
 
             if (i % 2 == 0) //나중에 삭제해야함
             {
