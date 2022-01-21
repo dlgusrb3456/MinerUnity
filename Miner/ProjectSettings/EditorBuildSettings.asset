@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScene.unity
     guid: 93105b1e329e0b74eb16c20369919b05
   - enabled: 1
-    path: Assets/Scenes/loginMain-DESKTOP-HBJAN4L.unity
+    path: Assets/Scenes/loginMain.unity
     guid: 2b6994073cfb71c4a941304693018b13
   - enabled: 1
     path: Assets/Scenes/FindID.unity

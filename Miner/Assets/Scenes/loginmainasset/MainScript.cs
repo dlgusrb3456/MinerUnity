@@ -68,6 +68,7 @@ public class MainScript : MonoBehaviour
                     PlayerPrefs.SetInt("autoLogin", 0);
                     Debug.Log(PlayerPrefs.GetInt("autoLogin"));
                 }
+                SceneManager.LoadScene("mainDesign");
             }
             else
             {

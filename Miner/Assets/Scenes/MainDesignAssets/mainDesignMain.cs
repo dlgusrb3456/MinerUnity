@@ -9,7 +9,8 @@ public class mainDesignMain : MonoBehaviour
 
     ////톱니바퀴 
     public GameObject Panel_settings;
-
+    public Toggle toggle_bgmOn;
+    public Toggle toggle_bgnOff;
 
     ////추가
     public GameObject Panel_getmiroName;
@@ -49,9 +50,29 @@ public class mainDesignMain : MonoBehaviour
         
     }
 
+    private void Toggle_BGMOn(bool value)
+    {
+        if (value)
+        {
+            PlayerPrefs.SetInt("mainBGM", 1);
+            Debug.Log("mainBGM on");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("mainBGM", 0);
+            Debug.Log("mainBGM off");
+        }
+    }
+
+    private void Toggle_BGMOff()
+    {
+
+    }
+
     public void logOut()
     {
         SceneManager.LoadScene("loginMain");
+        PlayerPrefs.SetInt("autoLogin", 0);
     }
     public void loadFile()
     {
@@ -127,29 +148,7 @@ public class mainDesignMain : MonoBehaviour
         }
     }
 
-    public void deleteSelectFile1()
-    {
-        Panel_setFileShare.gameObject.SetActive(false);
-        Panel_setFileNotShare.gameObject.SetActive(false);
-        deleteCheckText.text = selectedFileName + "을 정말 삭제하시겠습니까?";
-        Panel_deleteReal.gameObject.SetActive(true);
-    }
-
-
-    public void deleteSelectFile2()
-    {
-        for (int i = 0; i < Map.localMaps.Count; i++)
-        {
-            if (Map.localMaps[i].name == selectedFileName)
-            {
-                Map.deleteLocalMap(Map.localMaps[i]);
-                loadFile();
-                Panel_deleteReal.gameObject.SetActive(false);
-                break;
-            }
-
-        }
-    }
+    
 
     public void startFile()
     {
@@ -157,10 +156,6 @@ public class mainDesignMain : MonoBehaviour
         //SceneManager.LoadScene("");
     }
 
-    public void settingFile()
-    {
-        //세팅 Panel active => 톱니바퀴 누른경우
-    }
 
     public void addFile()
     {
@@ -215,15 +210,15 @@ public class mainDesignMain : MonoBehaviour
     {
         if (toggle_small.isOn)
         {
-            Map.saveToJson(Map.createNew(newMiroName, false, "3X4"));
+            Map.saveToJson(Map.createNew(newMiroName, false, "20"));
         }
         else if (toggle_middle.isOn)
         {
-            Map.saveToJson(Map.createNew(newMiroName, false, "10X20"));
+            Map.saveToJson(Map.createNew(newMiroName, false, "50"));
         }
         else if (toggle_large.isOn)
         {
-            Map.saveToJson(Map.createNew(newMiroName, false, "30X40"));
+            Map.saveToJson(Map.createNew(newMiroName, false, "100"));
         }
 
         newMiroName = "";
@@ -235,6 +230,7 @@ public class mainDesignMain : MonoBehaviour
     {
         Panel_getmiroName.gameObject.SetActive(false);
         Panel_getmiroSize.gameObject.SetActive(false);
+        Panel_settings.gameObject.SetActive(false);
     }
 
 
@@ -260,8 +256,13 @@ public class mainDesignMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         Debug.Log("start");
         MinerEnvironment.initEnvironment();
+        toggle_bgmOn.onValueChanged.AddListener((value) =>
+        {
+            Toggle_BGMOn(value);
+        });
         //Map.saveToJson(Map.createNew("미로1", true, "3X4"));
         //Map.saveToJson(Map.createNew("미로2", false, "3X4"));     
         //Map.saveToJson(Map.createNew("미로3", true, "3X4"));
