@@ -8,7 +8,7 @@ public class mainDesignMain : MonoBehaviour
 {
 
     ////톱니바퀴 
-    //public GameObject Panel_settings;
+    public GameObject Panel_settings;
 
 
     ////추가
@@ -42,7 +42,17 @@ public class mainDesignMain : MonoBehaviour
 
 
 
+    public void Button_settings()
+    {
+        Panel_settings.transform.position = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
+        Panel_settings.gameObject.SetActive(true);
+        
+    }
 
+    public void logOut()
+    {
+        SceneManager.LoadScene("loginMain");
+    }
     public void loadFile()
     {
         Transform[] childList = contentPanel.GetComponentsInChildren<Transform>();

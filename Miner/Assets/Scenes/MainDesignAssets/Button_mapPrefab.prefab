@@ -299,7 +299,8 @@ MonoBehaviour:
   Panel_setFilePrefab2: {fileID: 6154455353076491559, guid: 02985ca1aee7f324cab9dbcdec960ee3,
     type: 3}
   Button_mapPrefab: {fileID: 2705195379520879929}
-  imageBG: {fileID: 21300000, guid: a11c7a0c487150e4ab6f56e16f00d960, type: 3}
+  Panel_deletePrefab: {fileID: 5172399085314685590, guid: 9dc4345ffb2467144935bb29589e5d58,
+    type: 3}
   Text_mironame: {fileID: 2705195379165742364}
 --- !u!1 &2705195379165742366
 GameObject:

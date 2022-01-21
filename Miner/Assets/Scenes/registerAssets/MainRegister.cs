@@ -154,6 +154,7 @@ public class MainRegister : MonoBehaviour
     {
         //loginMain 으로 씬 연결.
         SceneManager.LoadScene("loginMain");
+        PlayerPrefs.SetInt("autoLogin", 0);
     }
 
     void Start()
