@@ -227,7 +227,10 @@ MonoBehaviour:
   Panel_fileInfo: {fileID: 4610887868614103251, guid: 95b2f4f01278b5145b1c81cf746993df,
     type: 3}
   Button_PlayFile: {fileID: 2538895068410970123}
-  fileInfo: {fileID: 0}
+  Text_UserInfo: {fileID: 6081413456485551459, guid: 173658dbb28ca8c43ad7e06ecd9b83b7,
+    type: 3}
+  Panel_getPW: {fileID: 7101236817666794917, guid: bb2818c5166574f47b3e56cbdea4e0e9,
+    type: 3}
   Text_puPri: {fileID: 3494408874554029441}
 --- !u!1 &6451556294317978276
 GameObject:
@@ -475,5 +478,6 @@ MonoBehaviour:
   Panel_fileInfo: {fileID: 4610887868614103251, guid: 95b2f4f01278b5145b1c81cf746993df,
     type: 3}
   Button_PlayFile: {fileID: 2538895068410970123}
-  fileInfo: {fileID: 0}
+  Text_UserInfo: {fileID: 0}
+  Panel_getPW: {fileID: 0}
   Text_puPri: {fileID: 3494408874554029441}

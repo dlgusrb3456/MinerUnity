@@ -243,7 +243,7 @@ public class mainDesignMain : MonoBehaviour
     public void movePlay()
     {
         //메인_플레이 화면으로 이동 => 표지판에서 플레이 누른경우
-        //SceneManager.LoadScene("");
+        SceneManager.LoadScene("mainPlay");
     }
 
     public void reLoad()

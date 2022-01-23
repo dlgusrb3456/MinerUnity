@@ -49,7 +49,7 @@ public class dotProblem : MonoBehaviour
                 {
                     Debug.Log("isNoneShared");
                     nonesharePanel = Instantiate(Panel_setFilePrefab2) as GameObject;
-                    nonesharePanel.transform.parent = Button_mapPrefab.transform;
+                    nonesharePanel.transform.parent = Button_mapPrefab.transform.parent;
                     nonesharePanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(closeNonesharePanel);
                     nonesharePanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(deletePre);
                     nonesharePanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(share);

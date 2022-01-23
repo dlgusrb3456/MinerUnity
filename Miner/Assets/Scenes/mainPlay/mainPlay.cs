@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class mainPlay : MonoBehaviour
 {
     //미로파일 4개 Panel
@@ -21,6 +23,21 @@ public class mainPlay : MonoBehaviour
     //Toggle
     public Toggle Toggle_popular;
     public Toggle Toggle_latest;
+
+    public void moveDesign()
+    {
+        //메인_설계 화면으로 이동 => 표지판에서 설계 누른경우
+        SceneManager.LoadScene("mainDesign");
+    }
+
+    public void movePlay()
+    {
+        //메인_플레이 화면으로 이동 => 표지판에서 플레이 누른경우
+        SceneManager.LoadScene("mainPlay");
+    }
+
+
+
 
     public void LoadfilestoPanel()
     {
