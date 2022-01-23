@@ -19,7 +19,7 @@ public class TTS : MonoBehaviour
         while (true) { 
             flashingText.text = ""; 
             yield return new WaitForSeconds(.5f); 
-            flashingText.text = "Spacebar to Start"; 
+            flashingText.text = "Tab to Start"; 
             yield return new WaitForSeconds(.5f); 
         } 
     }
