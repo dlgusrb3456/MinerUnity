@@ -11,6 +11,7 @@ public partial class Map
     public static List<Map> localMaps = new List<Map>(); // '설계' 탭에서 보이는 맵들이 저장되는 곳.
     public static Map currentMap = null; // 현재 플레이중인 맵
     public static string defaultLastClearDate = "not_cleared_yet"; // lastClaerDate의 기본값.
+    private static string mapCompressionBase64String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     // localMaps에 MinerEnvironment.savedMapPath에 있는 맵 json 파일들을 읽어옵니다.
     public static void loadLocalMaps()
@@ -68,6 +69,51 @@ public partial class Map
         m.fileName = generateNewJsonPath();
         return m;
         
+    }
+
+    // Map 객체에 저장된 맵 데이터 문자열을 MapData 형식으로 반환합니다.
+    public static MapData decodeMapData(Map map)
+    {
+        int[] size = mapSizeStringToArray(map.mapSize);
+        int[] rl = new int[size[0] * size[1]];
+
+        MapData d = new MapData();
+        d.mapSize.x = size[0];
+        d.mapSize.y = size[1];
+
+        for (int i=0; i<map.mapData.Length; i++)
+        {
+            int idx;
+            for (idx = 0; idx < mapCompressionBase64String.Length; idx++)
+                if (mapCompressionBase64String[idx] == map.mapData[idx]) break;
+
+            if (idx == mapCompressionBase64String.Length) return null;
+
+            rl[i * 2] = idx >> 3;
+            rl[i * 2 + 1] = idx & 0x07; //0b000111
+
+            // if (rl[i * 2] == TileType.LastIndex || rl[i * 2 + 1] == TileType.LastIndex)
+            // d.playerPosition = ???
+        }
+
+        d.mapData = rl;
+        return d;
+    }
+
+    // MapData 객체에 저장된 맵 데이터를 압축된 문자열로 변환합니다. 
+    public static string encodeMapData(MapData mapData)
+    {
+        string rl = "";
+        int[] arr = mapData.mapData;
+
+        for (int i=0; i<mapData.mapSize.x; i++)
+        {
+                int raw = 0;
+                raw += arr[i * 2] << 3;
+                raw += arr[i * 2 + 1];
+                rl += mapCompressionBase64String[raw];
+        }
+        return rl;
     }
 
     private static int[] mapSizeStringToArray(string mapSizeString)
