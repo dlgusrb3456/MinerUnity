@@ -44,23 +44,23 @@ public class usingAPIEx : MonoBehaviour
         string json = JsonUtility.ToJson(myObject);
 
 
-        //using (UnityWebRequest www = UnityWebRequest.Post(URL, json))
-        //{
-        //    byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
-        //    www.uploadHandler = new UploadHandlerRaw(bytes);
-        //    www.SetRequestHeader("Content-Type", "application/json");
+        using (UnityWebRequest www = UnityWebRequest.Post(URL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
 
-        //    yield return www.Send();
+            yield return www.Send();
 
-        //    if (www.isError)
-        //    {
-        //        Debug.Log(www.error);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log(www.downloadHandler.text);
-        //    }
-        //}
+            if (www.isError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+            }
+        }
 
 
 
