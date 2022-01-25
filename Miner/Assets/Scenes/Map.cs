@@ -71,10 +71,15 @@ public partial class Map
         
     }
 
-    // Map 객체의 압축된 맵 데이터인 mapData 문자열을 배열 형태의 맵 데이터로 변환합니다.
-    public static int[] decodeMapData(Map map, int width, int height)
+    // Map 객체에 저장된 맵 데이터 문자열을 MapData 형식으로 반환합니다.
+    public static MapData decodeMapData(Map map)
     {
-        int[] rl = new int[width * height];
+        int[] size = mapSizeStringToArray(map.mapSize);
+        int[] rl = new int[size[0] * size[1]];
+
+        MapData d = new MapData();
+        d.mapSize.x = size[0];
+        d.mapSize.y = size[1];
 
         for (int i=0; i<map.mapData.Length; i++)
         {
@@ -82,24 +87,30 @@ public partial class Map
             for (idx = 0; idx < mapCompressionBase64String.Length; idx++)
                 if (mapCompressionBase64String[idx] == map.mapData[idx]) break;
 
-            if (idx == mapCompressionBase64String.Length) return new int[] { -1 };
+            if (idx == mapCompressionBase64String.Length) return null;
+
             rl[i * 2] = idx >> 3;
             rl[i * 2 + 1] = idx & 0x07; //0b000111
+
+            // if (rl[i * 2] == TileType.LastIndex || rl[i * 2 + 1] == TileType.LastIndex)
+            // d.playerPosition = ???
         }
 
-        return rl;
+        d.mapData = rl;
+        return d;
     }
 
-    // 배열 형태의 맵 데이터를 string 형식의 압축된 데이터로 변환합니다.
-    public static string encodeMapData(int[] mapData, int width, int height)
+    // MapData 객체에 저장된 맵 데이터를 압축된 문자열로 변환합니다. 
+    public static string encodeMapData(MapData mapData)
     {
         string rl = "";
+        int[] arr = mapData.mapData;
 
-        for (int i=0; i<height; i++)
+        for (int i=0; i<mapData.mapSize.x; i++)
         {
                 int raw = 0;
-                raw += mapData[i * 2] << 3;
-                raw += mapData[i * 2 + 1];
+                raw += arr[i * 2] << 3;
+                raw += arr[i * 2 + 1];
                 rl += mapCompressionBase64String[raw];
         }
         return rl;
