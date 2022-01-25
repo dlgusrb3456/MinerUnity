@@ -71,43 +71,35 @@ public partial class Map
         
     }
 
-    // Map 객체의 압축된 맵 데이터인 mapData 문자열을 이차원 배열 형태의 맵 데이터로 변환합니다.
-    public static int[,] decodeMapData(Map map, int width, int height)
+    // Map 객체의 압축된 맵 데이터인 mapData 문자열을 배열 형태의 맵 데이터로 변환합니다.
+    public static int[] decodeMapData(Map map, int width, int height)
     {
-        int[,] rl = new int[width,height];
-        string raw = map.mapData;
+        int[] rl = new int[width * height];
 
-        for (int i=0; i<height; i++)
-        for (int j=0; j<width/2; j++)
+        for (int i=0; i<map.mapData.Length; i++)
         {
-                int strIdx = i * (height / 2) + j;
-                char c = raw[strIdx];
-                int idx;
+            int idx;
+            for (idx = 0; idx < mapCompressionBase64String.Length; idx++)
+                if (mapCompressionBase64String[idx] == map.mapData[idx]) break;
 
-                for (idx = -1; idx < mapCompressionBase64String.Length; idx++)
-                    if (mapCompressionBase64String[idx] == c) break;
-
-                // 형식에 어긋난 문자가 발견된 경우 작업을 중지하고 {{-1}} 를 반환합니다.
-                if (idx == mapCompressionBase64String.Length) return new int[,] { { -1 } };
-
-                rl[i, strIdx * 2] = idx >> 3;
-                rl[i, strIdx * 2 + 1] = idx & 0x07; //0b000111
+            if (idx == mapCompressionBase64String.Length) return new int[] { -1 };
+            rl[i * 2] = idx >> 3;
+            rl[i * 2 + 1] = idx & 0x07; //0b000111
         }
 
         return rl;
     }
 
-    // 이차원 배열 형태의 맵 데이터를 string 형식의 압축된 데이터로 변환합니다.
-    public static string encodeMapData(int[,] mapData, int width, int height)
+    // 배열 형태의 맵 데이터를 string 형식의 압축된 데이터로 변환합니다.
+    public static string encodeMapData(int[] mapData, int width, int height)
     {
         string rl = "";
 
         for (int i=0; i<height; i++)
-        for (int j=0; j<width/2; j++)
         {
                 int raw = 0;
-                raw += mapData[i, j * 2] << 3;
-                raw += mapData[i, j * 2 + 1];
+                raw += mapData[i * 2] << 3;
+                raw += mapData[i * 2 + 1];
                 rl += mapCompressionBase64String[raw];
         }
         return rl;
