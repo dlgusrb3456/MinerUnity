@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+
+public class emailClass
+{
+    public string email;
+}
+
+
+public class nickNameClass
+{
+    public string nickName;
+}
 
 
 public class MainRegister : MonoBehaviour
@@ -14,6 +26,7 @@ public class MainRegister : MonoBehaviour
     public InputField PWCheckfield;
     public InputField PhoneNumfield;
     public InputField PhoneCodefield;
+    public InputField getNickName;
 
     public Text IDText;
     public Text PWcheckText;
@@ -22,13 +35,16 @@ public class MainRegister : MonoBehaviour
     public Text PhoneNumCheck;
     public Text finalRegister;
     public Text Text_alert_agree;
-
+    public Text Text_nickNameAlert;
 
     public GameObject alertPanel;
     public Toggle toggle;
 
     private string checkID = "";
+    private string checkNickName = "";
+
     private bool isIDcheck = false;
+    private bool isNickNamecheck = false;
     private bool PWconfitioncheck = false;
     private bool PWconfirmcheck = false;
     private string checkPhoneNum = "";
@@ -37,25 +53,153 @@ public class MainRegister : MonoBehaviour
     private bool isCodeCheck = false;
     private bool updateStop = false;
 
+
+
     public void IDduplicateCheck()
     {
+
+        
         //api로 호출하고, 반환값에 따라.
         checkID = IDfield.text; //중복확인을 진행한 이메일 주소 저장
-        bool returnAPI = false;
-        if (IDfield.text=="dlgusrb3456@naver.com") //성공한 경우 => 사용 가능한 아이디 , 실패한경우 1. 이미 아이디가 있는 경우, 2. 아이디 형식이 이메일 형식이 아닌 경우
-        {
-            isIDcheck = true;
-            IDText.text = "사용 가능한 아이디입니다";
-            IDText.color = Color.green;
-        }
-        else
-        {
-            isIDcheck = false;
-            IDText.text = "아이디가 이미 존재합니다";
-            IDText.color = Color.red;
-        }
+        StartCoroutine(registEmailCheck(checkID));
+        //bool returnAPI = false;
+        //if (IDfield.text=="dlgusrb3456@naver.com") //성공한 경우 => 사용 가능한 아이디 , 실패한경우 1. 이미 아이디가 있는 경우, 2. 아이디 형식이 이메일 형식이 아닌 경우
+        //{
+        //    isIDcheck = true;
+        //    IDText.text = "사용 가능한 아이디입니다";
+        //    IDText.color = Color.green;
+        //}
+        //else
+        //{
+        //    isIDcheck = false;
+        //    IDText.text = "아이디가 이미 존재합니다";
+        //    IDText.color = Color.red;
+        //}
 
     }
+
+    IEnumerator registEmailCheck(string emails)
+    {
+        string realURL = "https://miner22.shop/miner/users/email";
+        emailClass myObject = new emailClass { email = emails };
+        string json = JsonUtility.ToJson(myObject);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post(realURL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                for(int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
+                string[] returncode = words[1].Split(':');
+                if(returncode[1] == "1001")
+                {
+                    isIDcheck = true;
+                    IDText.text = "사용 가능한 아이디입니다";
+                    IDText.color = Color.green;
+                }
+                else if(returncode[1] == "2015")
+                {
+                    isIDcheck = false;
+                    IDText.text = "이메일을 입력해주세요";
+                    IDText.color = Color.red;
+                }
+                else if(returncode[1] == "2016")
+                {
+                    isIDcheck = false;
+                    IDText.text = "이메일 형식을 확인해주세요.";
+                    IDText.color = Color.red;
+                }
+                else if(returncode[1] == "2017")
+                {
+                    isIDcheck = false;
+                    IDText.text = "중복된 이메일입니다.";
+                    IDText.color = Color.red;
+                }
+            }
+        }
+    }
+
+    public void nickNameDuplicateCheck()
+    {
+        checkNickName = getNickName.text;
+        StartCoroutine(registNickNameCheck(checkNickName));
+    }
+
+    IEnumerator registNickNameCheck(string nickNames)
+    {
+        string realURL = "https://miner22.shop/miner/users/name";
+        nickNameClass myObject = new nickNameClass { nickName = nickNames };
+        string json = JsonUtility.ToJson(myObject);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post(realURL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
+
+                string[] returncode = words[1].Split(':');
+                if (returncode[1] == "1002")
+                {
+                    isNickNamecheck = true;
+                    Text_nickNameAlert.text = "사용 가능한 아이디입니다";
+                    Text_nickNameAlert.color = Color.green;
+                }
+                else if (returncode[1] == "2019")
+                {
+                    isNickNamecheck = false;
+                    Text_nickNameAlert.text = "6자 미만으로 설정해주세요";
+                    Text_nickNameAlert.color = Color.red;
+                }
+                else if (returncode[1] == "2020")
+                {
+                    isNickNamecheck = false;
+                    Text_nickNameAlert.text = "이미 존재하는 닉네임입니다.";
+                    Text_nickNameAlert.color = Color.red;
+                }
+
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
 
     public void SendCode()
     {
