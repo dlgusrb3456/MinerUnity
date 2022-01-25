@@ -63,6 +63,7 @@ public class modifyPW : MonoBehaviour
     {
         alertPanel.gameObject.SetActive(false);
         blackPanel.gameObject.SetActive(false);
+        Debug.Log(PlayerPrefs.GetString("modifyuserIdx"));
     }
 
     // Update is called once per frame
