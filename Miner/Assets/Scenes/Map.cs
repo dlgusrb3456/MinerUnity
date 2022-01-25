@@ -11,6 +11,7 @@ public partial class Map
     public static List<Map> localMaps = new List<Map>(); // '설계' 탭에서 보이는 맵들이 저장되는 곳.
     public static Map currentMap = null; // 현재 플레이중인 맵
     public static string defaultLastClearDate = "not_cleared_yet"; // lastClaerDate의 기본값.
+    private static string mapCompressionBase64String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     // localMaps에 MinerEnvironment.savedMapPath에 있는 맵 json 파일들을 읽어옵니다.
     public static void loadLocalMaps()
@@ -68,6 +69,48 @@ public partial class Map
         m.fileName = generateNewJsonPath();
         return m;
         
+    }
+
+    // Map 객체의 압축된 맵 데이터인 mapData 문자열을 이차원 배열 형태의 맵 데이터로 변환합니다.
+    public static int[,] decodeMapData(Map map, int width, int height)
+    {
+        int[,] rl = new int[width,height];
+        string raw = map.mapData;
+
+        for (int i=0; i<height; i++)
+        for (int j=0; j<width/2; j++)
+        {
+                int strIdx = i * (height / 2) + j;
+                char c = raw[strIdx];
+                int idx;
+
+                for (idx = -1; idx < mapCompressionBase64String.Length; idx++)
+                    if (mapCompressionBase64String[idx] == c) break;
+
+                // 형식에 어긋난 문자가 발견된 경우 작업을 중지하고 {{-1}} 를 반환합니다.
+                if (idx == mapCompressionBase64String.Length) return new int[,] { { -1 } };
+
+                rl[i, strIdx * 2] = idx >> 3;
+                rl[i, strIdx * 2 + 1] = idx & 0x07; //0b000111
+        }
+
+        return rl;
+    }
+
+    // 이차원 배열 형태의 맵 데이터를 string 형식의 압축된 데이터로 변환합니다.
+    public static string encodeMapData(int[,] mapData, int width, int height)
+    {
+        string rl = "";
+
+        for (int i=0; i<height; i++)
+        for (int j=0; j<width/2; j++)
+        {
+                int raw = 0;
+                raw += mapData[i, j * 2] << 3;
+                raw += mapData[i, j * 2 + 1];
+                rl += mapCompressionBase64String[raw];
+        }
+        return rl;
     }
 
     private static int[] mapSizeStringToArray(string mapSizeString)
