@@ -71,6 +71,7 @@ public partial class Map
         
     }
 
+
     public static int[,] decodeMapData(Map map, int width, int height)
     {
         string raw = map.mapData;
@@ -91,8 +92,11 @@ public partial class Map
                 rl[i, j * 2 + 1] = k & 0x07;
             }
 
-        return rl;
+
+        d.mapData = rl;
+        return d;
     }
+
 
     public static string encodeMapData(int[,] mapDataArray, int width, int height)
     {
@@ -108,6 +112,7 @@ public partial class Map
             }
 
         return raw;
+
     }
 
 
