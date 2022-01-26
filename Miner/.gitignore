@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/unity
 # Edit at https://www.toptal.com/developers/gitignore?templates=unity
 
+# 승환만 사용하는 부분
+/Miner/.gitignore
+/Miner/ProjectSettings/
+###
+
+
 ### Unity ###
 # This .gitignore file should be placed at the root of your Unity project directory
 #

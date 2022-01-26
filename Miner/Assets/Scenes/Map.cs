@@ -71,47 +71,45 @@ public partial class Map
         
     }
 
-    // Map 객체의 압축된 맵 데이터인 mapData 문자열을 이차원 배열 형태의 맵 데이터로 변환합니다.
     public static int[,] decodeMapData(Map map, int width, int height)
     {
-        int[,] rl = new int[width,height];
         string raw = map.mapData;
+        int[,] rl = new int[height, width];
 
-        for (int i=0; i<height; i++)
-        for (int j=0; j<width/2; j++)
-        {
-                int strIdx = i * (height / 2) + j;
-                char c = raw[strIdx];
-                int idx;
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width / 2; j++)
+            {
+                int idx = i * (width / 2) + j;
+                int k;
 
-                for (idx = -1; idx < mapCompressionBase64String.Length; idx++)
-                    if (mapCompressionBase64String[idx] == c) break;
+                for (k = 0; k < mapCompressionBase64String.Length; k++)
+                    if (raw[idx] == mapCompressionBase64String[k]) break;
 
-                // 형식에 어긋난 문자가 발견된 경우 작업을 중지하고 {{-1}} 를 반환합니다.
-                if (idx == mapCompressionBase64String.Length) return new int[,] { { -1 } };
+                if (k == mapCompressionBase64String.Length) return null;
 
-                rl[i, strIdx * 2] = idx >> 3;
-                rl[i, strIdx * 2 + 1] = idx & 0x07; //0b000111
-        }
+                rl[i, j * 2] = k >> 3;
+                rl[i, j * 2 + 1] = k & 0x07;
+            }
 
         return rl;
     }
 
-    // 이차원 배열 형태의 맵 데이터를 string 형식의 압축된 데이터로 변환합니다.
-    public static string encodeMapData(int[,] mapData, int width, int height)
+    public static string encodeMapData(int[,] mapDataArray, int width, int height)
     {
-        string rl = "";
+        string raw = "";
 
-        for (int i=0; i<height; i++)
-        for (int j=0; j<width/2; j++)
-        {
-                int raw = 0;
-                raw += mapData[i, j * 2] << 3;
-                raw += mapData[i, j * 2 + 1];
-                rl += mapCompressionBase64String[raw];
-        }
-        return rl;
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width / 2; j++)
+            {
+                int sum = 0;
+                sum += mapDataArray[i, j * 2] << 3;
+                sum += mapDataArray[i, j * 2 + 1];
+                raw += mapCompressionBase64String[sum];
+            }
+
+        return raw;
     }
+
 
     private static int[] mapSizeStringToArray(string mapSizeString)
     {

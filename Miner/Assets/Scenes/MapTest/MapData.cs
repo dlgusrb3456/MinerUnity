@@ -9,7 +9,6 @@ public class MapData : MonoBehaviour
 {
     public Vector2Int mapSize;
     public int[] mapData;
-
     public Vector2Int playerPosition; 
 
     //MapData mapData
