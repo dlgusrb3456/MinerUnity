@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 
 
-public class datas
+public class datass
 {
     public string email;
     public string password;
@@ -27,7 +27,7 @@ public class apitest : MonoBehaviour
     IEnumerator exAPi()
     {
         string realURL = URL + exURL;
-        datas myObject = new datas { email = "dlgusrb", password = "123" };
+        datass myObject = new datass { email = "dlgusrb", password = "123" };
         string json = JsonUtility.ToJson(myObject);
 
 
