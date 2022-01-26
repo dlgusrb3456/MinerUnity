@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 public class Tilemap2D : MonoBehaviour
 {
-    /*[Header("Tile")]
+    [Header("Tile")]
     [SerializeField]
     private GameObject tilePrefeb;
 
@@ -45,5 +45,5 @@ public class Tilemap2D : MonoBehaviour
 
         Tile tile = clone.GetComponent<Tile>();
         tile.Setup(tileType);
-    }*/
+    }
 }
