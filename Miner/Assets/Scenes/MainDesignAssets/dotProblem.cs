@@ -42,18 +42,18 @@ public class dotProblem : MonoBehaviour
                     sharePanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(closesharePanel);
                     sharePanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(deletePre);
                     //sharePanel.transform.GetComponent<Image>().sprite = imageBG;
-                    sharePanel.transform.localPosition = new Vector3(120, -15, 0);
+                    sharePanel.transform.localPosition = new Vector3(120,45, 0);
                     sharePanel.gameObject.SetActive(true);
                 }
                 else
                 {
                     Debug.Log("isNoneShared");
                     nonesharePanel = Instantiate(Panel_setFilePrefab2) as GameObject;
-                    nonesharePanel.transform.parent = Button_mapPrefab.transform.parent;
+                    nonesharePanel.transform.parent = Button_mapPrefab.transform;
                     nonesharePanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(closeNonesharePanel);
                     nonesharePanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(deletePre);
                     nonesharePanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(share);
-                    nonesharePanel.transform.localPosition = new Vector3(120, -15, 0);
+                    nonesharePanel.transform.localPosition = new Vector3(120, 45, 0);
                     nonesharePanel.gameObject.SetActive(true);
                 }
                 break;

@@ -10,11 +10,21 @@ public class emailClass
     public string email;
 }
 
+public class registerInfo
+{
+    public string email;
+    public string password;
+    public string phoneNum;
+    public string nickName;
+    public int isChecked;
+}
+
 
 public class nickNameClass
 {
     public string nickName;
 }
+
 
 
 public class MainRegister : MonoBehaviour
@@ -37,6 +47,7 @@ public class MainRegister : MonoBehaviour
     public Text Text_alert_agree;
     public Text Text_nickNameAlert;
 
+    public GameObject preventPanel;
     public GameObject alertPanel;
     public Toggle toggle;
 
@@ -48,10 +59,8 @@ public class MainRegister : MonoBehaviour
     private bool PWconfitioncheck = false;
     private bool PWconfirmcheck = false;
     private string checkPhoneNum = "";
-    private bool isPhoneCheck = false;
-    private string sendCode = "Miner";
+
     private bool isCodeCheck = false;
-    private bool updateStop = false;
 
 
 
@@ -172,7 +181,7 @@ public class MainRegister : MonoBehaviour
                 if (returncode[1] == "1002")
                 {
                     isNickNamecheck = true;
-                    Text_nickNameAlert.text = "사용 가능한 아이디입니다";
+                    Text_nickNameAlert.text = "사용 가능한 닉네임입니다";
                     Text_nickNameAlert.color = Color.green;
                 }
                 else if (returncode[1] == "2019")
@@ -204,34 +213,183 @@ public class MainRegister : MonoBehaviour
     public void SendCode()
     {
         checkPhoneNum = PhoneNumfield.text;
-        bool returnAPI = false;
-        if (PhoneNumfield.text!="01033614263") // 형식에 오류있는 경우
-        {
-            PhoneNumCheck.text = "전화번호 형식이 옳지 않습니다";
-            PhoneNumCheck.color = Color.red;
-        }
-        else
-        {
-            //sendCode = api에서 사용자에게 보낸 코드 네자리 받아와서 저장하기.
-            sendCode = "1234";
-            isPhoneCheck = true;
-            PhoneNumCheck.color = Color.clear;
-        }
+        StartCoroutine(isPhone(checkPhoneNum));
 
     }
+    IEnumerator isPhone(string phoneNums)
+    {
+        string realURL = "https://miner22.shop/miner/users/phoneNum";
+        isPhoneNum myObject = new isPhoneNum { phoneNum = phoneNums };
+        string json = JsonUtility.ToJson(myObject);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post(realURL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
+
+                string[] returncode = words[1].Split(':');
+                if (returncode[1] == "1000") //회원이 있는 경우.
+                {
+
+                    PhoneNumCheck.text = "이미 등록된 전화번호입니다.";
+                    PhoneNumCheck.color = Color.red;
+
+                }
+                else if (returncode[1] == "3015") //처음 등록되는 전화번호.
+                {
+                    StartCoroutine(sendPhCode(phoneNums)); 
+                }
+                else
+                {
+                    PhoneNumCheck.text = "검색 실패.";
+                    PhoneNumCheck.color = Color.red;
+                }
+
+            }
+        }
+    }
+
+
+
+    IEnumerator sendPhCode(string phoneNums)
+    {
+        string realURL = "https://miner22.shop/miner/sms";
+        registphoneNum myObject = new registphoneNum { recipientPhoneNumber = phoneNums };
+        string json = JsonUtility.ToJson(myObject);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post(realURL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
+
+                string[] returncode = words[1].Split(':');
+                if (returncode[1] == "1000")
+                {
+                    PhoneNumCheck.text = "인증번호를 전송했습니다.";
+                    PhoneNumCheck.color = Color.green;
+
+                }
+                else if (returncode[1] == "2025")
+                {
+                    PhoneNumCheck.text = "전화번호 형식을 확인해주세요.";
+                    PhoneNumCheck.color = Color.red;
+                }
+                else if (returncode[1] == "3016")
+                {
+                    PhoneNumCheck.text = "메세지 전송에 실패했습니다.";
+                    PhoneNumCheck.color = Color.red;
+                }
+                else
+                {
+                    PhoneNumCheck.text = "검색 실패";
+                    PhoneNumCheck.color = Color.red;
+                }
+
+            }
+        }
+    }
+
 
     public void checkCode()
     {
-        if(PhoneCodefield.text == sendCode)
+        StartCoroutine(checkPhoneCode(checkPhoneNum));
+        //if (PhoneCodefield.text == sendCode)
+        //{
+        //    PWcodeCheckText.text = "인증 완료!";
+        //    PWcodeCheckText.color = Color.green;
+        //    isCodeCheck = true;
+        //}
+        //else
+        //{
+        //    PWcodeCheckText.text = "코드가 일치하지 않습니다";
+        //    PWcodeCheckText.color = Color.red;
+        //}
+    }
+
+    IEnumerator checkPhoneCode(string phoneNums)
+    {
+        string realURL = "https://miner22.shop/miner/users/signup/auth";
+        checkPhoneCode myObject = new checkPhoneCode { phoneNum = phoneNums, authNum = PhoneCodefield.text };
+        string json = JsonUtility.ToJson(myObject);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post(realURL, json))
         {
-            PWcodeCheckText.text = "인증 완료!";
-            PWcodeCheckText.color = Color.green;
-            isCodeCheck = true;
-        }
-        else
-        {
-            PWcodeCheckText.text = "코드가 일치하지 않습니다";
-            PWcodeCheckText.color = Color.red;
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
+
+                string[] returncode = words[1].Split(':');
+                if (returncode[1] == "1000")
+                {
+
+                    PWcodeCheckText.text = "인증 완료!";
+                    PWcodeCheckText.color = Color.green;
+                    isCodeCheck = true;
+
+                }
+                else if (returncode[1] == "2030")
+                {
+                    PWcodeCheckText.text = "인증번호가 일치하지 않습니다.";
+                    PWcodeCheckText.color = Color.red;
+
+                }
+                else
+                {
+                    PWcodeCheckText.text = "검색 실패.";
+                    PWcodeCheckText.color = Color.red;
+                }
+
+            }
         }
     }
 
@@ -243,36 +401,47 @@ public class MainRegister : MonoBehaviour
             IDText.color = Color.green;
             if (checkPhoneNum == PhoneNumfield.text)
             {
-                PhoneNumCheck.color = Color.clear;
-                if (isIDcheck && PWconfitioncheck && PWconfirmcheck && isPhoneCheck && isCodeCheck)
+
+                if(checkNickName == getNickName.text)
                 {
-                    //서비스 약관 확인 화면으로 이동.
-                    sendCode = "miner";
-                    updateStop = true;
-                    alertPanel.gameObject.SetActive(true);
-                    
+                    PhoneNumCheck.color = Color.clear;
+                    if (isIDcheck && PWconfitioncheck && PWconfirmcheck && isCodeCheck && isNickNamecheck)
+                    {
+                        //서비스 약관 확인 화면으로 이동.
+
+                        preventPanel.gameObject.SetActive(true);
+                        alertPanel.gameObject.SetActive(true);
+
+                    }
+                    else
+                    {
+                        finalRegister.text = "빨간 글씨를 확인해주세요.";
+                        finalRegister.color = Color.red;
+                    }
                 }
                 else
                 {
-                    finalRegister.text = "빨간 글씨를 확인해주세요";
-                    finalRegister.color = Color.red;
+                    Text_nickNameAlert.text = "인증된 닉네임과 다릅니다.";
+                    Text_nickNameAlert.color = Color.red;
                 }
+                
             }
             else
             {
-                PhoneNumCheck.text = "인증된 전화번호와 다릅니다";
+                PhoneNumCheck.text = "인증된 전화번호와 다릅니다.";
                 PhoneNumCheck.color = Color.red;
             }
         }
         else
         {
-            IDText.text = "중복 확인된 아이디와 다릅니다";
+            IDText.text = "중복 확인된 아이디와 다릅니다.";
             IDText.color = Color.red;
         }
     }
 
     public void close()
     {
+        preventPanel.gameObject.SetActive(false);
         alertPanel.gameObject.SetActive(false);
     }
 
@@ -280,18 +449,62 @@ public class MainRegister : MonoBehaviour
     {
         if (toggle.isOn)
         {
-            //닉네임 입력 화면으로 이동
-            //api에 id, pw, 전화번호 넘겨서 회원가입 진행
-            PlayerPrefs.SetString("id", checkID); //id PlayersPrefs로 저장
-            //화면 이동 후 사용자가 정한 닉네임, id 값이랑 같이 넘겨서 닉네임 저장.
-            SceneManager.LoadScene("nickName");
+            StartCoroutine(registApi(checkID, PWCheckfield.text,checkPhoneNum,checkNickName,1));
         }
         else
         {
             //경고문구 보여주기.
+            Text_alert_agree.text = "약관에 동의해야 회원가입이 진행됩니다";
             Text_alert_agree.color = Color.red;
         }
     }
+    IEnumerator registApi(string emails, string passwords,string phoneNums, string nickNames,int isChecks)
+    {
+        string realURL = "https://miner22.shop/miner/users/signup";
+        registerInfo myObject = new registerInfo {email= emails , password=passwords , phoneNum = phoneNums, nickName = nickNames, isChecked = isChecks};
+        string json = JsonUtility.ToJson(myObject);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post(realURL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
+
+                string[] returncode = words[1].Split(':');
+                if (returncode[1] == "1000")
+                {
+                    PlayerPrefs.SetString("userIdx", checkID);
+                    SceneManager.LoadScene("mainDesign");
+
+                }
+                else
+                {
+                    Text_alert_agree.text = "회원가입에 실패했습니다.";
+                    Text_alert_agree.color = Color.red;
+                }
+
+            }
+        }
+    }
+
+    //registerInfo
+
 
 
     public void goBack()
@@ -303,19 +516,19 @@ public class MainRegister : MonoBehaviour
 
     void Start()
     {
+        preventPanel.gameObject.SetActive(false);
         alertPanel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!updateStop)
-        {
+       
             if (PWfield.text != "")
             {
-                if (PWfield.text.Length < 10) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
+                if (PWfield.text.Length < 8) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
                 {
-                    PWconditionText.text = "비밀번호는 10자리 이상입니다";
+                    PWconditionText.text = "비밀번호는 8자리 이상입니다";
                     PWconditionText.color = Color.red;
                     PWconfitioncheck = false;
                 }
@@ -352,7 +565,7 @@ public class MainRegister : MonoBehaviour
             {
                 PWcheckText.color = Color.clear;
             }
-        }
+        
       
     }
 }

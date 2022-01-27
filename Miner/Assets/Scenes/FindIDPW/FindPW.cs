@@ -78,17 +78,6 @@ public class FindPW : MonoBehaviour
 
         StartCoroutine(sendEmailCode(checkID));
 
-        //else if(InputField_email.text == "dlgusrn@naver.co")
-        //{
-        //    Text_email.text = "회원 정보가 존재하지 않습니다";
-        //    Text_email.color = Color.red;
-        //}
-        //else
-        //{
-        //    Text_email.text = "이메일 형식이 올바르지 않습니다.";
-        //    Text_email.color = Color.red;
-        //}
-
         
     }
 
@@ -140,6 +129,11 @@ public class FindPW : MonoBehaviour
                     Text_email.text = "이메일 형식을 확인해주세요.";
                     Text_email.color = Color.red;
                 }
+                else
+                {
+                    Text_email.text = "검색 실패.";
+                    Text_email.color = Color.red;
+                }
 
             }
         }
@@ -167,19 +161,6 @@ public class FindPW : MonoBehaviour
 
         StartCoroutine(checkEmailCode(InputField_emailCode.text));
 
-        //if (InputField_emailCode.text == userIdxs)
-        //{
-        //    //비밀번호 재설정 화면으로 넘어가기
-        //    userIdxs = "miner";
-        //    Text_emailCode.color = Color.clear;
-        //    PlayerPrefs.SetString("modifyID", checkID);
-        //    SceneManager.LoadScene("modifyPW");
-        //}
-        //else
-        //{
-        //    Text_emailCode.text = "인증번호가 일치하지 않습니다";
-        //    Text_emailCode.color = Color.red;
-        //}
     }
     IEnumerator checkEmailCode(string authNum)
     {
@@ -215,7 +196,6 @@ public class FindPW : MonoBehaviour
                     string[] tmparr = words[3].Split(':');
                     string[] useridxarr = tmparr[2].Split('}');
                     PlayerPrefs.SetString("modifyuserIdx", useridxarr[0]);
-                    
                     SceneManager.LoadScene("modifyPW");
                 }
                 else if (returncode[1] == "2021")
@@ -226,6 +206,11 @@ public class FindPW : MonoBehaviour
                 else if (returncode[1] == "2022")
                 {
                     Text_emailCode.text = "인증번호가 일치하지 않습니다.";
+                    Text_emailCode.color = Color.red;
+                }
+                else
+                {
+                    Text_emailCode.text = "검색 실패.";
                     Text_emailCode.color = Color.red;
                 }
 

@@ -37,7 +37,6 @@ public class FindID : MonoBehaviour
 
 
     private string checkPhoneNum = "Miner";
-    private string code = "1234";
 
 
     public void FindIDButton()

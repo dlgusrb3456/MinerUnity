@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class loadScene : MonoBehaviour
 {
     // Start is called before the first frame update
-    bool autoLogin = false;
     private int autos = 0;
     void Start()
     {

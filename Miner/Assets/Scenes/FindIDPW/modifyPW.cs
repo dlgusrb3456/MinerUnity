@@ -72,22 +72,31 @@ public class modifyPW : MonoBehaviour
      
         if (InputField_PW.text != "")  
         {
-                if (InputField_PW.text.Length < 10) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
+            for(int i = 0; i < InputField_PW.text.Length; i++)
+            {
+                if(InputField_PW.text[i] == ' ')
                 {
-                Text_PW.text = "비밀번호는 10자리 이상입니다";
-                Text_PW.color = Color.red;
+                    Text_PW.text = "비밀번호에 띄어쓰기는 포함할 수 없습니다.";
+                    Text_PW.color = Color.red;
+                    PWconfitioncheck = false;
+                }
+            }
+                if (InputField_PW.text.Length < 9) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
+                {
+                    Text_PW.text = "비밀번호는 8자리 이상입니다";
+                    Text_PW.color = Color.red;
                     PWconfitioncheck = false;
                 }
                 else
                 {
-                Text_PW.text = "사용 가능한 비밀번호입니다";
-                Text_PW.color = Color.green;
+                    Text_PW.text = "사용 가능한 비밀번호입니다";
+                    Text_PW.color = Color.green;
                     PWconfitioncheck = true;
                 }
         }
         else
         {
-        Text_PW.color = Color.clear;
+            Text_PW.color = Color.clear;
         }
 
 
