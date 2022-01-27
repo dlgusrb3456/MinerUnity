@@ -57,7 +57,7 @@ public partial class Map
     }
 
     // 새 맵 객체를 생성합니다. 로컬에서 json을 읽어 맵 객체를 만드는 것이 아니라, 로컬에 저장되어 있지 않은 맵 객체를 생성할때 쓰입니다.
-    public static Map createNew(String name, bool isPrivate, string mapSize) //mapSize 20X20
+    public static Map createNew(String name, bool isPrivate, string mapSize) //mapSize 22 22 / 52 52 / 102 102 
     {
         Map m = new Map();
         m.name = name;
@@ -93,8 +93,8 @@ public partial class Map
             }
 
 
-        d.mapData = rl;
-        return d;
+        //d.mapData = rl;
+        return rl;
     }
 
 

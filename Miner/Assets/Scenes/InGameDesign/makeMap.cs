@@ -13,7 +13,9 @@ public class makeMap : MonoBehaviour
 
 
     //프리팹들
-    public GameObject obstacle_prefab;
+    public GameObject obstacle_prefab;  //장애물 프리팹.
+    public GameObject Panel_maps; //움직여야할 판넬.
+
 
     //UI 토글들.
     public Toggle toggle_design;
@@ -24,8 +26,23 @@ public class makeMap : MonoBehaviour
     public Text Text_status; // => 프리팹의 자식으로 찾을듯.
 
 
+    // 0: 길
+    // 1: 장애물
+    // 2: 도착
+    // 3: 출발
+    // 4: 테두리
+    //44444
+    //41114
+    //41114
+    //41114
+    //44444
 
+    //작은: 20 20 => 22 22 => 꼭지점 좌표 고정
+    //중간: 50 50 => 52 52 => 꼭지점 좌표 고정
+    //큰:   100 100 => 102 102 => 꼭지점 좌표 고정
 
+    //줌인: 2.5
+    //줌 아웃: 작은: 0.7 / 중간: 0.5 / 큰: 0.3;
 
     public void onClickButton()
     {
@@ -99,6 +116,15 @@ public class makeMap : MonoBehaviour
         }
         else    //아무것도 클릭되어있지 않은 상태.
         {
+            //정사각형 => 좌측 하단 꼭지점 좌표, 우측 상단 꼭지점 좌표
+
+            //드래그 => 화면 터치 개수가 1개일 경우에
+            //줌인 줌아웃 => 화면 터치 개수가 2개일 경우에 
+
+            //모바일: 터치 touchCount == 1?
+            //PC: 클릭 => 
+
+
             Debug.Log("else?");
             //화면 움직이게 하기
         }

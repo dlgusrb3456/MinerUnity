@@ -104,10 +104,10 @@ public class FindPW : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
@@ -185,10 +185,10 @@ public class FindPW : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
@@ -216,16 +216,5 @@ public class FindPW : MonoBehaviour
 
             }
         }
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

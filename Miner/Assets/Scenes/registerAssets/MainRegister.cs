@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
+using System.Text.RegularExpressions;
 
 public class emailClass
 {
@@ -62,29 +63,13 @@ public class MainRegister : MonoBehaviour
 
     private bool isCodeCheck = false;
 
+    private Regex regex = new Regex(@"^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$");
 
 
     public void IDduplicateCheck()
     {
-
-        
-        //api로 호출하고, 반환값에 따라.
         checkID = IDfield.text; //중복확인을 진행한 이메일 주소 저장
         StartCoroutine(registEmailCheck(checkID));
-        //bool returnAPI = false;
-        //if (IDfield.text=="dlgusrb3456@naver.com") //성공한 경우 => 사용 가능한 아이디 , 실패한경우 1. 이미 아이디가 있는 경우, 2. 아이디 형식이 이메일 형식이 아닌 경우
-        //{
-        //    isIDcheck = true;
-        //    IDText.text = "사용 가능한 아이디입니다";
-        //    IDText.color = Color.green;
-        //}
-        //else
-        //{
-        //    isIDcheck = false;
-        //    IDText.text = "아이디가 이미 존재합니다";
-        //    IDText.color = Color.red;
-        //}
-
     }
 
     IEnumerator registEmailCheck(string emails)
@@ -110,10 +95,10 @@ public class MainRegister : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for(int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for(int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
                 string[] returncode = words[1].Split(':');
                 if(returncode[1] == "1001")
                 {
@@ -172,10 +157,10 @@ public class MainRegister : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1002")
@@ -200,15 +185,6 @@ public class MainRegister : MonoBehaviour
             }
         }
     }
-
-
-
-
-
-
-
-
-
 
     public void SendCode()
     {
@@ -239,10 +215,10 @@ public class MainRegister : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000") //회원이 있는 경우.
@@ -291,10 +267,10 @@ public class MainRegister : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
@@ -327,17 +303,6 @@ public class MainRegister : MonoBehaviour
     public void checkCode()
     {
         StartCoroutine(checkPhoneCode(checkPhoneNum));
-        //if (PhoneCodefield.text == sendCode)
-        //{
-        //    PWcodeCheckText.text = "인증 완료!";
-        //    PWcodeCheckText.color = Color.green;
-        //    isCodeCheck = true;
-        //}
-        //else
-        //{
-        //    PWcodeCheckText.text = "코드가 일치하지 않습니다";
-        //    PWcodeCheckText.color = Color.red;
-        //}
     }
 
     IEnumerator checkPhoneCode(string phoneNums)
@@ -363,10 +328,10 @@ public class MainRegister : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
@@ -481,10 +446,10 @@ public class MainRegister : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
@@ -502,11 +467,6 @@ public class MainRegister : MonoBehaviour
             }
         }
     }
-
-    //registerInfo
-
-
-
     public void goBack()
     {
         //loginMain 으로 씬 연결.
@@ -526,9 +486,10 @@ public class MainRegister : MonoBehaviour
        
             if (PWfield.text != "")
             {
-                if (PWfield.text.Length < 8) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
+            
+                if (!regex.IsMatch(PWfield.text)) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
                 {
-                    PWconditionText.text = "비밀번호는 8자리 이상입니다";
+                    PWconditionText.text = "숫자/특수문자/영어 포함, 한글 미포함, 8~20자 입니다.";
                     PWconditionText.color = Color.red;
                     PWconfitioncheck = false;
                 }

@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 public class loadScene : MonoBehaviour
 {
     // Start is called before the first frame update
+    //오토로그인 체크
+    //추후에 브금도 체크.
+
     private int autos = 0;
     void Start()
     {

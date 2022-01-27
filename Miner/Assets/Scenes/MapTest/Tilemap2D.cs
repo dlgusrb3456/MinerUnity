@@ -12,7 +12,7 @@ public class Tilemap2D : MonoBehaviour
     public void GenerateTilemap(MapData mapData)
     {
         int width = mapData.mapSize.x;
-        int width = mapData.mapSize.y;
+        int height = mapData.mapSize.y;
 
         for (int y = 0; y < height; ++y)
         {
@@ -29,21 +29,21 @@ public class Tilemap2D : MonoBehaviour
 
                 if (mapData.mapData[index] > (int)TileType.Empty && mapData.mapData[index] < (int)TileType.LastIndex)
                 {
-                    SpawnTile((TileType) mapData.mapData[index], position);
+                   // SpawnTile((TileType) mapData.mapData[index], position);
                 }
             }
         }
 
     }
 
-    private void SpawnTile(TileType tileType, Vector3 position)
-    {
-        GameObject clone = Instantiate(tilePrefab, posotion, Quaternion.identity);
+    //private void SpawnTile(TileType tileType, Vector3 position)
+    //{
+    //    GameObject clone = Instantiate(tilePrefab, posotion, Quaternion.identity);
 
-        clone.name = "Tile";
-        clone.transform.SetParent(transform);
+    //    clone.name = "Tile";
+    //    clone.transform.SetParent(transform);
 
-        Tile tile = clone.GetComponent<Tile>();
-        tile.Setup(tileType);
-    }
+    //    Tile tile = clone.GetComponent<Tile>();
+    //    tile.Setup(tileType);
+    //}
 }

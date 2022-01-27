@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+using System.Text.RegularExpressions;
 
+public class modifyPWInfo
+{
+    public string userIdx;
+    public string password;
+}
 
 public class modifyPW : MonoBehaviour
 {
@@ -21,6 +28,7 @@ public class modifyPW : MonoBehaviour
 
     private bool PWconfitioncheck = false;
     private bool PWconfirmcheck = false;
+    private Regex regex = new Regex(@"^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$");
 
     public void goBackLogin()
     {
@@ -47,18 +55,61 @@ public class modifyPW : MonoBehaviour
         if (PWconfitioncheck && PWconfirmcheck)
         {
             Text_Buttonmodify.color = Color.clear;
-            string modifyID = PlayerPrefs.GetString("modifyID");
             string modifyPW = InputField_PWconfirm.text;
-
-            //api로 해당 ID의 PW를 modifyPW로 변경.
-            blackPanel.gameObject.SetActive(true);
-            alertPanel.gameObject.SetActive(true);
+            StartCoroutine(modifyPWs(modifyPW));
+            Debug.Log("success");
         }
         else
         {
             Text_Buttonmodify.color = Color.red;
         }
     }
+    IEnumerator modifyPWs(string passwords)
+    {
+        string realURL = "https://miner22.shop/miner/users/modifyPw";
+        string userIdxs = PlayerPrefs.GetString("modifyuserIdx");
+        modifyPWInfo myObject = new modifyPWInfo { userIdx = userIdxs, password = passwords };
+        string json = JsonUtility.ToJson(myObject);
+
+        using (UnityWebRequest www = UnityWebRequest.Put(realURL, json))
+        {
+            www.method = "PATCH";
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
+
+                string[] returncode = words[1].Split(':');
+                if (returncode[1] == "1000")
+                {
+                    blackPanel.gameObject.SetActive(true);
+                    alertPanel.gameObject.SetActive(true);
+                }
+               
+                else
+                {
+                    Text_Buttonmodify.text = "비밀번호 변경 실패.";
+                    Text_Buttonmodify.color = Color.red;
+                }
+
+            }
+        }
+    }
+
     void Start()
     {
         alertPanel.gameObject.SetActive(false);
@@ -81,9 +132,10 @@ public class modifyPW : MonoBehaviour
                     PWconfitioncheck = false;
                 }
             }
-                if (InputField_PW.text.Length < 9) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
+           
+                if (!regex.IsMatch(InputField_PW.text)) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
                 {
-                    Text_PW.text = "비밀번호는 8자리 이상입니다";
+                    Text_PW.text = "숫자/특수문자/영어 포함, 한글 미포함, 8~20자 입니다.";
                     Text_PW.color = Color.red;
                     PWconfitioncheck = false;
                 }

@@ -61,29 +61,6 @@ public class FindID : MonoBehaviour
     {
         checkPhoneNum = PhoneNumfield.text;
         StartCoroutine(isPhone(checkPhoneNum));
-        //인풋필드의 전화번호 전송 , 
-        //1. 정상적으로 성공한 경우 , 전송한 코드 받아와서 저장하기
-        //2. 해당 이메일이 없는 경우 => 가입 정보가 없습니다.
-        //3. 이메일 형식을 지키지 않은경우 => 이메일 형식이 올바르지 않습니다.
-
-        //if (PhoneNumfield.text == "01033614263")
-        //{
-        //    checkPhoneNum = PhoneNumfield.text;
-        //    code = "1234";
-        //    Text_PhoneNumField.color = Color.clear;
-        //}
-        //else if (PhoneNumfield.text == "0103361426")
-        //{
-        //    Text_PhoneNumField.text = "회원 정보가 존재하지 않습니다";
-        //    Text_PhoneNumField.color = Color.red;
-        //}
-        //else
-        //{
-        //    Text_PhoneNumField.text = "번호 형식이 올바르지 않습니다.";
-        //    Text_PhoneNumField.color = Color.red;
-        //}
-
-
     }
 
     IEnumerator isPhone(string phoneNums)
@@ -109,23 +86,15 @@ public class FindID : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
                 {
-                    //이메일 보내기
-                    
-
-                    //인증번호 체크 api 사용.
                     StartCoroutine(sendPhCode(phoneNums)); // => checkCode로 이동
-
-                    //string[] tmparr = words[3].Split(':');
-                    //string[] useridxarr = tmparr[2].Split('}');
-                    //userIdxs = useridxarr[0];
                 }
                 else if (returncode[1] == "3015")
                 {
@@ -165,10 +134,10 @@ public class FindID : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
@@ -203,24 +172,7 @@ public class FindID : MonoBehaviour
 
     public void checkCode()
     {
-
-
         StartCoroutine(checkPhoneCode(checkPhoneNum));
-        //if (PhoneCodefield.text == code)
-        //{
-        //    code = "miner";
-        //    Text_PhonecodeField.color = Color.clear;
-        //    string getEmail = "dlgu*******@naver.com"; //api 통신을 통해 받아온 email.
-        //    //SceneManager.LoadScene("modifyPW"); => 
-        //    Text_UserId.text = getEmail;
-        //    blackPanel.gameObject.SetActive(true);
-        //    alertPanel.gameObject.SetActive(true);
-        //}
-        //else
-        //{
-        //    Text_PhonecodeField.text = "인증번호가 일치하지 않습니다";
-        //    Text_PhonecodeField.color = Color.red;
-        //}
     }
 
     IEnumerator checkPhoneCode(string phoneNums)
@@ -246,10 +198,10 @@ public class FindID : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
@@ -283,11 +235,5 @@ public class FindID : MonoBehaviour
     {
         alertPanel.gameObject.SetActive(false);
         blackPanel.gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
