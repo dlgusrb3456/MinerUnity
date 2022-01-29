@@ -62,11 +62,12 @@ public partial class Map
         Map m = new Map();
         m.name = name;
         m.lastClearDate = defaultLastClearDate;
-        m.isPrivate = isPrivate;
+        m.isPrivate = false;
         m.isShared = false;
         m.mapSize = mapSize;
         m.mapData = "";
         m.fileName = generateNewJsonPath();
+        m.password = null;
         return m;
         
     }
@@ -146,6 +147,7 @@ public partial class Map
     public bool isShared;
     public string mapData; //압축
     public string mapSize; // 작은/중간/큰 
+    public string password;
 
     [NonSerialized]
     public string fileName;
