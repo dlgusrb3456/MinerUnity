@@ -19,6 +19,12 @@ public class makeMap : MonoBehaviour
     public GameObject obstacle_prefab;  //장애물 프리팹.
     public GameObject Panel_maps; //움직여야할 판넬.
 
+    public GameObject Panel_settings;
+    public GameObject Panel_prevent;
+    public GameObject Panel_outCheck;
+
+
+
     private GameObject obstacle;
 
 
@@ -270,6 +276,40 @@ public class makeMap : MonoBehaviour
         return raw;
     }
 
+    public void clickSettings()
+    {
+        Panel_settings.SetActive(true);
+        Panel_prevent.SetActive(true);
+    }
+
+    public void closeSettings()
+    {
+        Panel_settings.SetActive(false);
+        Panel_prevent.SetActive(false);
+    }
+
+
+    public void outPage()
+    {
+        //SceneManager.LoadScene("mainDesign");
+        Panel_outCheck.SetActive(true);
+    }
+
+    public void closeOutCheck()
+    {
+        Panel_outCheck.SetActive(false);
+    }
+
+    public void noSave()
+    {
+        SceneManager.LoadScene("mainDesign");
+    }
+
+    public void yesSave()
+    {
+        mapToArrSave();
+        SceneManager.LoadScene("mainDesign");
+    }
 
 
     // Start is called before the first frame update
@@ -279,6 +319,9 @@ public class makeMap : MonoBehaviour
         arrToMap();
         PlayerPrefs.SetInt("Toggle", 0);
         //obstacle_prefab.SetActive(true);
+        Panel_settings.SetActive(false);
+        Panel_prevent.SetActive(false);
+        Panel_outCheck.SetActive(false);
     }
 
     // Update is called once per frame
