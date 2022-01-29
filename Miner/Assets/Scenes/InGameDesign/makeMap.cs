@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class makeMap : MonoBehaviour
 {
 
@@ -16,14 +19,22 @@ public class makeMap : MonoBehaviour
     public GameObject obstacle_prefab;  //장애물 프리팹.
     public GameObject Panel_maps; //움직여야할 판넬.
 
+    private GameObject obstacle;
 
+
+    private static string mapCompressionBase64String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     //UI 토글들.
     public Toggle toggle_design;
     public Toggle toggle_start;
     public Toggle toggle_end;
 
+    //크기.
+    int xSize = 0;
+    int ySize = 0;
 
-    public Text Text_status; // => 프리팹의 자식으로 찾을듯.
+    //배열;
+    int[,] mapArr;
+    //public Text Text_status; // => 프리팹의 자식으로 찾을듯.
 
 
     // 0: 길
@@ -44,100 +55,235 @@ public class makeMap : MonoBehaviour
     //줌인: 2.5
     //줌 아웃: 작은: 0.7 / 중간: 0.5 / 큰: 0.3;
 
-    public void onClickButton()
+    public void toggleChanged()
     {
-        Debug.Log("clicked");
-        if (toggle_design.isOn) //설계하기 버튼이 눌린 상태
-        {
-            Debug.Log("design");
-            if (Text_status.text == "0" || Text_status.text == "2" || Text_status.text == "3")
-            {
-                Debug.Log("design => 1");
-                Text_status.text = "1";
-                //버튼 이미지 장애물로
-                obstacle_prefab.GetComponent<Image>().sprite = image_grass;
-                obstacle_prefab.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
-            }
-            else if(Text_status.text == "1")
-            {
-                Debug.Log("design => 0");
-                Text_status.text = "0";
-                //setactive false로
-                obstacle_prefab.GetComponent<Image>().color = Color.clear;
+        toggle_design.onValueChanged.AddListener(delegate {
+            ValueChanged();
+        });
 
-            }
-            
+        toggle_start.onValueChanged.AddListener(delegate {
+            ValueChanged();
+        });
+        toggle_end.onValueChanged.AddListener(delegate {
+            ValueChanged();
+        });
+
+    }
+
+    void ValueChanged()
+    {
+        Debug.Log("its done");
+        if (toggle_design.isOn)
+        {
+            PlayerPrefs.SetInt("Toggle", 1);
         }
-        else if(toggle_start.isOn) // 출발 버튼이 눌린 상태
+        else if (toggle_start.isOn)
         {
-            //clone 된 자식 객체 프리팹을 반복문으로 검사
-            //Text_status를 검사해서 1인 아이가 있다면 그 아이를 0으로 변경
-            //없다면 다음으로
-
-            //위의 검사 진행 후 
-            Debug.Log("start");
-            if (Text_status.text == "0" || Text_status.text == "1" || Text_status.text == "2")
-            {
-                Debug.Log("start=>3");
-                Text_status.text = "3";
-                //버튼 이미지 출발로
-                obstacle_prefab.GetComponent<Image>().sprite = image_start;
-                obstacle_prefab.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
-            }
-            else if (Text_status.text == "3")
-            {
-                Debug.Log("start=>0");
-                Text_status.text = "0";
-                //setactive false로
-                obstacle_prefab.GetComponent<Image>().color = Color.clear;
-            }
+            PlayerPrefs.SetInt("Toggle", 2);
         }
-        else if(toggle_end.isOn) //도착 버튼이 눌린 상태.
+        else if (toggle_end.isOn)
         {
-            //clone 된 자식 객체 프리팹을 반복문으로 검사
-            //Text_status를 검사해서 2인 아이가 있다면 그 아이를 0으로 변경
-            //없다면 다음으로
-
-            //위의 검사 진행 후 
-
-            if (Text_status.text == "0" || Text_status.text == "1" || Text_status.text == "3")
-            {
-                Text_status.text = "2";
-                //버튼 이미지 도착으로
-                obstacle_prefab.GetComponent<Image>().sprite = image_end;
-                obstacle_prefab.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
-            }
-            else if (Text_status.text == "2")
-            {
-                Text_status.text = "0";
-                //setactive false로
-                obstacle_prefab.GetComponent<Image>().color = Color.clear;
-            }
+            PlayerPrefs.SetInt("Toggle", 3);
         }
-        else    //아무것도 클릭되어있지 않은 상태.
+        else
         {
-            //정사각형 => 좌측 하단 꼭지점 좌표, 우측 상단 꼭지점 좌표
+            PlayerPrefs.SetInt("Toggle", 0);
+        }
 
-            //드래그 => 화면 터치 개수가 1개일 경우에
-            //줌인 줌아웃 => 화면 터치 개수가 2개일 경우에 
+    }
 
-            //모바일: 터치 touchCount == 1?
-            //PC: 클릭 => 
-
-
-            Debug.Log("else?");
-            //화면 움직이게 하기
+    void startValueChanged(Toggle change)
+    {
+        if (PlayerPrefs.GetInt("Toggle") == 2)
+        {
+            PlayerPrefs.SetInt("Toggle", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Toggle", 2);
         }
     }
+
+    void endValueChanged(Toggle change)
+    {
+        if (PlayerPrefs.GetInt("Toggle") == 3)
+        {
+            PlayerPrefs.SetInt("Toggle", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Toggle", 3);
+        }
+    }
+
+
+    public void arrToMap()
+    {
+        Map.loadLocalMaps();
+        string[] mapSize = new string[2];
+        string selectedFileName = "asdf";
+        Map select = new Map();
+        Debug.Log(Map.localMaps.Count);
+        for (int i = 0; i < Map.localMaps.Count; i++)
+        {
+            //Debug.Log(Map.localMaps[i].name);
+            if (Map.localMaps[i].name == "asdf")
+            {
+                select = Map.localMaps[i];
+
+                mapSize = Map.localMaps[i].mapSize.Split('X');
+
+            }
+
+        }
+
+
+
+        //Map selectMap = new Map();
+        //selectMap = Map.getMaps(selectedFileName);
+        Debug.Log(select.name);
+        //= Map.mapSizeStringToArray(selectMap.mapSize);
+        xSize = Convert.ToInt32(mapSize[0]);
+        ySize = Convert.ToInt32(mapSize[1]);
+        Panel_maps.GetComponent<GridLayoutGroup>().constraintCount = xSize;
+        mapArr = new int[xSize, ySize];
+        //mapArr = Map.decodeMapData(select);
+        for (int i = 0; i < Map.localMaps.Count; i++)
+        {
+            if (Map.localMaps[i].name == "asdf")
+            {
+                mapArr = decodeMapData(Map.localMaps[i], xSize, ySize);
+            }
+        }
+
+
+        for (int i = 0; i < xSize; i++)
+        {
+            for (int j = 0; j < ySize; j++)
+            {
+                obstacle = Instantiate(obstacle_prefab);
+                obstacle.transform.parent = Panel_maps.transform;
+                obstacle.transform.GetChild(0).GetComponent<Text>().text = mapArr[i, j].ToString();
+                obstacle.transform.GetChild(1).GetComponent<Text>().text = i.ToString() + "," + j.ToString();
+                //obstacle.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(onClickButton(obstacle));
+                //obstacle.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => onClickButton(obstacle));
+                if (mapArr[i, j] == 0)
+                {
+                    obstacle.GetComponent<Image>().color = Color.clear;
+                }
+                else if (mapArr[i, j] == 1)
+                {
+                    obstacle.GetComponent<Image>().sprite = image_grass;
+                    obstacle.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                }
+                else if (mapArr[i, j] == 2)
+                {
+                    obstacle.GetComponent<Image>().sprite = image_end;
+                    obstacle.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                }
+                else if (mapArr[i, j] == 3)
+                {
+                    obstacle.GetComponent<Image>().sprite = image_start;
+                    obstacle.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                }
+                else if (mapArr[i, j] == 4)
+                {
+                    obstacle.GetComponent<Image>().sprite = image_block;
+                    obstacle.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                }
+            }
+        }
+    }
+
+    public void mapToArrSave()
+    {
+        Transform child = null;
+        int childCount = Panel_maps.transform.childCount;
+
+        for (int i = 0; i < childCount; i++)
+        {
+            child = Panel_maps.transform.GetChild(i);
+            int getStatus = Convert.ToInt32(child.transform.GetChild(0).GetComponent<Text>().text);
+            //Debug.Log(getStatus);
+            //Debug.Log(child.transform.GetChild(1).GetComponent<Text>().text);
+            string[] temp = child.transform.GetChild(1).GetComponent<Text>().text.Split(',');
+
+            int xpos = Convert.ToInt32(temp[0]);
+            int ypos = Convert.ToInt32(temp[1]);
+            mapArr[xpos, ypos] = getStatus;
+        }
+
+        string mapInfo = encodeMapData(mapArr);
+        for (int i = 0; i < Map.localMaps.Count; i++)
+        {
+            if (Map.localMaps[i].name == "asdf")
+            {
+                Map.localMaps[i].mapData = mapInfo;
+                Map.saveToJson(Map.localMaps[i]);
+                Debug.Log("save");
+                SceneManager.LoadScene("InGameDesign");
+            }
+        }
+    }
+
+    public int[,] decodeMapData(Map map, int height, int width)
+    {
+        string raw = map.mapData;
+
+        //int height = mapSizeStringToArray(map.mapSize)[0];
+        //int width = mapSizeStringToArray(map.mapSize)[1];
+        int[,] rl = new int[height, width];
+
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width / 2; j++)
+            {
+                int idx = i * (width / 2) + j;
+                int k;
+
+                for (k = 0; k < mapCompressionBase64String.Length; k++)
+                    if (raw[idx] == mapCompressionBase64String[k]) break;
+
+                if (k == mapCompressionBase64String.Length) return null;
+
+                rl[i, j * 2] = k >> 3;
+                rl[i, j * 2 + 1] = k & 0x07;
+            }
+
+
+        //d.mapData = rl;
+        return rl;
+    }
+    public string encodeMapData(int[,] mapDataArray)
+    {
+        string raw = "";
+        int height = mapDataArray.GetLength(0);
+        int width = mapDataArray.GetLength(1);
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width / 2; j++)
+            {
+                int sum = 0;
+                sum += mapDataArray[i, j * 2] << 3;
+                sum += mapDataArray[i, j * 2 + 1];
+                raw += mapCompressionBase64String[sum];
+            }
+
+        return raw;
+    }
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        obstacle_prefab.SetActive(true);
+        toggleChanged();
+        arrToMap();
+        PlayerPrefs.SetInt("Toggle", 0);
+        //obstacle_prefab.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
