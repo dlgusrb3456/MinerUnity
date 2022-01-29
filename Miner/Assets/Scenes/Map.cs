@@ -68,6 +68,7 @@ public partial class Map
         m.mapData = "";
         m.fileName = generateNewJsonPath();
         m.password = null;
+        m.elapsedSeconds = 0;
         return m;
         
     }
@@ -148,6 +149,7 @@ public partial class Map
     public string mapData; //압축
     public string mapSize; // 작은/중간/큰 
     public string password;
+    public int elapsedSeconds;
 
     [NonSerialized]
     public string fileName;
