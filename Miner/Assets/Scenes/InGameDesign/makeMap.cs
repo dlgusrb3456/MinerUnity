@@ -26,7 +26,8 @@ public class makeMap : MonoBehaviour
 
 
     private GameObject obstacle;
-
+    string selectedFileName = "";
+    private float zoomSpeed = 0.01f;
 
     private static string mapCompressionBase64String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     //UI 토글들.
@@ -78,7 +79,7 @@ public class makeMap : MonoBehaviour
 
     void ValueChanged()
     {
-        Debug.Log("its done");
+        //Debug.Log("its done");
         if (toggle_design.isOn)
         {
             PlayerPrefs.SetInt("Toggle", 1);
@@ -125,44 +126,33 @@ public class makeMap : MonoBehaviour
 
     public void arrToMap()
     {
+        Debug.Log("arrToMap start");
         Map.loadLocalMaps();
         string[] mapSize = new string[2];
-        string selectedFileName = "asdf";
-        Map select = new Map();
-        Debug.Log(Map.localMaps.Count);
+        selectedFileName = PlayerPrefs.GetString("DesSelectedFile");
         for (int i = 0; i < Map.localMaps.Count; i++)
         {
-            //Debug.Log(Map.localMaps[i].name);
-            if (Map.localMaps[i].name == "asdf")
+            if (Map.localMaps[i].name == selectedFileName)
             {
-                select = Map.localMaps[i];
-
                 mapSize = Map.localMaps[i].mapSize.Split('X');
-
             }
-
         }
 
-
-
-        //Map selectMap = new Map();
-        //selectMap = Map.getMaps(selectedFileName);
-        Debug.Log(select.name);
-        //= Map.mapSizeStringToArray(selectMap.mapSize);
         xSize = Convert.ToInt32(mapSize[0]);
         ySize = Convert.ToInt32(mapSize[1]);
         Panel_maps.GetComponent<GridLayoutGroup>().constraintCount = xSize;
         mapArr = new int[xSize, ySize];
-        //mapArr = Map.decodeMapData(select);
+
         for (int i = 0; i < Map.localMaps.Count; i++)
         {
-            if (Map.localMaps[i].name == "asdf")
+            if (Map.localMaps[i].name == selectedFileName)
             {
                 mapArr = decodeMapData(Map.localMaps[i], xSize, ySize);
+                break;
             }
         }
 
-
+        Debug.Log("배열=> 화면");
         for (int i = 0; i < xSize; i++)
         {
             for (int j = 0; j < ySize; j++)
@@ -171,8 +161,7 @@ public class makeMap : MonoBehaviour
                 obstacle.transform.parent = Panel_maps.transform;
                 obstacle.transform.GetChild(0).GetComponent<Text>().text = mapArr[i, j].ToString();
                 obstacle.transform.GetChild(1).GetComponent<Text>().text = i.ToString() + "," + j.ToString();
-                //obstacle.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(onClickButton(obstacle));
-                //obstacle.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => onClickButton(obstacle));
+           
                 if (mapArr[i, j] == 0)
                 {
                     obstacle.GetComponent<Image>().color = Color.clear;
@@ -199,10 +188,13 @@ public class makeMap : MonoBehaviour
                 }
             }
         }
+        Debug.Log("배열=> 화면 종료");
+        Debug.Log("arrToMap end");
     }
 
     public void mapToArrSave()
     {
+        Debug.Log("mapToArrSave start");
         Transform child = null;
         int childCount = Panel_maps.transform.childCount;
 
@@ -222,18 +214,19 @@ public class makeMap : MonoBehaviour
         string mapInfo = encodeMapData(mapArr);
         for (int i = 0; i < Map.localMaps.Count; i++)
         {
-            if (Map.localMaps[i].name == "asdf")
+            if (Map.localMaps[i].name == selectedFileName)
             {
                 Map.localMaps[i].mapData = mapInfo;
                 Map.saveToJson(Map.localMaps[i]);
-                Debug.Log("save");
-                SceneManager.LoadScene("InGameDesign");
+                //SceneManager.LoadScene("InGameDesign");
             }
         }
+        Debug.Log("mapToArrSave end");
     }
 
     public int[,] decodeMapData(Map map, int height, int width)
     {
+        Debug.Log("문자 배열화 시작");
         string raw = map.mapData;
 
         //int height = mapSizeStringToArray(map.mapSize)[0];
@@ -257,10 +250,12 @@ public class makeMap : MonoBehaviour
 
 
         //d.mapData = rl;
+        Debug.Log("문자 배열화 종료");
         return rl;
     }
     public string encodeMapData(int[,] mapDataArray)
     {
+        Debug.Log("배열 문자화 시작");
         string raw = "";
         int height = mapDataArray.GetLength(0);
         int width = mapDataArray.GetLength(1);
@@ -272,7 +267,7 @@ public class makeMap : MonoBehaviour
                 sum += mapDataArray[i, j * 2 + 1];
                 raw += mapCompressionBase64String[sum];
             }
-
+        Debug.Log("배열 문자화 종료");
         return raw;
     }
 
@@ -327,6 +322,26 @@ public class makeMap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.touchCount == 2)
+        {
+            Touch touchZero = Input.GetTouch(0); //첫번째 손가락 터치를 저장
+            Touch touchOne = Input.GetTouch(1); //두번째 손가락 터치를 저장
 
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition; //deltaPosition는 이동방향 추적할 때 사용
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude; //magnitude는 두 점간의 거리 비교(벡터)
+            float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+            
+            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+            float moveSpeed = -deltaMagnitudeDiff * zoomSpeed;
+            if(Panel_maps.transform.localScale.x + moveSpeed > 0.15)
+            {
+                Panel_maps.transform.localScale += new Vector3(moveSpeed, moveSpeed, 0);
+            }
+            
+            
+            
+        }
     }
 }
