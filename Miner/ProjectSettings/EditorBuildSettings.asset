@@ -20,9 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/modifyPW.unity
     guid: c563c322e85483748ae37656bfe1a716
-  - enabled: 1
-    path: Assets/Scenes/nickName.unity
-    guid: 6bfe474957671c1419234a6f749df250
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/register.unity
     guid: def78f882e27e0e4d9993e8441a55842
