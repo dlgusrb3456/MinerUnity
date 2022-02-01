@@ -36,6 +36,11 @@ public class FindID : MonoBehaviour
     public GameObject blackPanel;
 
 
+    //로딩판넬
+    public GameObject testPanel;
+    public Image circleProgress;
+    private float progress = 0.0f;
+
     private string checkPhoneNum = "Miner";
 
 
@@ -65,6 +70,7 @@ public class FindID : MonoBehaviour
 
     IEnumerator isPhone(string phoneNums)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/users/phoneNum";
         isPhoneNum myObject = new isPhoneNum { phoneNum = phoneNums };
         string json = JsonUtility.ToJson(myObject);
@@ -98,11 +104,13 @@ public class FindID : MonoBehaviour
                 }
                 else if (returncode[1] == "3015")
                 {
+                    testPanel.SetActive(false);
                     Text_PhoneNumField.text = "회원 정보가 존재하지 않습니다";
                     Text_PhoneNumField.color = Color.red;
                 }
                 else
                 {
+                    testPanel.SetActive(false);
                     Text_PhoneNumField.text = "검색 실패";
                     Text_PhoneNumField.color = Color.red;
                 }
@@ -165,6 +173,7 @@ public class FindID : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false);
     }
 
 
@@ -235,5 +244,19 @@ public class FindID : MonoBehaviour
     {
         alertPanel.gameObject.SetActive(false);
         blackPanel.gameObject.SetActive(false);
+        testPanel.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (testPanel.activeSelf == true)
+        {
+            progress += 0.3f * Time.deltaTime;
+            if (progress > 1)
+            {
+                progress = 0;
+            }
+            circleProgress.fillAmount = progress;
+        }
     }
 }
