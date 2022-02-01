@@ -1,31 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAction : MonoBehaviour
 {
-    public float Speed;
+    [SerializeField]
+    private VirtualJoystick virtualJoystick;
+    private float moveSpeed = 10;
 
-    Rigidbody2D rigid;
-    float h;
-    float v;
-    bool isHorizonMove;
-
-    void Awake()
+    private void Update()
     {
-        rigid = GetComponent<Rigidbody2D>();
+        float x = virtualJoystick.Horizontal();
+        float y = virtualJoystick.Vertical();
 
+        if(x != 0 || y != 0)
+        {
+            transform.position += new Vector3(x, y, 0) * moveSpeed * Time.deltaTime;
+        }
     }
 
-    void Update()
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
-    }
-
-    void FixedUpdate()
-    {
-        Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
-     // rigid.velocity = new moveVec * Speed;
+        if (collision.gameObject.tag == "Finish") // 도착지점에 충돌하면
+        {
+            // 게임 정지, 종료
+        }
     }
 }
