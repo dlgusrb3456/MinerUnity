@@ -83,7 +83,7 @@ public class MainScript : MonoBehaviour
                     string[] nickNames = words[5].Split('"');
                     Debug.Log(nickNames[3]); //성공시 닉네임
                     PlayerPrefs.SetString("nickName", nickNames[3]);
-                    Debug.Log(PlayerPrefs.GetString("nickName"));
+                    //Debug.Log(PlayerPrefs.GetString("nickName"));
                     if (toggle.isOn)
                     {
                         PlayerPrefs.SetInt("autoLogin", 1);
