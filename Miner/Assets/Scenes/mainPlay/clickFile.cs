@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+
 class userInfo
 {
     public string nickName { get; set; }
@@ -12,6 +13,7 @@ class userInfo
     {
         this.nickName = nickName;
         this.playTime = playTime;
+        
     }
 
     public override string ToString()

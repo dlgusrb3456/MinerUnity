@@ -1,8 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+using System.Linq;
+public class searchNullClass
+{
+    public int orderType;
+    public int pageNo;
+}
+
+public class mapInfos
+{
+    public string mapName { get; set; }
+    public string mapPassword { get; set; }
+    public string editorName { get; set; }
+    public string playCount { get; set; }
+    
+    public mapInfos(string mapName, string mapPassword,string editorName, string playCount)
+    {
+        this.mapName = mapName;
+        this.mapPassword = mapPassword;
+        this.editorName = editorName;
+        this.playCount = playCount;
+    }
+
+}
 
 public class mainPlay : MonoBehaviour
 {
@@ -14,7 +39,7 @@ public class mainPlay : MonoBehaviour
 
     //search 변수
     public InputField searchInputField;
-
+    private string searchText = "";
 
     //Dropdown 변수
     public Dropdown dropdown;
@@ -23,6 +48,22 @@ public class mainPlay : MonoBehaviour
     //Toggle
     public Toggle Toggle_popular;
     public Toggle Toggle_latest;
+
+    public GameObject Toggle_Page;
+    public GameObject Toggle_PageGroup;
+
+    private GameObject Page_Toggle;
+
+    //mapInfo list
+    List<mapInfos> maps = new List<mapInfos>();
+    
+    
+
+
+    //pagingInfo
+
+    private int totalMapNum=0;
+    private int currentPage = 1;
 
     public void moveDesign()
     {
@@ -39,8 +80,9 @@ public class mainPlay : MonoBehaviour
 
 
 
-    public void LoadfilestoPanel()
+    public void LoadfilestoPanel(int listCount)
     {
+        Debug.Log("maps.Count = " + listCount);
         //기존의 판넬에 들어있는 파일들 모두 삭제.
         Transform[] childList = Panel_files.GetComponentsInChildren<Transform>();
         if (childList != null)
@@ -55,12 +97,12 @@ public class mainPlay : MonoBehaviour
         }
         // 선택한 페이지에 속한 파일 정보를 가져와야함.
 
-        for(int i = 0; i < 4; i++) //가져온 파일의 개수가 4개인 경우, List형식으로 반환할 예정
+        for(int i = 0; i < listCount; i++) //가져온 파일의 개수가 4개인 경우, List형식으로 반환할 예정
         {
             GameObject file = Instantiate(Button_PlayFile) as GameObject;
             file.transform.parent = Panel_files.transform;
-            file.transform.GetChild(0).GetComponent<Text>().text = "미로 " + i + "/ 락큼";
-            if(i%2 == 0) // 이 미로가 공유파일인지 확인하는 절차 => 공유인경우
+            file.transform.GetChild(0).GetComponent<Text>().text = maps[i].mapName + " / "+maps[i].editorName;
+            if(maps[i].mapPassword == "") // 이 미로가 공유파일인지 확인하는 절차 => 공유인경우
             {
                 file.transform.GetChild(1).GetComponent<Image>().sprite = image_unLock;
             }
@@ -68,28 +110,127 @@ public class mainPlay : MonoBehaviour
             {
                 file.transform.GetChild(1).GetComponent<Image>().sprite = image_lock;
             }
-            file.transform.GetChild(2).GetComponent<Text>().text = "총 플레이 :  " + i;
+            file.transform.GetChild(2).GetComponent<Text>().text = "총 플레이 :  " + maps[i].playCount;
         }
 
     }
 
-    public void getFileInfo(int pageNum)
-    {
-        int fileCount = 0;
-    }
-
-
-    public void searchNull()
+    public void searchNull(int pageNos)
     {
         searchInputField.text = "";
         if (Toggle_popular.isOn)
         {
+            searchText = "";
+            PlayerPrefs.SetString("searchText", searchText);
+            PlayerPrefs.SetInt("ToggleType", 0);
+            StartCoroutine(searchNullAPI(0, pageNos));
+            
             //인기순으로 검색해서 화면에 보이기
         }
         else
         {
+            searchText = "";
+            PlayerPrefs.SetInt("ToggleType", 1);
+            PlayerPrefs.SetString("searchText", searchText);
+            StartCoroutine(searchNullAPI(1, pageNos));
+            
             //최신순으로 검색해서 화면에 보이기
         }
+    }
+
+    IEnumerator searchNullAPI(int orderTypes,int pageNos)
+    {
+        //testPanel.SetActive(true);
+        string realURL = "https://miner22.shop/miner/playmaps";
+        searchNullClass myObject = new searchNullClass { orderType = orderTypes, pageNo = pageNos };
+        string json = JsonUtility.ToJson(myObject);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post(realURL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                //Debug.Log(returns);
+                string[] words = returns.Split(',');
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
+
+                //Debug.Log(words[words.Length - 3]);
+                string[] mapCountsarr = words[words.Length-3].Split(':');
+                totalMapNum = Convert.ToInt32(mapCountsarr[1]);
+                makePageInfo();
+                string[] returncode = words[1].Split(':');
+                if (returncode[1] == "1000")
+                {
+                    maps.Clear();
+                    if (words.Length == 12)
+                    {
+                        Debug.Log("없음");
+                    } 
+                    else if(words.Length == 20) {
+                        maps = getInfotoAPI(1,words);
+
+                    }
+                    else if(words.Length == 29)
+                    {
+                        maps = getInfotoAPI(2, words);
+                    }
+                    else if(words.Length == 38)
+                    {
+                        maps = getInfotoAPI(3, words);
+                    }
+                    else if(words.Length == 47)
+                    {
+                        maps = getInfotoAPI(4, words);
+                    }
+                    LoadfilestoPanel(maps.Count);
+
+                }
+                else 
+                {
+                    //실패.
+                }
+            }
+        }
+    }
+
+    public List<mapInfos> getInfotoAPI(int num,string[] words)
+    {
+        List<mapInfos> tmpList = new List<mapInfos>();
+        string mapName = "";
+        string mapPassword = "";
+        string editor = "";
+        string playCount = "";
+        for (int i = 0; i < num; i++)
+        {
+            string[] info = words[3 + (i * 9)].Split('"');
+            mapName = info[info.Length - 2];
+            Debug.Log("mapName = " + mapName);
+            info = words[6 + (i * 9)].Split('"');
+            mapPassword = info[info.Length - 1];
+            Debug.Log("mapPassword = " + mapPassword);
+            info = words[7 + (i * 9)].Split('"');
+            editor = info[info.Length - 2];
+            Debug.Log("editor = " + editor);
+            info = words[8 + (i * 9)].Split('"');
+            playCount = info[info.Length - 1];
+            Debug.Log("playCount = " + playCount);
+            tmpList.Add(new mapInfos(mapName, mapPassword, editor, playCount));
+        }
+        return tmpList;
     }
 
     public void searchNotNull(string text)
@@ -124,47 +265,81 @@ public class mainPlay : MonoBehaviour
 
         if(searchInputField.text.Length == 0)
         {
-            searchNull();
+            searchNull(currentPage);
+            searchText = "";
         }
         else
         {
-            searchNotNull(searchInputField.text);
+            searchText = searchInputField.text;
+            searchNotNull(searchText);
         }
 
     }
 
     public void searchDelete()
     {
-        searchNull();
+        currentPage = 1;
+        searchText = "";
+        searchNull(currentPage);
     }
 
 
 
-    public void getPagingInfo()
+    public void makePageInfo()
     {
-        //1. 검색 inputField가 비어있는 경우 
-            //1.1 인기순이면 인기순으로 전체 미로 정보 페이징 처리해서 가져오기
-            //1.1 최신순이면 최신순으로 전체 미로 정보 페이징 처리해서 가져오기
-        //2. 검색 inputField에서 검색을 진행한 경우 (닉네임 검색/미로이름 검색 나뉨)
-            //2.1 인기순이면 인기순으로 검색된 미로 정보 페이징 처리해서 가져오기
-            //2.2 최신순이면 최신순으로 검색된 미로 정보 페이징 처리해서 가져오기
+        //지우고 다시 생성.
+        Transform[] childList = Toggle_PageGroup.GetComponentsInChildren<Transform>();
+        if (childList != null)
+        {
+            for (int i = 1; i < childList.Length; i++)
+            {
+                if (childList[i] != transform)
+                {
+                    Destroy(childList[i].gameObject);
+                }
+            }
+        }
+        int totalPages = totalMapNum / 4;
+        int lastMapFile = totalMapNum % 4;
+        if(lastMapFile > 0)
+        {
+            totalPages += 1;
+        }
 
-        //인기순/최신순 토글 입력시 inputField 내용이 없으면 1, 있으면 2
-        //x 버튼 입력시 1 수행
-
+        for(int i = 0; i < totalPages; i++)
+        {
+            Page_Toggle = Instantiate(Toggle_Page) as GameObject;
+            Page_Toggle.transform.GetChild(0).GetComponent<Text>().text = (i+1).ToString();
+            Page_Toggle.transform.parent = Toggle_PageGroup.transform;
+            Page_Toggle.transform.GetComponent<Button>().onClick.AddListener(testClick);
+        }
 
     }
+
+    public void testClick()
+    {
+        //기존에 있는 애들을 다 지워야함. Destroy;
+        Debug.Log(PlayerPrefs.GetInt("currentPage"));
+        currentPage = PlayerPrefs.GetInt("currentPage");
+        search();
+    }
+
+
+
     public void OnDropdownEvent(int index)
     {
         chooseSearchType = index;
         Debug.Log(chooseSearchType);
+        PlayerPrefs.SetInt("dropBox", index);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
-        LoadfilestoPanel();
+        Toggle_popular.onValueChanged.AddListener(delegate { search(); });
+        //LoadfilestoPanel();
+        searchNull(1);
     }
 
     // Update is called once per frame
