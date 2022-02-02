@@ -36,7 +36,7 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             touchPosition.y = (touchPosition.y / imageBackground.rectTransform.sizeDelta.y);
 
             // touchPosition 값의 정규화 [-n, n]
-            touchPosition = new Vector2(touchPosition.x * 2 - 1, touchPosition.y * 2 - 1);
+            touchPosition = new Vector2(touchPosition.x * 2 , touchPosition.y * 2 );
 
             // touchPosition 값의 정규화 [-1, 1]
             touchPosition = (touchPosition.magnitude > 1) ? touchPosition.normalized : touchPosition;
