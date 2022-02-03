@@ -7,7 +7,13 @@ public class PlayerAction : MonoBehaviour
 {
     [SerializeField]
     private VirtualJoystick virtualJoystick;
-    private float moveSpeed = 10;
+    public float moveSpeed = 5;
+    SpriteRenderer spriteRenderer;
+    
+    private void Start()
+    {
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
+    }
 
     private void Update()
     {
@@ -18,13 +24,23 @@ public class PlayerAction : MonoBehaviour
         {
             transform.position += new Vector3(x, y, 0) * moveSpeed * Time.deltaTime;
         }
+
+        //방향전환
+        if (x < 0)
+            spriteRenderer.flipX = false;
+        if (x > 0)
+            spriteRenderer.flipX = true;
+
+
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Finish") // 도착지점에 충돌하면
         {
-            // 게임 정지, 종료
+            // 게임 정지, 종료 > 게임 종료(플레이 시간 등 정보 들어간)판넬 뜨게
         }
     }
+
 }
