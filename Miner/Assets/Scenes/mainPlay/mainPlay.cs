@@ -12,6 +12,13 @@ public class searchNullClass
     public int pageNo;
 }
 
+public class searchNotNullClass
+{
+    public int orderType;
+    public int searchType;
+    public string searchContent;
+    public int pageNo;
+}
 public class mapInfos
 {
     public string mapName { get; set; }
@@ -169,12 +176,13 @@ public class mainPlay : MonoBehaviour
                 //}
 
                 //Debug.Log(words[words.Length - 3]);
-                string[] mapCountsarr = words[words.Length-3].Split(':');
-                totalMapNum = Convert.ToInt32(mapCountsarr[1]);
-                makePageInfo();
+               
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
                 {
+                    string[] mapCountsarr = words[words.Length - 3].Split(':');
+                    totalMapNum = Convert.ToInt32(mapCountsarr[1]);
+                    makePageInfo();
                     maps.Clear();
                     if (words.Length == 12)
                     {
@@ -182,7 +190,6 @@ public class mainPlay : MonoBehaviour
                     } 
                     else if(words.Length == 20) {
                         maps = getInfotoAPI(1,words);
-
                     }
                     else if(words.Length == 29)
                     {
@@ -246,9 +253,103 @@ public class mainPlay : MonoBehaviour
         {
             isPopular = 1; // 최신순
         }
-        // isPopular, isNickName, text 세가지 넘겨서 값 받아오기
+        // isPopular, isNickName, text ,currentPage세가지 넘겨서 값 받아오기
+        StartCoroutine(searchNotNullAPI(isPopular, isNickName,text,1));
+    }
+
+    IEnumerator searchNotNullAPI(int orderTypes, int searchTypes,string searchContents, int pageNos)
+    {
+        //testPanel.SetActive(true);
+        string realURL = "https://miner22.shop/miner/playmaps/search";
+        searchNotNullClass myObject = new searchNotNullClass { orderType = orderTypes, searchType = searchTypes,searchContent = searchContents,pageNo = pageNos };
+        string json = JsonUtility.ToJson(myObject);
 
 
+        using (UnityWebRequest www = UnityWebRequest.Post(realURL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                //Debug.Log(returns);
+                string[] words = returns.Split(',');
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
+
+                //Debug.Log(words[words.Length - 3]);
+                
+                string[] returncode = words[1].Split(':');
+                if (returncode[1] == "1000")
+                {
+                    string[] mapCountsarr = words[words.Length - 3].Split(':');
+                    totalMapNum = Convert.ToInt32(mapCountsarr[1]);
+                    makePageInfo();
+                    maps.Clear();
+                    if (words.Length == 12)
+                    {
+                        //Debug.Log("없음");
+                    }
+                    else if (words.Length == 20)
+                    {
+                        maps = getInfotoAPI(1, words);
+                    }
+                    else if (words.Length == 29)
+                    {
+                        maps = getInfotoAPI(2, words);
+                    }
+                    else if (words.Length == 38)
+                    {
+                        maps = getInfotoAPI(3, words);
+                    }
+                    else if (words.Length == 47)
+                    {
+                        maps = getInfotoAPI(4, words);
+                    }
+                    LoadfilestoPanel(maps.Count);
+
+                }
+                else
+                {
+                    //실패.
+                }
+            }
+        }
+    }
+
+    public void searchConfirm()
+    {
+        currentPage = 1;
+        for (int i = 0; i < searchInputField.text.Length; i++)
+        {
+            if (searchInputField.text[i] == ' ')
+            {
+                Debug.Log("띄어쓰기는 입력할 수 없습니다.");
+                return;
+            }
+        }
+
+        if (searchInputField.text.Length == 0)
+        {
+            searchNull(currentPage);
+            searchText = "";
+        }
+        else
+        {
+            searchText = searchInputField.text;
+
+            searchNotNull(searchText);
+        }
     }
 
 
@@ -271,6 +372,7 @@ public class mainPlay : MonoBehaviour
         else
         {
             searchText = searchInputField.text;
+
             searchNotNull(searchText);
         }
 
