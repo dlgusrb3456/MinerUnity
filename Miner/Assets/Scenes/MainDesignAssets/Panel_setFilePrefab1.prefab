@@ -118,7 +118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 206.12, y: 336.09}
+  m_AnchoredPosition: {x: 74.1, y: 199.2}
   m_SizeDelta: {x: 50, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7231100362274350874
@@ -228,6 +228,9 @@ MonoBehaviour:
   Panel_deletePrefab: {fileID: 5172399085314685590, guid: 9dc4345ffb2467144935bb29589e5d58,
     type: 3}
   Panel_checkPrivatePrefabs: {fileID: 0}
+  Panel_getPrivate: {fileID: 0}
+  Panel_alertshareStatus: {fileID: 0}
+  Panel_loading: {fileID: 0}
   Text_mironame: {fileID: 7231100362952372587}
 --- !u!1 &7231100362701981854
 GameObject:
@@ -516,7 +519,6 @@ GameObject:
   - component: {fileID: 7231100363186322117}
   - component: {fileID: 7231100363186322116}
   - component: {fileID: 7231100363186322119}
-  - component: {fileID: 571340037227595837}
   m_Layer: 5
   m_Name: Button_delete
   m_TagString: Untagged
@@ -623,36 +625,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7231100363186322116}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &571340037227595837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7231100363186322121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9366f031a317a642996146d9804fc38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Panel_setFilePrefab1: {fileID: 0}
-  Panel_setFilePrefab2: {fileID: 0}
-  Button_mapPrefab: {fileID: 0}
-  Panel_deletePrefab: {fileID: 0}
-  Panel_checkPrivatePrefabs: {fileID: 0}
-  Text_mironame: {fileID: 0}
+      m_Calls: []
 --- !u!1 &7231100363401102997
 GameObject:
   m_ObjectHideFlags: 0

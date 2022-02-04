@@ -102,12 +102,6 @@ public class mainDesignMain : MonoBehaviour
             file.transform.GetChild(1).GetComponent<Text>().text = Map.localMaps[i].lastClearDate;
             //file.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(dotdotdot);
 
-            if (i % 2 == 0) //나중에 삭제해야함
-            {
-                Map.localMaps[i].isShared = true;
-            }
-
-
             if (Map.localMaps[i].isShared)
             {
                 file.transform.GetChild(3).GetComponent<Text>().text = "공유 O";
