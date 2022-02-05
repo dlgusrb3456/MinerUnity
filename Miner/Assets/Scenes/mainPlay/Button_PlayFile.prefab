@@ -219,7 +219,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2538895068410970123}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fca8577ead2a96a4aa1bbd10416db290, type: 3}
   m_Name: 
@@ -232,6 +232,7 @@ MonoBehaviour:
   Panel_getPW: {fileID: 7101236817666794917, guid: bb2818c5166574f47b3e56cbdea4e0e9,
     type: 3}
   Text_puPri: {fileID: 3494408874554029441}
+  Text_names: {fileID: 5288979345709795892}
 --- !u!1 &6451556294317978276
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,3 +482,4 @@ MonoBehaviour:
   Text_UserInfo: {fileID: 0}
   Panel_getPW: {fileID: 0}
   Text_puPri: {fileID: 3494408874554029441}
+  Text_names: {fileID: 0}

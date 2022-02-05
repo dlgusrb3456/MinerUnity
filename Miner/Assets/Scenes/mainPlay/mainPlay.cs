@@ -108,7 +108,8 @@ public class mainPlay : MonoBehaviour
         {
             GameObject file = Instantiate(Button_PlayFile) as GameObject;
             file.transform.parent = Panel_files.transform;
-            file.transform.GetChild(0).GetComponent<Text>().text = maps[i].mapName + " / "+maps[i].editorName;
+            file.transform.GetChild(0).GetComponent<Text>().text = maps[i].mapName + "/"+maps[i].editorName;
+
             if(maps[i].mapPassword == "") // 이 미로가 공유파일인지 확인하는 절차 => 공유인경우
             {
                 file.transform.GetChild(1).GetComponent<Image>().sprite = image_unLock;
@@ -117,10 +118,11 @@ public class mainPlay : MonoBehaviour
             {
                 file.transform.GetChild(1).GetComponent<Image>().sprite = image_lock;
             }
-            file.transform.GetChild(2).GetComponent<Text>().text = "총 플레이 :  " + maps[i].playCount;
+            file.transform.GetChild(2).GetComponent<Text>().text = "총 플레이 :  " + maps[i].playCount;    
         }
 
     }
+
 
     public void searchNull(int pageNos)
     {

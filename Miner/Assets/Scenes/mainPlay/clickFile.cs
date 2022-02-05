@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-
+using UnityEngine.Networking;
 class userInfo
 {
     public string nickName { get; set; }
@@ -22,6 +22,11 @@ class userInfo
     }
 }
 
+public class getPlayInfoClass
+{
+    public string mapName;
+    public string editorName;
+}
 
 public class clickFile : MonoBehaviour
 {
@@ -37,12 +42,18 @@ public class clickFile : MonoBehaviour
     private GameObject getPWPanel;
     //private InputField getPWInputField;
     public Text Text_puPri;
+    public Text Text_names;
 
+    //private string editorNames = PlayerPrefs.GetString("");
     private string miroName = "";
+    private string editorName = "";
     private string isPrivate = "";
     private string size = "";
     private string playTime = "";
     private string pw = "";
+
+
+
 
     public void clickPlay()
     {
@@ -93,46 +104,98 @@ public class clickFile : MonoBehaviour
         Destroy(getPWPanel);
     }
 
+    IEnumerator getInfosAPI(string mapNames, string editorNames)
+    {
+        string URL = "https://miner22.shop/miner/playmaps/loadPlayInfo";
+        Debug.Log("miroNames: "+ mapNames);
+        Debug.Log("editorNames: "+ editorNames);
+
+        getPlayInfoClass myObject = new getPlayInfoClass { mapName = mapNames , editorName = editorNames };
+
+        string json = JsonUtility.ToJson(myObject);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(URL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
+
+                string[] returncode = words[1].Split(':');
+
+                if (returncode[1] == "1000")
+                {
+                    
+                }
+
+                else
+                {
+                  
+                }
+
+            }
+        }
+    }
+
+
+
     public void fileOnClick()
     {
         //api 호출을 통해 다음의 정보를 가져와야함.
         //1. 미로명 2. private, public 상태, 3. 크기정보 , 4. 평균 플레이 타임, 5. 플레이한 사람들의 정보 (닉네임과 플레이타임) => 빠른 순서대로 정렬해야함.
-        miroName = "미로 1";
-        isPrivate = "private";
-        size = "작음";
-        playTime = "1m 35s";
-        pw = "2222";
+        string[] tmpInfos = Text_names.text.Split('/');
+        miroName = tmpInfos[0];
+        editorName = tmpInfos[1];
+        StartCoroutine(getInfosAPI(miroName, editorName));
 
-        List<userInfo> users = new List<userInfo>();
-        users.Add(new userInfo ("라큼",25));
-        users.Add(new userInfo("라캄", 15));
-        users.Add(new userInfo("라콤", 5));
-        users.Add(new userInfo("라쿰", 85));
+        //isPrivate = "private";
+        //size = "작음";
+        //playTime = "1m 35s";
+        //pw = "2222";
 
-        users = users.OrderBy(x => x.playTime).ToList();
-        foreach(var userInfo in users)
-        {
-            Debug.Log(userInfo.ToString());
-        }
+        //List<userInfo> users = new List<userInfo>();
+        //users.Add(new userInfo ("라큼",25));
+        //users.Add(new userInfo("라캄", 15));
+        //users.Add(new userInfo("라콤", 5));
+        //users.Add(new userInfo("라쿰", 85));
+
+        //users = users.OrderBy(x => x.playTime).ToList();
+        //foreach(var userInfo in users)
+        //{
+        //    Debug.Log(userInfo.ToString());
+        //}
         
-        fileInfo = Instantiate(Panel_fileInfo) as GameObject;
-        fileInfo.transform.parent = Button_PlayFile.transform.parent.parent;
-        fileInfo.transform.GetChild(0).GetComponent<Text>().text = miroName;
-        fileInfo.transform.GetChild(1).GetComponent<Text>().text = isPrivate;
-        fileInfo.transform.GetChild(2).GetComponent<Text>().text = size;
-        fileInfo.transform.GetChild(3).GetComponent<Text>().text = playTime;
-        fileInfo.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(clickClose_info);
-        fileInfo.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(clickPlay);
-        Transform contentPanel = fileInfo.transform.GetChild(6).transform.GetChild(0).transform.GetChild(0);
+        //fileInfo = Instantiate(Panel_fileInfo) as GameObject;
+        //fileInfo.transform.parent = Button_PlayFile.transform.parent.parent;
+        //fileInfo.transform.GetChild(0).GetComponent<Text>().text = miroName;
+        //fileInfo.transform.GetChild(1).GetComponent<Text>().text = isPrivate;
+        //fileInfo.transform.GetChild(2).GetComponent<Text>().text = size;
+        //fileInfo.transform.GetChild(3).GetComponent<Text>().text = playTime;
+        //fileInfo.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(clickClose_info);
+        //fileInfo.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(clickPlay);
+        //Transform contentPanel = fileInfo.transform.GetChild(6).transform.GetChild(0).transform.GetChild(0);
 
-        foreach (var userInfo in users)
-        {
-            Text_file= Instantiate(Text_UserInfo) as GameObject;
-            Text_file.transform.parent = contentPanel.transform;
-            Text_file.transform.GetComponent<Text>().text = userInfo.ToString();
-        }
+        //foreach (var userInfo in users)
+        //{
+        //    Text_file= Instantiate(Text_UserInfo) as GameObject;
+        //    Text_file.transform.parent = contentPanel.transform;
+        //    Text_file.transform.GetComponent<Text>().text = userInfo.ToString();
+        //}
 
-        fileInfo.transform.position = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
+        //fileInfo.transform.position = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
     }
     // Start is called before the first frame update
     void Start()

@@ -40,6 +40,7 @@ public class PlayerAction : MonoBehaviour
         if (collision.gameObject.tag == "Finish") // 도착지점에 충돌하면
         {
             // 게임 정지, 종료 > 게임 종료(플레이 시간 등 정보 들어간)판넬 뜨게
+            Debug.Log("colision");
         }
     }
 
