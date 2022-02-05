@@ -227,16 +227,16 @@ public class mainPlay : MonoBehaviour
         {
             string[] info = words[3 + (i * 9)].Split('"');
             mapName = info[info.Length - 2];
-            Debug.Log("mapName = " + mapName);
+            //Debug.Log("mapName = " + mapName);
             info = words[6 + (i * 9)].Split('"');
             mapPassword = info[info.Length - 1];
-            Debug.Log("mapPassword = " + mapPassword);
+            //Debug.Log("mapPassword = " + mapPassword);
             info = words[7 + (i * 9)].Split('"');
             editor = info[info.Length - 2];
-            Debug.Log("editor = " + editor);
+            //Debug.Log("editor = " + editor);
             info = words[8 + (i * 9)].Split('"');
             playCount = info[info.Length - 1];
-            Debug.Log("playCount = " + playCount);
+            //Debug.Log("playCount = " + playCount);
             tmpList.Add(new mapInfos(mapName, mapPassword, editor, playCount));
         }
         return tmpList;
