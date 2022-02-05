@@ -1,6 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+
+public class getmapInfoClass
+{
+    public string editorName;
+    public string mapName;
+}
 
 public class mapMaker : MonoBehaviour
 {
@@ -8,6 +15,10 @@ public class mapMaker : MonoBehaviour
     public GameObject startPrefab;
     public GameObject endPrefab;
     public GameObject rockPrefab;
+    public GameObject Players;
+
+
+
 
     private GameObject grass_obj;
     private GameObject start_obj;
@@ -16,6 +27,57 @@ public class mapMaker : MonoBehaviour
 
 
     //arr만 받아오면 그냥 쓰면 됨;
+
+    IEnumerator getmapInfoAPI()
+    {
+        string URL = "https://miner22.shop/miner/playmaps/info";
+        Debug.Log("miroNames: " + PlayerPrefs.GetString("mapName"));
+        Debug.Log("editorNames: " + PlayerPrefs.GetString("editorName"));
+
+        getmapInfoClass myObject = new getmapInfoClass { editorName = PlayerPrefs.GetString("editorName"), mapName = PlayerPrefs.GetString("mapName") };
+
+        string json = JsonUtility.ToJson(myObject);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(URL, json))
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(bytes);
+            www.SetRequestHeader("Content-Type", "application/json");
+            yield return www.Send();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.isNetworkError);
+            }
+            else
+            {
+                string returns = www.downloadHandler.text;
+                string[] words = returns.Split(',');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
+
+                string[] returncode = words[1].Split(':');
+
+                if (returncode[1] == "1000")
+                {
+                    
+                }
+
+                else
+                {
+
+                }
+
+            }
+        }
+    }
+
+
+
+
+
 
     int[,] testarr = new int[7, 7]
     {
@@ -31,16 +93,16 @@ public class mapMaker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(getmapInfoAPI());
         for (int i = 0; i < testarr.GetLength(0); i++)
         {
             for (int j = 0; j < testarr.GetLength(1); j++)
             {
-                Debug.Log("i :" + i + "j :" + j);
+                //Debug.Log("i :" + i + "j :" + j);
 
                 Vector3 position = new Vector3(-1.0f + (float)0.5 * i, -1.0f + (float)0.5 * j, 0);
-                Debug.Log(position.x);
-                Debug.Log(position.y);
+                //Debug.Log(position.x);
+                //Debug.Log(position.y);
                 if (testarr[i, j] == 1)
                 {
                     grass_obj = Instantiate(grassPrefab);
@@ -57,6 +119,7 @@ public class mapMaker : MonoBehaviour
                 {
                     start_obj = Instantiate(startPrefab);
                     start_obj.transform.position = position;
+                    Players.transform.position = position;
                 }
                 else if (testarr[i, j] == 4)
                 {

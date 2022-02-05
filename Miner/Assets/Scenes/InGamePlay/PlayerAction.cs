@@ -9,10 +9,16 @@ public class PlayerAction : MonoBehaviour
     private VirtualJoystick virtualJoystick;
     public float moveSpeed = 5;
     SpriteRenderer spriteRenderer;
-    
+
+
+    //종료 이벤트;
+    public Text TimerText;
+    public GameObject Panel_preventEnds;
+
     private void Start()
     {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
+        Panel_preventEnds.SetActive(false);
     }
 
     private void Update()
@@ -40,6 +46,8 @@ public class PlayerAction : MonoBehaviour
         if (collision.gameObject.tag == "Finish") // 도착지점에 충돌하면
         {
             // 게임 정지, 종료 > 게임 종료(플레이 시간 등 정보 들어간)판넬 뜨게
+            Panel_preventEnds.SetActive(true);
+            Timer.pauseTimer();
             Debug.Log("colision");
         }
     }

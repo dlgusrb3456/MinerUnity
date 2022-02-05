@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 public class userInfo
 {
     public string nickName { get; set; }
@@ -78,6 +79,9 @@ public class clickFile : MonoBehaviour
         {
             //플레이화면으로 이동.
             Debug.Log("go to IngamePlay");
+            PlayerPrefs.SetString("editorName", editorName);
+            PlayerPrefs.SetString("mapName", miroName);
+            SceneManager.LoadScene("InGamePlay");
         }
     }
 
@@ -87,6 +91,9 @@ public class clickFile : MonoBehaviour
         if(str == pw)
         {
             //플래이화면으로 이동.
+            PlayerPrefs.SetString("editorName", editorName);
+            PlayerPrefs.SetString("mapName", miroName);
+            SceneManager.LoadScene("InGamePlay");
             Debug.Log("complete");
         }
         else if(str.Length != 4)
