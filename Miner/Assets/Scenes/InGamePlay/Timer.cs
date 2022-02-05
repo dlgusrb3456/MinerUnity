@@ -13,6 +13,7 @@ public class Timer : MonoBehaviour
     // 로딩과 동시에 세기 시작. 
     void Start()
     {
+    	stopwatch.Reset();
         startTimer();
         StartCoroutine("timerTextUpdateLoop");
     }
