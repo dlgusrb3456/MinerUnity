@@ -376,6 +376,7 @@ MonoBehaviour:
   Panel_settings: {fileID: 1794157420}
   Panel_preventSettings: {fileID: 1599833820}
   Panel_preventEndsDesign: {fileID: 821613633}
+  MainCamera: {fileID: 5878735}
   Player: {fileID: 311007247}
   postionPrefabs: {fileID: 8508093402314512733, guid: 60be740e210f17c4ca14823c6f12fcaf,
     type: 3}
