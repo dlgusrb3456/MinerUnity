@@ -10,7 +10,7 @@ public class CanvasScripts : MonoBehaviour
     // Start is called before the first frame update
     public GameObject Panel_settings;
     public GameObject Panel_preventSettings;
-
+    public GameObject Panel_preventEndsDesign;
 
     public GameObject Player;
 
@@ -53,22 +53,43 @@ public class CanvasScripts : MonoBehaviour
         SceneManager.LoadScene("InGamePlay");
     }
 
+    public void goDesign()
+    {
+        SceneManager.LoadScene("InGameDesign");
+    }
+
     public void clickSettings()
     {
         Timer.pauseTimer();
-        Panel_preventSettings.SetActive(true);
+        if (PlayerPrefs.GetString("playMode") == "Play")
+        {
+            Panel_preventSettings.SetActive(true);
+        }
+        else if(PlayerPrefs.GetString("playMode") == "Design")
+        {
+            Panel_preventEndsDesign.SetActive(true);
+        }
+            
     }
 
     public void closeSettings()
     {
         Timer.startTimer();
-        Panel_preventSettings.SetActive(false);
+        if (PlayerPrefs.GetString("playMode") == "Play")
+        {
+            Panel_preventSettings.SetActive(false);
+        }
+        else if (PlayerPrefs.GetString("playMode") == "Design")
+        {
+            Panel_preventEndsDesign.SetActive(false);
+        }
     }
 
     void Start()
     {
         //시작할때 position count size기준으로 변경;
         Panel_preventSettings.SetActive(false);
+        Panel_preventEndsDesign.SetActive(false);
     }
 
     // Update is called once per frame

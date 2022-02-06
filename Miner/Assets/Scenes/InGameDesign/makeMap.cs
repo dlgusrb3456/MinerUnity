@@ -22,7 +22,7 @@ public class makeMap : MonoBehaviour
     public GameObject Panel_settings;
     public GameObject Panel_prevent;
     public GameObject Panel_outCheck;
-
+    public GameObject Panel_validationCheck;
 
 
     private GameObject obstacle;
@@ -126,7 +126,7 @@ public class makeMap : MonoBehaviour
 
     public void arrToMap()
     {
-        Debug.Log("arrToMap start");
+      
         Map.loadLocalMaps();
         string[] mapSize = new string[2];
         selectedFileName = PlayerPrefs.GetString("DesSelectedFile");
@@ -152,7 +152,7 @@ public class makeMap : MonoBehaviour
             }
         }
 
-        Debug.Log("배열=> 화면");
+        
         for (int i = 0; i < xSize; i++)
         {
             for (int j = 0; j < ySize; j++)
@@ -188,13 +188,55 @@ public class makeMap : MonoBehaviour
                 }
             }
         }
-        Debug.Log("배열=> 화면 종료");
-        Debug.Log("arrToMap end");
+
+    }
+
+    public void clickPlay()
+    {
+        if (checkValidation())
+        {
+            mapToArrSave();
+            PlayerPrefs.SetString("playMode", "Design");
+            SceneManager.LoadScene("InGamePlay");
+        }
+        else
+        {
+            Panel_validationCheck.SetActive(true);
+            Debug.Log("validation error");
+        }
+    }
+
+    public bool checkValidation()
+    {
+        // 2: 도착
+        // 3: 출발
+        Transform child = null;
+        int childCount = Panel_maps.transform.childCount;
+        int startCount = 0;
+        int endCount = 0;
+        for (int i = 0; i < childCount; i++)
+        {
+            child = Panel_maps.transform.GetChild(i);
+            int getStatus = Convert.ToInt32(child.transform.GetChild(0).GetComponent<Text>().text);
+            if(getStatus == 2)
+            {
+                endCount++;
+            }
+            else if(getStatus == 3)
+            {
+                startCount++;
+            }
+        }
+        if(startCount==1 && endCount == 1)
+        {
+            return true;
+        }
+        return false;
     }
 
     public void mapToArrSave()
     {
-        Debug.Log("mapToArrSave start");
+
         Transform child = null;
         int childCount = Panel_maps.transform.childCount;
 
@@ -221,12 +263,12 @@ public class makeMap : MonoBehaviour
                 //SceneManager.LoadScene("InGameDesign");
             }
         }
-        Debug.Log("mapToArrSave end");
+
     }
 
     public int[,] decodeMapData(Map map, int height, int width)
     {
-        Debug.Log("문자 배열화 시작");
+
         string raw = map.mapData;
 
         //int height = mapSizeStringToArray(map.mapSize)[0];
@@ -250,12 +292,12 @@ public class makeMap : MonoBehaviour
 
 
         //d.mapData = rl;
-        Debug.Log("문자 배열화 종료");
+
         return rl;
     }
     public string encodeMapData(int[,] mapDataArray)
     {
-        Debug.Log("배열 문자화 시작");
+
         string raw = "";
         int height = mapDataArray.GetLength(0);
         int width = mapDataArray.GetLength(1);
@@ -267,7 +309,7 @@ public class makeMap : MonoBehaviour
                 sum += mapDataArray[i, j * 2 + 1];
                 raw += mapCompressionBase64String[sum];
             }
-        Debug.Log("배열 문자화 종료");
+
         return raw;
     }
 
@@ -305,7 +347,10 @@ public class makeMap : MonoBehaviour
         mapToArrSave();
         SceneManager.LoadScene("mainDesign");
     }
-
+    public void confirmValidation()
+    {
+        Panel_validationCheck.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -317,6 +362,7 @@ public class makeMap : MonoBehaviour
         Panel_settings.SetActive(false);
         Panel_prevent.SetActive(false);
         Panel_outCheck.SetActive(false);
+        Panel_validationCheck.SetActive(false);
     }
 
     // Update is called once per frame

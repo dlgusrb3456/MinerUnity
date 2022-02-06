@@ -14,6 +14,11 @@ public class PlayerAction : MonoBehaviour
     //종료 이벤트;
     public Text TimerText;
     public GameObject Panel_preventEnds;
+    public GameObject Panel_preventEndsDesign;
+
+    //충돌 이벤트;
+    public GameObject SpriteEnd;
+
 
     private void Start()
     {
@@ -43,12 +48,20 @@ public class PlayerAction : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Finish") // 도착지점에 충돌하면
+        if (collision.gameObject == SpriteEnd) // 도착지점에 충돌하면
         {
             // 게임 정지, 종료 > 게임 종료(플레이 시간 등 정보 들어간)판넬 뜨게
-            Panel_preventEnds.SetActive(true);
+            
             Timer.pauseTimer();
-            Debug.Log("colision");
+
+            if (PlayerPrefs.GetString("playMode") == "Play")
+            {
+                Panel_preventEnds.SetActive(true);
+            }
+            else if (PlayerPrefs.GetString("playMode") == "Design")
+            {
+                Panel_preventEndsDesign.SetActive(true);
+            }
         }
     }
 
