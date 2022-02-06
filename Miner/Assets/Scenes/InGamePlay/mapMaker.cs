@@ -25,6 +25,13 @@ public class mapMaker : MonoBehaviour
     private GameObject end_obj;
     private GameObject rock_obj;
 
+    //크기.
+    int xSize = 0;
+    int ySize = 0;
+
+    //배열;
+    int[,] mapArr;
+
 
     //arr만 받아오면 그냥 쓰면 됨;
 

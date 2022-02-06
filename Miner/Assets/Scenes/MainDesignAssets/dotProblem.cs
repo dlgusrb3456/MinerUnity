@@ -62,6 +62,13 @@ public class dotProblem : MonoBehaviour
     private string largeMap = "102X102";
     private string mapPasswords = "";
 
+
+    private static string mapCompressionBase64String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    //checkValidation
+    private bool isOK = false;
+    private int[,] mapArr;
+    private int[,] mapArrCheck;
+
     public void dotdotdotPanel()
     {
         
@@ -259,24 +266,185 @@ public class dotProblem : MonoBehaviour
         Destroy(checkPrivatePrefabs);
     }
 
+    public int[,] decodeMapData(Map map, int height, int width)
+    {
+        Debug.Log("문자 배열화 시작");
+        string raw = map.mapData;
+
+        //int height = mapSizeStringToArray(map.mapSize)[0];
+        //int width = mapSizeStringToArray(map.mapSize)[1];
+        int[,] rl = new int[height, width];
+
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width / 2; j++)
+            {
+                int idx = i * (width / 2) + j;
+                int k;
+
+                for (k = 0; k < mapCompressionBase64String.Length; k++)
+                    if (raw[idx] == mapCompressionBase64String[k]) break;
+
+                if (k == mapCompressionBase64String.Length) return null;
+
+                rl[i, j * 2] = k >> 3;
+                rl[i, j * 2 + 1] = k & 0x07;
+            }
+
+
+        //d.mapData = rl;
+        Debug.Log("문자 배열화 종료");
+        return rl;
+    }
+
+    public bool validationCheck(int [,] mapArr)
+    {
+        // 0: 길
+        // 1: 장애물
+        // 2: 도착
+        // 3: 출발
+        // 4: 테두리
+        int startCount = 0;
+        int endCount = 0;
+        int startPosX = 0;
+        int startPosY = 0; 
+        for (int i = 0; i < mapArr.GetLength(0); i++)
+        {
+            for (int j = 0; j < mapArr.GetLength(1); j++)
+            {
+                if (mapArr[i, j] == 2)
+                {
+                    endCount++;
+                }
+                else if(mapArr[i, j] == 3)
+                {
+                    startCount++;
+                    startPosX = i;
+                    startPosY = j;
+                }
+
+            }
+        }
+
+        if (endCount == 1 && startCount == 1)
+        {
+            Debug.Log("count OK");
+            startToEnd(mapArr, startPosX, startPosY);
+            if (isOK)
+            {
+                isOK = false;
+                return true;
+            }
+        }
+        Debug.Log("endCount: "+endCount);
+        Debug.Log("startCount: " + startCount);
+        return false;
+    }
+
+    public void startToEnd(int [,] mapArr,int i,int j)
+    {
+        int sizeX = mapArr.GetLength(0);
+        int sizeY = mapArr.GetLength(1);
+        if (j - 1 >= 0) //좌측
+        {
+            if (mapArr[i,j - 1] == 2)
+            {
+                isOK = true;
+                return;
+            }
+            else if(mapArr[i, j - 1] == 0 && mapArrCheck[i,j-1]==0)
+            {
+                mapArrCheck[i, j - 1] = 1;
+                startToEnd(mapArr, i, j - 1);
+            }
+        }
+
+        if (i - 1 >= 0) //상단
+        {
+            if (mapArr[i-1, j] == 2)
+            {
+                isOK = true;
+                return;
+            }
+            else if (mapArr[i-1, j] == 0 && mapArrCheck[i-1, j] == 0)
+            {
+                mapArrCheck[i-1, j] = 1;
+                startToEnd(mapArr, i-1, j);
+            }
+        }
+
+        if (j + 1 < sizeY)//우측
+        {
+            if (mapArr[i, j +1] == 2)
+            {
+                isOK = true;
+                return;
+            }
+            else if (mapArr[i, j + 1] == 0 && mapArrCheck[i, j+1] == 0)
+            {
+                mapArrCheck[i, j+1] = 1;
+                startToEnd(mapArr, i, j+1);
+            }
+        }
+
+        if (i + 1 < sizeX)//하단
+        {
+            if (mapArr[i+1, j] == 2)
+            {
+                isOK = true;
+                return;
+            }
+            else if (mapArr[i + 1, j] == 0 && mapArrCheck[i+1, j] == 0)
+            {
+                mapArrCheck[i + 1, j] = 1;
+                startToEnd(mapArr, i+1, j);
+            }
+        }
+    }
+
     public void confirmShare()
     {
-        Destroy(checkPrivatePrefabs);
-        if (checkPrivatePrefabs.transform.GetChild(6).GetComponent<Transform>().transform.GetChild(0).GetComponent<Toggle>().isOn)
+        
+        string[] mapSize = new string[2];
+        
+        int xSize = 0;
+        int ySize = 0;
+        for (int i = 0; i < Map.localMaps.Count; i++)
         {
-            Debug.Log("public 공유");
-            mapPasswords = "0";
-            StartCoroutine(shareAPI());
-            //api로 공유 진행
+            if (Map.localMaps[i].name == selectedFileName)
+            {
+                mapSize = Map.localMaps[i].mapSize.Split('X');
+                xSize = Convert.ToInt32(mapSize[0]);
+                ySize = Convert.ToInt32(mapSize[1]);
+                mapArr = new int[xSize, ySize];
+                mapArrCheck = new int[xSize, ySize];
+                mapArr = decodeMapData(Map.localMaps[i], xSize, ySize);
+                break;
+            }
+        }
+        if (validationCheck(mapArr))
+        {
+            Destroy(checkPrivatePrefabs);
+            if (checkPrivatePrefabs.transform.GetChild(6).GetComponent<Transform>().transform.GetChild(0).GetComponent<Toggle>().isOn)
+            {
+                Debug.Log("public 공유");
+                mapPasswords = "0";
+                StartCoroutine(shareAPI());
+                //api로 공유 진행
+            }
+            else
+            {
+                Debug.Log("private 공유");
+                getPrivate = Instantiate(Panel_getPrivate) as GameObject;
+                getPrivate.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
+                getPrivate.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(cancleGetPW);
+                getPrivate.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(confirmGetPW);
+            }
         }
         else
         {
-            Debug.Log("private 공유");
-            getPrivate = Instantiate(Panel_getPrivate) as GameObject;
-            getPrivate.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
-            getPrivate.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(cancleGetPW);
-            getPrivate.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(confirmGetPW);
+            checkPrivatePrefabs.transform.GetChild(7).GetComponent<Text>().text = "미로 형식이 유효하지 않습니다. \n*미로의 시작점과 도착점은 한개씩입니다.\n*미로의 시작점과 도착점은 길로 이어져야 합니다.";
         }
+        
     }
 
     public void confirmGetPW()
