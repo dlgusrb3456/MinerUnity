@@ -91,7 +91,7 @@ public class dotProblem : MonoBehaviour
                     sharePanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(shareStop);
                     sharePanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(shareModify);
                     //sharePanel.transform.GetComponent<Image>().sprite = imageBG;
-                    sharePanel.transform.localPosition = new Vector3(120,45, 0);
+                    sharePanel.transform.localPosition = new Vector3(325,135, 0);
                     sharePanel.gameObject.SetActive(true);
                 }
                 else
@@ -102,7 +102,7 @@ public class dotProblem : MonoBehaviour
                     nonesharePanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(closeNonesharePanel);
                     nonesharePanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(deletePre);
                     nonesharePanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(share);
-                    nonesharePanel.transform.localPosition = new Vector3(120, 45, 0);
+                    nonesharePanel.transform.localPosition = new Vector3(325, 135, 0);
                     nonesharePanel.gameObject.SetActive(true);
                 }
                 break;
