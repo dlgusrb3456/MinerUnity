@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 public class regiOutMain : MonoBehaviour
 {
     // Start is called before the first frame update
+    public class registerOutAPIInfo
+    {
+        public string email;
+        public string password;
+    }
 
     public GameObject Panel_loading;
     //public GameObject Panel_outComplete;
@@ -18,11 +23,46 @@ public class regiOutMain : MonoBehaviour
 
 
 
-    public class registerOutAPIInfo
+   
+
+    void Start()
     {
-        public string email;
-        public string password;
+        Panel_loading.SetActive(false);
+        Panel_black.SetActive(false);
+        ExitPanel.SetActive(false);
     }
+
+    void Update()
+    {
+        //안드로이드인 경우
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
+            {
+                if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                {
+                    ExitPanel.SetActive(false);
+                }
+                else
+                {
+                    ExitPanel.SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void ExitYes()
+    {
+        Application.Quit();
+    }
+
+    public void ExitNo()
+    {
+        ExitPanel.SetActive(false);
+    }
+
+
+
 
     IEnumerator regoOutAPI(string emails, string passwords)
     {
@@ -99,39 +139,5 @@ public class regiOutMain : MonoBehaviour
     }
 
 
-    void Start()
-    {
-        Panel_loading.SetActive(false);
-        Panel_black.SetActive(false);
-        ExitPanel.SetActive(false);
-    }
 
-    void Update()
-    {
-        //안드로이드인 경우
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
-            {
-                if (ExitPanel.activeSelf) // 판넬 켜져있으면
-                {
-                    ExitPanel.SetActive(false);
-                }
-                else
-                {
-                    ExitPanel.SetActive(true);
-                }
-            }
-        }
-    }
-
-    public void ExitYes()
-    {
-        Application.Quit();
-    }
-
-    public void ExitNo()
-    {
-        ExitPanel.SetActive(false);
-    }
 }

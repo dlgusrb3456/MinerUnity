@@ -133,7 +133,7 @@ public class mapMaker : MonoBehaviour
             for (int j = 0; j < designArr.GetLength(1); j++)
             {
              
-                Vector3 position = new Vector3(-1.0f + (float)(-0.5) * i, -1.0f + (float)0.5 * j, 0);
+                Vector3 position = new Vector3(-1.0f + (float)(-0.6) * i, -1.0f + (float)0.6 * j, 0);
                 if (designArr[i, j] == 1)
                 {
                     grass_obj = Instantiate(grassPrefab);
@@ -204,7 +204,7 @@ public class mapMaker : MonoBehaviour
                 {
                     //Debug.Log("i :" + i + "j :" + j);
 
-                    Vector3 position = new Vector3(-1.0f + (float)(-0.5) * i, -1.0f + (float)0.5 * j, 0);
+                    Vector3 position = new Vector3(-1.0f + (float)(-0.6) * i, -1.0f + (float)0.6 * j, 0);
                     //Debug.Log(position.x);
                     //Debug.Log(position.y);
                     if (testarr[i, j] == 1)

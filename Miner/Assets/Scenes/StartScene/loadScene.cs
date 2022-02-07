@@ -19,6 +19,12 @@ public class loadScene : MonoBehaviour
         // 여기서 자동로그인이 되어 있다면 bool 변수 값에 true를 아니라면 false를 줌
     }
 
+    public void goToLogin()
+    {
+        SceneManager.LoadScene("loginMain");
+    }
+
+
     // Update is called once per frame
     void Update()
     {

@@ -30,6 +30,11 @@ public class FindPW : MonoBehaviour
     private string userIdxs = "-1";
     // Start is called before the first frame update
 
+    public GameObject ExitPanel;
+    public GameObject testPanel;
+    private float progress = 0.0f;
+    public Image circleProgress;
+
     public void FindIDButton()
     {
         SceneManager.LoadScene("FindID");
@@ -46,6 +51,15 @@ public class FindPW : MonoBehaviour
         SceneManager.LoadScene("loginMain");
     }
 
+    public void ExitYes()
+    {
+        Application.Quit();
+    }
+
+    public void ExitNo()
+    {
+        ExitPanel.SetActive(false);
+    }
 
     public void sendCode()
     {
@@ -83,6 +97,7 @@ public class FindPW : MonoBehaviour
 
     IEnumerator sendEmailCode(string emails)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/email/emailSend";
         findPWInfo myObject = new findPWInfo { address = emails };
         string json = JsonUtility.ToJson(myObject);
@@ -137,6 +152,7 @@ public class FindPW : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false);
     }
 
     public void checkCode()
@@ -164,6 +180,7 @@ public class FindPW : MonoBehaviour
     }
     IEnumerator checkEmailCode(string authNum)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/email/compareAuth";
         checkPWinfo myObject = new checkPWinfo {userIdx = userIdxs , authNum = authNum};
         string json = JsonUtility.ToJson(myObject);
@@ -216,5 +233,41 @@ public class FindPW : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false);
+    }
+    void Start()
+    {
+        ExitPanel.SetActive(false);
+        testPanel.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (testPanel.activeSelf == true)
+        {
+            progress += 0.3f * Time.deltaTime;
+            if (progress > 1)
+            {
+                progress = 0;
+            }
+            circleProgress.fillAmount = progress;
+        }
+
+        //안드로이드인 경우
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
+            {
+                if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                {
+                    ExitPanel.SetActive(false);
+                }
+                else
+                {
+                    ExitPanel.SetActive(true);
+                }
+            }
+        }
+
     }
 }

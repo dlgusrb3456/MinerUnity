@@ -18,6 +18,7 @@ public class onClickButton : MonoBehaviour
 
     public void onClickButtons()
     {
+        obstacles.GetComponent<AudioSource>().Play();
         int test_statuss = PlayerPrefs.GetInt("Toggle");
         string test_status = test_statuss.ToString();
         Debug.Log(test_status);
