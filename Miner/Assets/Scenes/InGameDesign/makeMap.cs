@@ -15,6 +15,7 @@ public class makeMap : MonoBehaviour
     public Sprite image_block;
 
 
+
     //프리팹들
     public GameObject obstacle_prefab;  //장애물 프리팹.
     public GameObject Panel_maps; //움직여야할 판넬.
@@ -161,7 +162,8 @@ public class makeMap : MonoBehaviour
                 obstacle.transform.parent = Panel_maps.transform;
                 obstacle.transform.GetChild(0).GetComponent<Text>().text = mapArr[i, j].ToString();
                 obstacle.transform.GetChild(1).GetComponent<Text>().text = i.ToString() + "," + j.ToString();
-           
+                obstacle.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                //obstacle.transform.GetComponent<RectTransform>().localScale.y = 1;
                 if (mapArr[i, j] == 0)
                 {
                     obstacle.GetComponent<Image>().color = Color.clear;
@@ -355,6 +357,7 @@ public class makeMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      
         toggleChanged();
         arrToMap();
         PlayerPrefs.SetInt("Toggle", 0);

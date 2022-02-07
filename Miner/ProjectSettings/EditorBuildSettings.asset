@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/modifyPW.unity
     guid: c563c322e85483748ae37656bfe1a716
+  - enabled: 1
+    path: Assets/Scenes/regiOut.unity
+    guid: 13fe8517b067e8f45ad8a2a13874a5eb
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000

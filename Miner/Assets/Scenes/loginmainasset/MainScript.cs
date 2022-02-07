@@ -10,9 +10,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System;
-using System.Threading.Tasks;
 
 
 //오토로그인  PlayerPrefs.SetInt("autoLogin", 1);
@@ -45,7 +43,10 @@ public class MainScript : MonoBehaviour
     {
         SceneManager.LoadScene("FindID");
     }
-
+    public void moveregiOut()
+    {
+        SceneManager.LoadScene("regiOut");
+    }
 
     IEnumerator loginAPI(string emails, string passwords)
     {

@@ -11,6 +11,8 @@ public class CanvasScripts : MonoBehaviour
     public GameObject Panel_settings;
     public GameObject Panel_preventSettings;
     public GameObject Panel_preventEndsDesign;
+    //카메라
+    public Camera MainCamera;
 
     public GameObject Player;
 
@@ -88,6 +90,7 @@ public class CanvasScripts : MonoBehaviour
     void Start()
     {
         //시작할때 position count size기준으로 변경;
+        MainCamera.orthographicSize = 3.0f;
         Panel_preventSettings.SetActive(false);
         Panel_preventEndsDesign.SetActive(false);
     }
