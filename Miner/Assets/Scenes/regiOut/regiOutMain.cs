@@ -132,6 +132,6 @@ public class regiOutMain : MonoBehaviour
 
     public void ExitNo()
     {
-        Application.Quit();
+        ExitPanel.SetActive(false);
     }
 }

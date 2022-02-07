@@ -43,7 +43,10 @@ public class MainScript : MonoBehaviour
     {
         SceneManager.LoadScene("FindID");
     }
-
+    public void moveregiOut()
+    {
+        SceneManager.LoadScene("regiOut");
+    }
 
     IEnumerator loginAPI(string emails, string passwords)
     {
