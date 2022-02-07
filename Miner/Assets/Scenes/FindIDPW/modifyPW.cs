@@ -26,9 +26,26 @@ public class modifyPW : MonoBehaviour
     public GameObject alertPanel;
     public GameObject blackPanel;
 
+    public GameObject ExitPanel;
+    public GameObject testPanel;
+    private float progress = 0.0f;
+    public Image circleProgress;
+
     private bool PWconfitioncheck = false;
     private bool PWconfirmcheck = false;
     private Regex regex = new Regex(@"^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$");
+
+    public void ExitYes()
+    {
+        Application.Quit();
+    }
+
+    public void ExitNo()
+    {
+        ExitPanel.SetActive(false);
+    }
+
+
 
     public void goBackLogin()
     {
@@ -66,6 +83,7 @@ public class modifyPW : MonoBehaviour
     }
     IEnumerator modifyPWs(string passwords)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/users/modifyPw";
         string userIdxs = PlayerPrefs.GetString("modifyuserIdx");
         modifyPWInfo myObject = new modifyPWInfo { userIdx = userIdxs, password = passwords };
@@ -108,19 +126,49 @@ public class modifyPW : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false);
     }
 
     void Start()
     {
         alertPanel.gameObject.SetActive(false);
         blackPanel.gameObject.SetActive(false);
+        ExitPanel.SetActive(false);
+        testPanel.SetActive(false);
         Debug.Log(PlayerPrefs.GetString("modifyuserIdx"));
     }
 
     // Update is called once per frame
     void Update()
     {
-     
+        if (testPanel.activeSelf == true)
+        {
+            progress += 0.3f * Time.deltaTime;
+            if (progress > 1)
+            {
+                progress = 0;
+            }
+            circleProgress.fillAmount = progress;
+        }
+
+        //안드로이드인 경우
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
+            {
+                if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                {
+                    ExitPanel.SetActive(false);
+                }
+                else
+                {
+                    ExitPanel.SetActive(true);
+                }
+            }
+        }
+
+
+
         if (InputField_PW.text != "")  
         {
             for(int i = 0; i < InputField_PW.text.Length; i++)

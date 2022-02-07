@@ -19,6 +19,12 @@ public class makeMap : MonoBehaviour
     //프리팹들
     public GameObject obstacle_prefab;  //장애물 프리팹.
     public GameObject Panel_maps; //움직여야할 판넬.
+    public GameObject Panel_saveComplete;
+
+    //로딩화면
+    public GameObject testPanel;
+    private float progress = 0.0f;
+    public Image circleProgress;
 
     public GameObject Panel_settings;
     public GameObject Panel_prevent;
@@ -238,7 +244,7 @@ public class makeMap : MonoBehaviour
 
     public void mapToArrSave()
     {
-
+        testPanel.SetActive(true);
         Transform child = null;
         int childCount = Panel_maps.transform.childCount;
 
@@ -265,7 +271,8 @@ public class makeMap : MonoBehaviour
                 //SceneManager.LoadScene("InGameDesign");
             }
         }
-
+        testPanel.SetActive(false);
+        Panel_saveComplete.SetActive(true);
     }
 
     public int[,] decodeMapData(Map map, int height, int width)
@@ -327,6 +334,10 @@ public class makeMap : MonoBehaviour
         Panel_prevent.SetActive(false);
     }
 
+    public void closeSave()
+    {
+        Panel_saveComplete.SetActive(false);
+    }
 
     public void outPage()
     {
@@ -366,11 +377,14 @@ public class makeMap : MonoBehaviour
         Panel_prevent.SetActive(false);
         Panel_outCheck.SetActive(false);
         Panel_validationCheck.SetActive(false);
+        Panel_saveComplete.SetActive(false);
+        testPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        //줌인 줌아웃
         if(Input.touchCount == 2)
         {
             Touch touchZero = Input.GetTouch(0); //첫번째 손가락 터치를 저장
@@ -388,9 +402,35 @@ public class makeMap : MonoBehaviour
             {
                 Panel_maps.transform.localScale += new Vector3(moveSpeed, moveSpeed, 0);
             }
-            
-            
-            
+           
+        }
+        //로딩화면 돌아가기
+        if (testPanel.activeSelf == true)
+        {
+            progress += 0.3f * Time.deltaTime;
+            if (progress > 1)
+            {
+                progress = 0;
+            }
+            circleProgress.fillAmount = progress;
+        }
+
+        //뒤로가기
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
+            {
+                if (Panel_settings.activeSelf) // 판넬 켜져있으면
+                {
+                    Panel_settings.SetActive(false);
+                    Panel_prevent.SetActive(false);
+                }
+                else
+                {
+                    Panel_settings.SetActive(true);
+                    Panel_prevent.SetActive(true);
+                }
+            }
         }
     }
 }

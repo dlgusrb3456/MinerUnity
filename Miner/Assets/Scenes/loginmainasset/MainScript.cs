@@ -34,6 +34,26 @@ public class MainScript : MonoBehaviour
     public Toggle toggle;
     public Text LoginExceptiontxt;
 
+    //bgm;
+    GameObject BackgroundMusic;
+    AudioSource backmusic;
+
+    public GameObject Panel_loginMainSettings;
+    public Toggle mainBGM_ON;
+
+
+    public void BGM_changed()
+    {
+        if (mainBGM_ON.isOn)
+        {
+            PlayerPrefs.SetInt("mainBGM", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("mainBGM", 0);
+        }
+    }
+
 
     public void moveRegister()
     {
@@ -105,7 +125,10 @@ public class MainScript : MonoBehaviour
     }
 
 
-
+    public void settingOn()
+    {
+        Panel_loginMainSettings.SetActive(true);
+    }
 
 
     public void Login()
@@ -130,5 +153,31 @@ public class MainScript : MonoBehaviour
         Debug.Log("changeColor");
     }
 
+    void Start()
+    {
+        Panel_loginMainSettings.SetActive(false);
+        mainBGM_ON.onValueChanged.AddListener(delegate { BGM_changed(); });
+    }
 
+    public void BackGroundMusicOffButton() //배경음악 키고 끄는 버튼
+    {
+        BackgroundMusic = GameObject.FindGameObjectWithTag("mainBGM");
+        backmusic = BackgroundMusic.GetComponent<AudioSource>(); //배경음악 저장해둠
+        if (backmusic.isPlaying) backmusic.Pause();
+        else backmusic.Play();
+    }
+
+
+
+    void Update()
+    {
+        //if (PlayerPrefs.GetInt("mainBGM") == 0)
+        //{
+        //    GameObject.FindGameObjectWithTag("mainBGM").GetComponent<AudioSource>().Pause();
+        //}
+        //else
+        //{
+        //    GameObject.FindGameObjectWithTag("mainBGM").GetComponent<AudioSource>().Play();
+        //}
+    }
 }

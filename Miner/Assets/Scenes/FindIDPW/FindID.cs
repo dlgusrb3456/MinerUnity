@@ -43,6 +43,25 @@ public class FindID : MonoBehaviour
 
     private string checkPhoneNum = "Miner";
 
+    public GameObject ExitPanel;
+
+
+
+
+
+
+ 
+
+    public void ExitYes()
+    {
+        Application.Quit();
+    }
+
+    public void ExitNo()
+    {
+        ExitPanel.SetActive(false);
+    }
+
 
     public void FindIDButton()
     {
@@ -186,6 +205,7 @@ public class FindID : MonoBehaviour
 
     IEnumerator checkPhoneCode(string phoneNums)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/users/find-email";
         checkPhoneCode myObject = new checkPhoneCode { phoneNum = phoneNums, authNum = PhoneCodefield.text };
         string json = JsonUtility.ToJson(myObject);
@@ -236,6 +256,7 @@ public class FindID : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false);
     }
 
 
@@ -245,6 +266,7 @@ public class FindID : MonoBehaviour
         alertPanel.gameObject.SetActive(false);
         blackPanel.gameObject.SetActive(false);
         testPanel.SetActive(false);
+        ExitPanel.SetActive(false);
     }
 
     void Update()
@@ -258,5 +280,22 @@ public class FindID : MonoBehaviour
             }
             circleProgress.fillAmount = progress;
         }
+
+        //안드로이드인 경우
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
+            {
+                if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                {
+                    ExitPanel.SetActive(false);
+                }
+                else
+                {
+                    ExitPanel.SetActive(true);
+                }
+            }
+        }
+
     }
 }
