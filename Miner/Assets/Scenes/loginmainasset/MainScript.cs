@@ -39,21 +39,6 @@ public class MainScript : MonoBehaviour
     AudioSource backmusic;
 
     public GameObject Panel_loginMainSettings;
-    public Toggle mainBGM_ON;
-
-
-    public void BGM_changed()
-    {
-        if (mainBGM_ON.isOn)
-        {
-            PlayerPrefs.SetInt("mainBGM", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("mainBGM", 0);
-        }
-    }
-
 
     public void moveRegister()
     {
@@ -68,6 +53,10 @@ public class MainScript : MonoBehaviour
         SceneManager.LoadScene("regiOut");
     }
 
+    public void closePanel()
+    {
+        Panel_loginMainSettings.SetActive(false);
+    }
     IEnumerator loginAPI(string emails, string passwords)
     {
         string URL = "https://miner22.shop/miner/users/login";
@@ -155,29 +144,29 @@ public class MainScript : MonoBehaviour
 
     void Start()
     {
-        Panel_loginMainSettings.SetActive(false);
-        mainBGM_ON.onValueChanged.AddListener(delegate { BGM_changed(); });
-    }
-
-    public void BackGroundMusicOffButton() //배경음악 키고 끄는 버튼
-    {
         BackgroundMusic = GameObject.FindGameObjectWithTag("mainBGM");
         backmusic = BackgroundMusic.GetComponent<AudioSource>(); //배경음악 저장해둠
-        if (backmusic.isPlaying) backmusic.Pause();
-        else backmusic.Play();
+        Panel_loginMainSettings.SetActive(false);
+        
     }
 
 
+    public void bgmON()
+    {
+        backmusic.Play();
+        PlayerPrefs.SetInt("mainBGM", 0);
+        Debug.Log("mainBGM on");
+    }
+
+    public void bgmOff()
+    {
+        backmusic.Pause();
+        PlayerPrefs.SetInt("mainBGM", 1);
+        Debug.Log("mainBGM off");
+    }
 
     void Update()
     {
-        //if (PlayerPrefs.GetInt("mainBGM") == 0)
-        //{
-        //    GameObject.FindGameObjectWithTag("mainBGM").GetComponent<AudioSource>().Pause();
-        //}
-        //else
-        //{
-        //    GameObject.FindGameObjectWithTag("mainBGM").GetComponent<AudioSource>().Play();
-        //}
+
     }
 }
