@@ -9,8 +9,6 @@ public class mainDesignMain : MonoBehaviour
 
     ////톱니바퀴 
     public GameObject Panel_settings;
-    public Toggle toggle_bgmOn;
-    public Toggle toggle_bgnOff;
 
     ////추가
     public GameObject Panel_getmiroName;
@@ -53,23 +51,16 @@ public class mainDesignMain : MonoBehaviour
         
     }
 
-    private void Toggle_BGMOn(bool value)
+    public void bgmON()
     {
-        if (value)
-        {
             PlayerPrefs.SetInt("mainBGM", 1);
             Debug.Log("mainBGM on");
-        }
-        else
-        {
-            PlayerPrefs.SetInt("mainBGM", 0);
-            Debug.Log("mainBGM off");
-        }
     }
 
-    private void Toggle_BGMOff()
+    public void bgmOff()
     {
-
+            PlayerPrefs.SetInt("mainBGM", 0);
+            Debug.Log("mainBGM off");
     }
 
     public void logOut()
@@ -144,15 +135,6 @@ public class mainDesignMain : MonoBehaviour
 
         }
     }
-
-    
-
-    public void startFile()
-    {
-        //인게임_설계화면으로 이동
-        //SceneManager.LoadScene("");
-    }
-
 
     public void addFile()
     {
@@ -253,17 +235,8 @@ public class mainDesignMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        Debug.Log("start");
         MinerEnvironment.initEnvironment();
-        toggle_bgmOn.onValueChanged.AddListener((value) =>
-        {
-            Toggle_BGMOn(value);
-        });
-
         loadFile();
-
-
     }
 
     // Update is called once per frame

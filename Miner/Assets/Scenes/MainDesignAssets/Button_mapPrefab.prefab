@@ -305,7 +305,7 @@ MonoBehaviour:
     type: 3}
   Panel_getPrivate: {fileID: 8572484038167417473, guid: e721221eb0243ad4db30e07d5a2204dd,
     type: 3}
-  Panel_alertshareStatus: {fileID: 8215187282109127702, guid: f0019cedb872bc946845d1d54d4b8a0a,
+  Panel_alertshareStatus: {fileID: 4581159999939402826, guid: 1a0520ff6bc71b340a15b66f6e1f4ded,
     type: 3}
   Panel_loading: {fileID: 1462655030095699478, guid: 74f21ed895a79c843aaf468bc917fd6d,
     type: 3}

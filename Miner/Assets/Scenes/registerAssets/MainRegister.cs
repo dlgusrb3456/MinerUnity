@@ -65,15 +65,39 @@ public class MainRegister : MonoBehaviour
 
     private Regex regex = new Regex(@"^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$");
 
+    public GameObject ExitPanel;
+    public GameObject testPanel;
+    private float progress = 0.0f;
+    public Image circleProgress;
+
+
+    public void ExitYes()
+    {
+        Application.Quit();
+    }
+
+    public void ExitNo()
+    {
+        ExitPanel.SetActive(false);
+    }
 
     public void IDduplicateCheck()
     {
         checkID = IDfield.text; //중복확인을 진행한 이메일 주소 저장
-        StartCoroutine(registEmailCheck(checkID));
+        if(checkID.Length != 0)
+        {
+            StartCoroutine(registEmailCheck(checkID));
+        }
+        else
+        {
+            IDText.text = "이메일을 입력해주세요";
+            IDText.color = Color.red;
+        }
     }
 
     IEnumerator registEmailCheck(string emails)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/users/email";
         emailClass myObject = new emailClass { email = emails };
         string json = JsonUtility.ToJson(myObject);
@@ -126,6 +150,7 @@ public class MainRegister : MonoBehaviour
                 }
             }
         }
+        testPanel.SetActive(false);
     }
 
     public void nickNameDuplicateCheck()
@@ -136,6 +161,7 @@ public class MainRegister : MonoBehaviour
 
     IEnumerator registNickNameCheck(string nickNames)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/users/name";
         nickNameClass myObject = new nickNameClass { nickName = nickNames };
         string json = JsonUtility.ToJson(myObject);
@@ -184,6 +210,7 @@ public class MainRegister : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false); ;
     }
 
     public void SendCode()
@@ -194,6 +221,7 @@ public class MainRegister : MonoBehaviour
     }
     IEnumerator isPhone(string phoneNums)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/users/phoneNum";
         isPhoneNum myObject = new isPhoneNum { phoneNum = phoneNums };
         string json = JsonUtility.ToJson(myObject);
@@ -240,12 +268,14 @@ public class MainRegister : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false);
     }
 
 
 
     IEnumerator sendPhCode(string phoneNums)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/sms";
         registphoneNum myObject = new registphoneNum { recipientPhoneNumber = phoneNums };
         string json = JsonUtility.ToJson(myObject);
@@ -297,6 +327,7 @@ public class MainRegister : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false);
     }
 
 
@@ -307,6 +338,7 @@ public class MainRegister : MonoBehaviour
 
     IEnumerator checkPhoneCode(string phoneNums)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/users/signup/auth";
         checkPhoneCode myObject = new checkPhoneCode { phoneNum = phoneNums, authNum = PhoneCodefield.text };
         string json = JsonUtility.ToJson(myObject);
@@ -356,11 +388,12 @@ public class MainRegister : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false);
     }
 
     public void register()
     {
-        if(checkID == IDfield.text)
+        if(checkID == IDfield.text && IDfield.text.Length != 0)
         {
             IDText.text = "사용 가능한 아이디입니다";
             IDText.color = Color.green;
@@ -425,6 +458,7 @@ public class MainRegister : MonoBehaviour
     }
     IEnumerator registApi(string emails, string passwords,string phoneNums, string nickNames,int isChecks)
     {
+        testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/users/signup";
         registerInfo myObject = new registerInfo {email= emails , password=passwords , phoneNum = phoneNums, nickName = nickNames, isChecked = isChecks};
         string json = JsonUtility.ToJson(myObject);
@@ -466,6 +500,7 @@ public class MainRegister : MonoBehaviour
 
             }
         }
+        testPanel.SetActive(false); ;
     }
     public void goBack()
     {
@@ -478,13 +513,40 @@ public class MainRegister : MonoBehaviour
     {
         preventPanel.gameObject.SetActive(false);
         alertPanel.gameObject.SetActive(false);
+        testPanel.SetActive(false);
+        ExitPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-            if (PWfield.text != "")
+        if (testPanel.activeSelf == true)
+        {
+            progress += 0.3f * Time.deltaTime;
+            if (progress > 1)
+            {
+                progress = 0;
+            }
+            circleProgress.fillAmount = progress;
+        }
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
+            {
+                if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                {
+                    ExitPanel.SetActive(false);
+                }
+                else
+                {
+                    ExitPanel.SetActive(true);
+                }
+            }
+        }
+
+
+        if (PWfield.text != "")
             {
             
                 if (!regex.IsMatch(PWfield.text)) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기

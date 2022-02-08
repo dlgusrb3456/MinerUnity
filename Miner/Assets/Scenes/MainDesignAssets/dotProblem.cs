@@ -119,6 +119,7 @@ public class dotProblem : MonoBehaviour
         checkPrivatePrefabs.transform.GetChild(1).GetComponent<Text>().text = "제작자 : " + PlayerPrefs.GetString("nickName"); // => 사용자 닉네임 저장해둔걸로 사용. 
         checkPrivatePrefabs.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(confirmShare); //완료
         checkPrivatePrefabs.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(cancleShare); //취소
+        checkPrivatePrefabs.transform.GetChild(7).GetComponent<Text>().color = Color.clear;
         checkPrivatePrefabs.transform.position = new Vector3(Camera.main.pixelWidth / 2, (Camera.main.pixelHeight / 2), 0);
     }
 
@@ -130,6 +131,7 @@ public class dotProblem : MonoBehaviour
     {
         loading = Instantiate(Panel_loading) as GameObject;
         loading.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
+        loading.transform.position = new Vector3(Camera.main.pixelWidth / 2, (Camera.main.pixelHeight / 2), 0);
         string URL = "https://miner22.shop/miner/playmaps/stop";
         Debug.Log(PlayerPrefs.GetString("nickName"));
         shareStopClass myObject = new shareStopClass{nickName = PlayerPrefs.GetString("nickName"),mapName = selectedFileName};
@@ -159,9 +161,6 @@ public class dotProblem : MonoBehaviour
                 }
 
                 string[] returncode = words[1].Split(':');
-                alertShareStatus = Instantiate(Panel_alertshareStatus) as GameObject;
-                alertShareStatus.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
-
                 if (returncode[1] == "1000")
                 {
                     //미로파일 상태 변화 => isShared 바꾸고 다시 load.
@@ -177,14 +176,15 @@ public class dotProblem : MonoBehaviour
                         }
                     }
                     //공유 중지 성공 판넬.
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = "공유 중지 완료!";
+
+                    makeAlertStatus("공유 중지 완료!", "");
                 }
 
                 else
                 {
                     //위의 공유 완료 판넬 공유 실패로.
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = "공유 중지 실패!";
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(2).GetComponent<Text>().text = "";
+
+                    makeAlertStatus("공유 중지 실패!", "");
                 }
 
             }
@@ -193,13 +193,39 @@ public class dotProblem : MonoBehaviour
     }
     public void shareModify()
     {
-        StartCoroutine(shareModifyAPI());
+        string[] mapSize = new string[2];
+
+        int xSize = 0;
+        int ySize = 0;
+        for (int i = 0; i < Map.localMaps.Count; i++)
+        {
+            if (Map.localMaps[i].name == selectedFileName)
+            {
+                mapSize = Map.localMaps[i].mapSize.Split('X');
+                xSize = Convert.ToInt32(mapSize[0]);
+                ySize = Convert.ToInt32(mapSize[1]);
+                mapArr = new int[xSize, ySize];
+                mapArrCheck = new int[xSize, ySize];
+                mapArr = decodeMapData(Map.localMaps[i], xSize, ySize);
+                break;
+            }
+        }
+        if (validationCheck(mapArr))
+        {
+            StartCoroutine(shareModifyAPI());
+        }
+        else
+        {
+            makeAlertStatus("공유 수정 실패!", "미로 형식이 유효하지 않습니다. \n*미로의 시작점과 도착점은 한개씩입니다.\n*미로의 시작점과 도착점은 길로 이어져야 합니다.");
+        }
+        
     }
 
     IEnumerator shareModifyAPI()
     {
         loading = Instantiate(Panel_loading) as GameObject;
         loading.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
+        loading.transform.position = new Vector3(Camera.main.pixelWidth / 2, (Camera.main.pixelHeight / 2), 0);
         string URL = "https://miner22.shop/miner/playmaps/modify";
 
         string mapInfos = "";
@@ -239,28 +265,30 @@ public class dotProblem : MonoBehaviour
                 }
 
                 string[] returncode = words[1].Split(':');
-                alertShareStatus = Instantiate(Panel_alertshareStatus) as GameObject;
-                alertShareStatus.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
 
                 if (returncode[1] == "1000")
                 {
-                    
-                    //공유 수정 성공 판넬.
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = "공유 수정 완료!";
+                    makeAlertStatus("공유 수정 완료!", "");
                 }
 
                 else
                 {
-                    //위의 공유 완료 판넬 공유 실패로.
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = "공유 수정 실패!";
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(2).GetComponent<Text>().text = "";
+                    makeAlertStatus("공유 수정 실패!", "");
                 }
 
             }
         }
         Destroy(loading);
     }
-
+    public void makeAlertStatus(string title, string contents)
+    {
+        alertShareStatus = Instantiate(Panel_alertshareStatus) as GameObject;
+        alertShareStatus.transform.position = new Vector3(Camera.main.pixelWidth / 2, (Camera.main.pixelHeight / 2), 0);
+        alertShareStatus.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(deleteStatus); //취소
+        alertShareStatus.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
+        alertShareStatus.transform.GetChild(0).GetComponent<Text>().text = title;
+        alertShareStatus.transform.GetChild(2).GetComponent<Text>().text = contents;
+    }
     public void cancleShare()
     {
         Destroy(checkPrivatePrefabs);
@@ -443,6 +471,7 @@ public class dotProblem : MonoBehaviour
         }
         else
         {
+            checkPrivatePrefabs.transform.GetChild(7).GetComponent<Text>().color = Color.red;
             checkPrivatePrefabs.transform.GetChild(7).GetComponent<Text>().text = "미로 형식이 유효하지 않습니다. \n*미로의 시작점과 도착점은 한개씩입니다.\n*미로의 시작점과 도착점은 길로 이어져야 합니다.";
         }
         
@@ -514,9 +543,6 @@ public class dotProblem : MonoBehaviour
                 }
 
                 string[] returncode = words[1].Split(':');
-                alertShareStatus = Instantiate(Panel_alertshareStatus) as GameObject;
-                alertShareStatus.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
-                alertShareStatus.transform.position = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
                 if (returncode[1] == "1000")
                 {
 
@@ -539,20 +565,26 @@ public class dotProblem : MonoBehaviour
                         }
                     }
                     //공유 완료 판넬.
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = "공유 완료!";
+
+                    makeAlertStatus("공유 완료!", "");
                 }
 
                 else
                 {
                     //위의 공유 완료 판넬 공유 실패로.
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = "공유 실패!" ;
-                    alertShareStatus.transform.GetChild(1).transform.GetChild(2).GetComponent<Text>().text = "*최대 3개만 공유할 수 있습니다\n*이미 공유된 파일을 중지하고 공유해주세요";
+                    makeAlertStatus("공유 실패!", "*최대 3개만 공유할 수 있습니다\n*이미 공유된 파일을 중지하고 공유해주세요");
                 }
 
             }
         }
         Destroy(loading);
     }
+
+    public void deleteStatus()
+    {
+        Destroy(alertShareStatus);
+    }
+
 
     public void deleteFinal()
     {
