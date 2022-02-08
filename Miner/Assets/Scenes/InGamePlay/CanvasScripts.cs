@@ -25,7 +25,10 @@ public class CanvasScripts : MonoBehaviour
     private int startCount = 10;
     private int positionCount = 10;
 
-
+    public void closeEndDesign()
+    {
+        Panel_preventEndsDesign.SetActive(false);
+    }
     public void positionClicked()
     {
         if (positionCount > 0)
