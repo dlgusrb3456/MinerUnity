@@ -436,6 +436,7 @@ public class dotProblem : MonoBehaviour
                 Debug.Log("private 공유");
                 getPrivate = Instantiate(Panel_getPrivate) as GameObject;
                 getPrivate.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
+                getPrivate.transform.position = new Vector3(Camera.main.pixelWidth / 2, (Camera.main.pixelHeight / 2), 0);
                 getPrivate.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(cancleGetPW);
                 getPrivate.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(confirmGetPW);
             }
@@ -470,6 +471,7 @@ public class dotProblem : MonoBehaviour
     {
         loading = Instantiate(Panel_loading) as GameObject;
         loading.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
+        loading.transform.position = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
         string URL = "https://miner22.shop/miner/playmaps/share";
         
         if(mapSizes == smallMap)
@@ -514,7 +516,7 @@ public class dotProblem : MonoBehaviour
                 string[] returncode = words[1].Split(':');
                 alertShareStatus = Instantiate(Panel_alertshareStatus) as GameObject;
                 alertShareStatus.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
-                
+                alertShareStatus.transform.position = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
                 if (returncode[1] == "1000")
                 {
 
