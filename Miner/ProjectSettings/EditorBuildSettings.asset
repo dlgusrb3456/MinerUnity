@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGamePlay.unity
     guid: e42a2cc5ca1b83841a318413da61f8e6
+  - enabled: 1
+    path: Assets/Scenes/loadingScene.unity
+    guid: ecb92c6410c13cc4fb954395ceb28fce
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
