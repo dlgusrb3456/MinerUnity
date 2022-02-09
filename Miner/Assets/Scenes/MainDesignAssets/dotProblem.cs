@@ -583,6 +583,7 @@ public class dotProblem : MonoBehaviour
     public void deleteStatus()
     {
         Destroy(alertShareStatus);
+        SceneManager.LoadScene("mainDesign");
     }
 
 

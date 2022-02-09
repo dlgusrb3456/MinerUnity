@@ -28,10 +28,27 @@ public class mapMaker : MonoBehaviour
     //크기.
     int xSize = 0;
     int ySize = 0;
-
+    int small = 22;
+    int middle = 52;
+    int large = 102;
     //배열;
     int[,] mapArr;
 
+
+
+
+    int[,] testarr = new int[7, 7]
+    {
+        {4,4,4,4,4,4,4 },
+        {4,0,1,1,1,1,4 },
+        {4,0,1,1,1,1,4 },
+        {4,0,1,1,1,1,4 },
+        {4,0,0,2,1,1,4 },
+        {4,1,1,1,3,1,4 },
+        {4,4,4,4,4,4,4 }
+    };
+
+    int[,] designArr;
 
     //arr만 받아오면 그냥 쓰면 됨;
 
@@ -69,7 +86,14 @@ public class mapMaker : MonoBehaviour
 
                 if (returncode[1] == "1000")
                 {
-                    
+                    string[] mapStrArr = words[3].Split('"');
+                    string mapStr = mapStrArr[5];
+                    Debug.Log("mapStr: "+mapStr);
+                    string[] mapSizeArr = words[4].Split(':');
+                    string mapSize = mapSizeArr[1];
+                    mapSize = mapSize[0].ToString();
+                    Debug.Log("mapSize: " + mapSize);
+                    arrToMapPlay(mapStr, mapSize);
                 }
 
                 else
@@ -80,24 +104,64 @@ public class mapMaker : MonoBehaviour
             }
         }
     }
-
-
-
-
-
-
-    int[,] testarr = new int[7, 7]
+    public void arrToMapPlay(string mapStr, string mapSize)
     {
-        {4,4,4,4,4,4,4 },
-        {4,0,1,1,1,1,4 },
-        {4,0,1,1,1,1,4 },
-        {4,0,1,1,1,1,4 },
-        {4,0,0,2,1,1,4 },
-        {4,1,1,1,3,1,4 },
-        {4,4,4,4,4,4,4 }
-    };
+        if(mapSize == "1")
+        {
+            xSize = small;
+            ySize = small;
+        }
+        else if(mapSize == "2")
+        {
+            xSize = middle;
+            ySize = middle;
+        }
+        else if (mapSize == "3")
+        {
+            xSize = large;
+            ySize = large;
+        }
 
-    int[,] designArr;
+        designArr = new int[xSize, ySize];
+        designArr = decodeMapDataPlay(mapStr, xSize, ySize);
+
+
+        for (int i = 0; i < designArr.GetLength(0); i++)
+        {
+            for (int j = 0; j < designArr.GetLength(1); j++)
+            {
+
+                Vector3 position = new Vector3(-1.0f + (float)(-0.6) * i, -1.0f + (float)0.6 * j, 0);
+                if (designArr[i, j] == 1)
+                {
+                    grass_obj = Instantiate(grassPrefab);
+                    grass_obj.transform.position = position;
+
+                }
+                else if (designArr[i, j] == 2)
+                {
+
+                    //end_obj = Instantiate(endPrefab);
+                    endPrefab.transform.position = position;
+                }
+                else if (designArr[i, j] == 3)
+                {
+                    start_obj = Instantiate(startPrefab);
+                    start_obj.transform.position = position;
+                    Players.transform.position = position;
+                }
+                else if (designArr[i, j] == 4)
+                {
+                    rock_obj = Instantiate(rockPrefab);
+                    rock_obj.transform.position = position;
+                }
+            }
+        }
+    }
+
+
+
+
 
 
     public void arrToMap()
@@ -164,6 +228,27 @@ public class mapMaker : MonoBehaviour
 
     }
 
+    public int[,] decodeMapDataPlay(string mapStr, int height, int width)
+    {
+        string raw = mapStr;
+        int[,] rl = new int[height, width];
+
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width / 2; j++)
+            {
+                int idx = i * (width / 2) + j;
+                int k;
+
+                for (k = 0; k < mapCompressionBase64String.Length; k++)
+                    if (raw[idx] == mapCompressionBase64String[k]) break;
+
+                if (k == mapCompressionBase64String.Length) return null;
+
+                rl[i, j * 2] = k >> 3;
+                rl[i, j * 2 + 1] = k & 0x07;
+            }
+        return rl;
+    }
 
 
     public int[,] decodeMapData(Map map, int height, int width)
@@ -195,43 +280,44 @@ public class mapMaker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(PlayerPrefs.GetString("playMode"));
         if (PlayerPrefs.GetString("playMode") == "Play")
         {
             StartCoroutine(getmapInfoAPI());
-            for (int i = 0; i < testarr.GetLength(0); i++)
-            {
-                for (int j = 0; j < testarr.GetLength(1); j++)
-                {
-                    //Debug.Log("i :" + i + "j :" + j);
+            //for (int i = 0; i < testarr.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < testarr.GetLength(1); j++)
+            //    {
+            //        //Debug.Log("i :" + i + "j :" + j);
 
-                    Vector3 position = new Vector3(-1.0f + (float)(-0.6) * i, -1.0f + (float)0.6 * j, 0);
-                    //Debug.Log(position.x);
-                    //Debug.Log(position.y);
-                    if (testarr[i, j] == 1)
-                    {
-                        grass_obj = Instantiate(grassPrefab);
-                        grass_obj.transform.position = position;
+            //        Vector3 position = new Vector3(-1.0f + (float)(-0.6) * i, -1.0f + (float)0.6 * j, 0);
+            //        //Debug.Log(position.x);
+            //        //Debug.Log(position.y);
+            //        if (testarr[i, j] == 1)
+            //        {
+            //            grass_obj = Instantiate(grassPrefab);
+            //            grass_obj.transform.position = position;
 
-                    }
-                    else if (testarr[i, j] == 2)
-                    {
+            //        }
+            //        else if (testarr[i, j] == 2)
+            //        {
 
-                        endPrefab.transform.position = position;
-                    }
-                    else if (testarr[i, j] == 3)
-                    {
-                        start_obj = Instantiate(startPrefab);
-                        start_obj.transform.position = position;
-                        Players.transform.position = position;
-                    }
-                    else if (testarr[i, j] == 4)
-                    {
-                        rock_obj = Instantiate(rockPrefab);
-                        rock_obj.transform.position = position;
-                    }
+            //            endPrefab.transform.position = position;
+            //        }
+            //        else if (testarr[i, j] == 3)
+            //        {
+            //            start_obj = Instantiate(startPrefab);
+            //            start_obj.transform.position = position;
+            //            Players.transform.position = position;
+            //        }
+            //        else if (testarr[i, j] == 4)
+            //        {
+            //            rock_obj = Instantiate(rockPrefab);
+            //            rock_obj.transform.position = position;
+            //        }
 
-                }
-            }
+            //    }
+            //}
         }
         else if(PlayerPrefs.GetString("playMode") == "Design")
         {
