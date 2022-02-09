@@ -470,12 +470,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1: {fileID: 1668402122}
   player2: {fileID: 85099524}
-  player3: {fileID: 0}
-  player4: {fileID: 0}
-  player5: {fileID: 0}
-  player6: {fileID: 0}
-  player7: {fileID: 0}
-  player8: {fileID: 0}
+  player3: {fileID: 1468064560}
+  player4: {fileID: 580953235}
+  player5: {fileID: 2053235122}
+  player6: {fileID: 1589629323}
+  player7: {fileID: 97172417}
+  player8: {fileID: 1335128000}
 --- !u!4 &532733890
 Transform:
   m_ObjectHideFlags: 0
