@@ -277,7 +277,7 @@ public class MainRegister : MonoBehaviour
     {
         testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/sms";
-        registphoneNum myObject = new registphoneNum { recipientPhoneNumber = phoneNums };
+        registphoneNum myObject = new registphoneNum { phoneNum = phoneNums };
         string json = JsonUtility.ToJson(myObject);
 
 

@@ -18,7 +18,7 @@ public class checkPhoneCode
 
 public class registphoneNum
 {
-    public string recipientPhoneNumber;
+    public string phoneNum;
 }
 public class FindID : MonoBehaviour
 {
@@ -141,7 +141,7 @@ public class FindID : MonoBehaviour
     IEnumerator sendPhCode(string phoneNums)
     {
         string realURL = "https://miner22.shop/miner/sms";
-        registphoneNum myObject = new registphoneNum { recipientPhoneNumber = phoneNums };
+        registphoneNum myObject = new registphoneNum { phoneNum = phoneNums };
         string json = JsonUtility.ToJson(myObject);
 
 

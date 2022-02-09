@@ -81,6 +81,7 @@ public class clickFile : MonoBehaviour
             Debug.Log("go to IngamePlay");
             PlayerPrefs.SetString("editorName", editorName);
             PlayerPrefs.SetString("mapName", miroName);
+            PlayerPrefs.SetString("playMode", "Play");
             SceneManager.LoadScene("InGamePlay");
         }
     }
@@ -93,6 +94,7 @@ public class clickFile : MonoBehaviour
             //플래이화면으로 이동.
             PlayerPrefs.SetString("editorName", editorName);
             PlayerPrefs.SetString("mapName", miroName);
+            PlayerPrefs.SetString("playMode", "Play");
             SceneManager.LoadScene("InGamePlay");
             Debug.Log("complete");
         }
@@ -187,15 +189,16 @@ public class clickFile : MonoBehaviour
             Debug.Log("pw: " + pw);
             fileInfo.transform.GetChild(1).GetComponent<Text>().text = "Private";
         }
-        if(tmpSize == "0")
+        //Debug.Log("tmpSize: " + tmpSize);
+        if(tmpSize == "1")
         {
             fileInfo.transform.GetChild(2).GetComponent<Text>().text = "/작음";
         }
-        else if(tmpSize == "1")
+        else if(tmpSize == "2")
         {
             fileInfo.transform.GetChild(2).GetComponent<Text>().text = "/중간";
         }
-        else if(tmpSize == "2")
+        else if(tmpSize == "3")
         {
             fileInfo.transform.GetChild(2).GetComponent<Text>().text = "/큼";
         }

@@ -109,8 +109,8 @@ public class mainPlay : MonoBehaviour
             GameObject file = Instantiate(Button_PlayFile) as GameObject;
             file.transform.parent = Panel_files.transform;
             file.transform.GetChild(0).GetComponent<Text>().text = maps[i].mapName + "/"+maps[i].editorName;
-
-            if(maps[i].mapPassword == "") // 이 미로가 공유파일인지 확인하는 절차 => 공유인경우
+            Debug.Log(maps[i].mapPassword);
+            if(maps[i].mapPassword == "0") // 이 미로가 공유파일인지 확인하는 절차 => 공유인경우
             {
                 file.transform.GetChild(1).GetComponent<Image>().sprite = image_unLock;
             }
@@ -118,7 +118,7 @@ public class mainPlay : MonoBehaviour
             {
                 file.transform.GetChild(1).GetComponent<Image>().sprite = image_lock;
             }
-            file.transform.GetChild(2).GetComponent<Text>().text = "총 플레이 :  " + maps[i].playCount;    
+            file.transform.GetChild(2).GetComponent<Text>().text = "총 플레이  " + maps[i].playCount;    
         }
 
     }
@@ -230,6 +230,8 @@ public class mainPlay : MonoBehaviour
             //Debug.Log("mapName = " + mapName);
             info = words[6 + (i * 9)].Split('"');
             mapPassword = info[info.Length - 1];
+            string[] passwords = mapPassword.Split(':');
+            mapPassword = passwords[passwords.Length - 1];
             //Debug.Log("mapPassword = " + mapPassword);
             info = words[7 + (i * 9)].Split('"');
             editor = info[info.Length - 2];
