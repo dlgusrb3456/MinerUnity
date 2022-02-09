@@ -67,12 +67,13 @@ public class regiOutMain : MonoBehaviour
     IEnumerator regoOutAPI(string emails, string passwords)
     {
         Panel_loading.SetActive(true);
-        string URL = "https://miner22.shop/miner/users/login"; //주소는 바꿔야함
+        string URL = "https://miner22.shop/miner/users/deleteUserInfo"; //주소는 바꿔야함
         registerOutAPIInfo myObject = new registerOutAPIInfo { email = emails, password = passwords };
         string json = JsonUtility.ToJson(myObject);
 
         using (UnityWebRequest www = UnityWebRequest.Post(URL, json))
         {
+            www.method = "PATCH";
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
             www.uploadHandler = new UploadHandlerRaw(bytes);
             www.SetRequestHeader("Content-Type", "application/json");
@@ -87,10 +88,10 @@ public class regiOutMain : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                //for (int i = 0; i < words.Length; i++)
-                //{
-                //    Debug.Log(words[i]);
-                //}
+                for (int i = 0; i < words.Length; i++)
+                {
+                    Debug.Log(words[i]);
+                }
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")

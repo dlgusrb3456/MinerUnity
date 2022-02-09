@@ -59,18 +59,31 @@ public class mainPlay : MonoBehaviour
     public GameObject Toggle_Page;
     public GameObject Toggle_PageGroup;
 
+    public GameObject Panel_settings;
     private GameObject Page_Toggle;
-
+    public GameObject ExitPanel;
     //mapInfo list
     List<mapInfos> maps = new List<mapInfos>();
-    
-    
 
+
+    //bgm;
+    GameObject BackgroundMusic;
+    AudioSource backmusic;
 
     //pagingInfo
 
     private int totalMapNum=0;
     private int currentPage = 1;
+
+    public void ExitYes()
+    {
+        Application.Quit();
+    }
+
+    public void ExitNo()
+    {
+        ExitPanel.SetActive(false);
+    }
 
     public void moveDesign()
     {
@@ -389,7 +402,10 @@ public class mainPlay : MonoBehaviour
         searchNull(currentPage);
     }
 
-
+    public void goTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
 
     public void makePageInfo()
     {
@@ -439,18 +455,64 @@ public class mainPlay : MonoBehaviour
         PlayerPrefs.SetInt("dropBox", index);
     }
 
+    public void buttonSettingsOn()
+    {
+        Panel_settings.SetActive(true);
+    }
+
+    public void PanelSettingsOff()
+    {
+        Panel_settings.SetActive(false);
+    }
+
+    public void logOut()
+    {
+        SceneManager.LoadScene("loginMain");
+        PlayerPrefs.SetInt("autoLogin", 0);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        ExitPanel.SetActive(false);
+        BackgroundMusic = GameObject.FindGameObjectWithTag("mainBGM");
+        backmusic = BackgroundMusic.GetComponent<AudioSource>(); //배경음악 저장해둠
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
+        Panel_settings.SetActive(false);
         Toggle_popular.onValueChanged.AddListener(delegate { search(); });
         //LoadfilestoPanel();
         searchNull(1);
     }
+    public void bgmON()
+    {
+        backmusic.Play();
+        PlayerPrefs.SetInt("mainBGM", 0);
+        Debug.Log("mainBGM on");
+    }
 
-    // Update is called once per frame
+    public void bgmOff()
+    {
+        backmusic.Pause();
+        PlayerPrefs.SetInt("mainBGM", 1);
+        Debug.Log("mainBGM off");
+    }
     void Update()
     {
-        
+        //안드로이드인 경우
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
+            {
+                if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                {
+                    ExitPanel.SetActive(false);
+                }
+                else
+                {
+                    ExitPanel.SetActive(true);
+                }
+            }
+        }
     }
+
 }

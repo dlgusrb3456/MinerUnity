@@ -21,7 +21,14 @@ public class loadScene : MonoBehaviour
 
     public void goToLogin()
     {
-        SceneManager.LoadScene("loginMain");
+        if (autos == 0)
+        {
+            SceneManager.LoadScene("loginMain");
+        }
+        else
+        {
+            SceneManager.LoadScene("mainDesign");
+        }
     }
 
 
