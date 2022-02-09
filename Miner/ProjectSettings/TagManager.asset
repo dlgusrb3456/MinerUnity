@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ColliderTile
   - mainBGM
+  - inGameBGM
   layers:
   - Default
   - TransparentFX

@@ -77,10 +77,10 @@ public class mapMaker : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
 
@@ -88,11 +88,11 @@ public class mapMaker : MonoBehaviour
                 {
                     string[] mapStrArr = words[3].Split('"');
                     string mapStr = mapStrArr[5];
-                    Debug.Log("mapStr: "+mapStr);
+                    //Debug.Log("mapStr: "+mapStr);
                     string[] mapSizeArr = words[4].Split(':');
                     string mapSize = mapSizeArr[1];
                     mapSize = mapSize[0].ToString();
-                    Debug.Log("mapSize: " + mapSize);
+                    //Debug.Log("mapSize: " + mapSize);
                     arrToMapPlay(mapStr, mapSize);
                 }
 

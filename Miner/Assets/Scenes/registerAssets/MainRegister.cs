@@ -489,7 +489,7 @@ public class MainRegister : MonoBehaviour
                 if (returncode[1] == "1000")
                 {
                     PlayerPrefs.SetString("userIdx", checkID);
-                    SceneManager.LoadScene("mainDesign");
+                    SceneManager.LoadScene("Tutorial");
 
                 }
                 else

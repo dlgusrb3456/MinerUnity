@@ -35,10 +35,9 @@ public class mainDesignMain : MonoBehaviour
     public GameObject Panel_setFileNotShare;
     private string selectedFileName = "";
 
-
-    //점점점=> 삭제 확인 패널
-    //public GameObject Panel_deleteReal;
-    //public Text deleteCheckText;
+    //bgm;
+    GameObject BackgroundMusic;
+    AudioSource backmusic;
 
     private string smallSize = "kkkkkkkkkkkhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMhJJJJJJJJJMkkkkkkkkkkk";
     private string middleSize = "kkkkkkkkkkkkkkkkkkkkkkkkkkhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMhJJJJJJJJJJJJJJJJJJJJJJJJMkkkkkkkkkkkkkkkkkkkkkkkkkk";
@@ -54,24 +53,16 @@ public class mainDesignMain : MonoBehaviour
         ExitPanel.SetActive(false);
     }
 
+    public void goTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
 
     public void Button_settings()
     {
         Panel_settings.transform.position = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0);
         Panel_settings.gameObject.SetActive(true);
         
-    }
-
-    public void bgmON()
-    {
-            PlayerPrefs.SetInt("mainBGM", 1);
-            Debug.Log("mainBGM on");
-    }
-
-    public void bgmOff()
-    {
-            PlayerPrefs.SetInt("mainBGM", 0);
-            Debug.Log("mainBGM off");
     }
 
     public void logOut()
@@ -246,9 +237,25 @@ public class mainDesignMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BackgroundMusic = GameObject.FindGameObjectWithTag("mainBGM");
+        backmusic = BackgroundMusic.GetComponent<AudioSource>(); //배경음악 저장해둠
         ExitPanel.SetActive(false);
         MinerEnvironment.initEnvironment();
         loadFile();
+    }
+
+    public void bgmON()
+    {
+        backmusic.Play();
+        PlayerPrefs.SetInt("mainBGM", 0);
+        Debug.Log("mainBGM on");
+    }
+
+    public void bgmOff()
+    {
+        backmusic.Pause();
+        PlayerPrefs.SetInt("mainBGM", 1);
+        Debug.Log("mainBGM off");
     }
 
     // Update is called once per frame

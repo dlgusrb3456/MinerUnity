@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
+
+
+
 public class CanvasScripts : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -24,6 +27,8 @@ public class CanvasScripts : MonoBehaviour
 
     private int startCount = 10;
     private int positionCount = 10;
+
+   
 
     public void closeEndDesign()
     {
