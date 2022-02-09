@@ -26,7 +26,7 @@ public class LoadingSceneManager : MonoBehaviour
     {
         yield return null;
         AsyncOperation op;
-        op = SceneManager.LoadSceneAsync(nextScene);
+        op = SceneManager.LoadSceneAsync("InGameDesign");
         op.allowSceneActivation = false;
         float timer = 0.0f;
 

@@ -13,7 +13,7 @@ public class fileClicked : MonoBehaviour
     public void fileOnclick()
     {
         PlayerPrefs.SetString("DesSelectedFile", text_mironame.text);
-        SceneManager.LoadScene("InGameDesign");
+        SceneManager.LoadScene("loadingScene");
     }
     void Start()
     {
