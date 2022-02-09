@@ -20,6 +20,7 @@ public class PlayerAction : MonoBehaviour
     public float moveSpeed = 5;
     SpriteRenderer spriteRenderer;
 
+    private Rigidbody2D rigid2D;
 
     //종료 이벤트;
     public Text TimerText;
@@ -28,6 +29,11 @@ public class PlayerAction : MonoBehaviour
 
     //충돌 이벤트;
     public GameObject SpriteEnd;
+
+    public void Awake()
+    {
+        rigid2D = GetComponent<Rigidbody2D>();
+    }
 
     public string TimerTextChange()
     {
@@ -101,7 +107,8 @@ public class PlayerAction : MonoBehaviour
 
         if(x != 0 || y != 0)
         {
-            transform.position += new Vector3(x, y, 0) * moveSpeed * Time.deltaTime;
+            //transform.position += new Vector3(x, y, 0) * moveSpeed * Time.deltaTime; 스리꺼
+            rigid2D.velocity = new Vector3(x, y, 0) * moveSpeed;
         }
 
         //방향전환
@@ -110,10 +117,9 @@ public class PlayerAction : MonoBehaviour
         if (x > 0)
             spriteRenderer.flipX = true;
 
-
-
     }
 
+  
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject == SpriteEnd) // 도착지점에 충돌하면
