@@ -27,11 +27,38 @@ public class CanvasScripts : MonoBehaviour
 
     private int startCount = 10;
     private int positionCount = 10;
-
-   
+    private int addCounts = 5;
+   public void setStartPositionCount()
+   {
+        int size = PlayerPrefs.GetInt("InmapSize");
+        if(size == 1)
+        {
+            startCount = 3;
+            positionCount = 3;
+            addCounts = 3;
+        }
+        else if(size == 2)
+        {
+            startCount = 7;
+            positionCount = 7;
+            addCounts = 7;
+        }
+        else if(size == 3)
+        {
+            startCount = 15;
+            positionCount = 15;
+            addCounts = 15;
+        }
+        else
+        {
+            Debug.Log("error");
+        }
+        textCount.text = startCount.ToString();
+   }
 
     public void closeEndDesign()
     {
+        Timer.startTimer();
         Panel_preventEndsDesign.SetActive(false);
     }
     public void positionClicked()
@@ -48,7 +75,7 @@ public class CanvasScripts : MonoBehaviour
 
     public void addCount()
     {
-        positionCount += 3;
+        positionCount += addCounts;
         textCount.text = positionCount.ToString();
     }
 
@@ -99,6 +126,7 @@ public class CanvasScripts : MonoBehaviour
     {
         //시작할때 position count size기준으로 변경;
         MainCamera.orthographicSize = 3.0f;
+        setStartPositionCount();
         Panel_preventSettings.SetActive(false);
         Panel_preventEndsDesign.SetActive(false);
     }

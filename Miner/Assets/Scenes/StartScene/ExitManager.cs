@@ -35,4 +35,9 @@ public class ExitManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void ExitNo()
+    {
+        ExitPanel.SetActive(false);
+    }
+
 }

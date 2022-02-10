@@ -20,8 +20,8 @@ public class regiOutMain : MonoBehaviour
     public InputField PW;
     public Text LoginExceptiontxt;
     public GameObject ExitPanel;
-
-
+    public GameObject Panel_outResult;
+    public Text outResutText;
 
    
 
@@ -96,16 +96,24 @@ public class regiOutMain : MonoBehaviour
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
                 {
-
+                    outResutText.text = "탈퇴 완료!";
                 }
                 else
                 {
-
+                    outResutText.text = "탈퇴 실패!";
                 }
 
                 Panel_loading.SetActive(false);
+                Panel_black.SetActive(false);
+                Panel_outResult.SetActive(true);
+
             }
         }
+    }
+
+    public void confirmresultOut()
+    {
+        Panel_outResult.SetActive(false);
     }
 
      public void outRegi()
@@ -125,8 +133,7 @@ public class regiOutMain : MonoBehaviour
 
     public void confirmOut()
     {
-        //StartCoroutine(regoOutAPI(ID.text, PW.text));
-        Debug.Log("outRegi");
+        StartCoroutine(regoOutAPI(ID.text, PW.text));
     }
 
     public void cancleOut()

@@ -415,7 +415,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 50
+  m_Spacing: -70
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -1005,7 +1005,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 602569808}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 845369359}
         m_MethodName: ExitYes
         m_Mode: 1
         m_Arguments:
@@ -3094,7 +3105,7 @@ MonoBehaviour:
   toggle_small: {fileID: 1924775305}
   toggle_middle: {fileID: 597882650}
   toggle_large: {fileID: 27408344}
-  ExitPanel: {fileID: 0}
+  ExitPanel: {fileID: 713784106}
   contentPanel: {fileID: 94902490}
   Button_mapPrefab: {fileID: 2705195379520879929, guid: 08ee8de546a88054da2b7f043a372c10,
     type: 3}
@@ -3312,7 +3323,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 602569808}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 845369359}
         m_MethodName: ExitNo
         m_Mode: 1
         m_Arguments:

@@ -46,6 +46,8 @@ public partial class Map
     // 맵 객체에 지정된 fileName에 객체의 정보를 저장합니다.
     public static void saveToJson(Map map)
     {
+        string nowTime = DateTime.Now.ToString("yyyy-MM-dd");
+        map.lastClearDate = nowTime;
         string jsonText = JsonUtility.ToJson(map);
         File.WriteAllText(map.fileName, jsonText);
     }
@@ -59,9 +61,10 @@ public partial class Map
     // 새 맵 객체를 생성합니다. 로컬에서 json을 읽어 맵 객체를 만드는 것이 아니라, 로컬에 저장되어 있지 않은 맵 객체를 생성할때 쓰입니다.
     public static Map createNew(String name, bool isPrivate, string mapSize,string mapDatas) //mapSize 22 22 / 52 52 / 102 102 
     {
+        string nowTime = DateTime.Now.ToString("yyyy-MM-dd");
         Map m = new Map();
         m.name = name;
-        m.lastClearDate = defaultLastClearDate;
+        m.lastClearDate = nowTime;
         m.isPrivate = false;
         m.isShared = false;
         m.mapSize = mapSize;

@@ -26,7 +26,7 @@ public class PlayerAction : MonoBehaviour
     public Text TimerText;
     public GameObject Panel_preventEnds;
     public GameObject Panel_preventEndsDesign;
-
+    public Text rank;
     //충돌 이벤트;
     public GameObject SpriteEnd;
 
@@ -83,12 +83,15 @@ public class PlayerAction : MonoBehaviour
 
                 if (returncode[1] == "1000")
                 {
-                   
+                    string[] myRankarr = words[4].Split(':');
+                    string[] myRankarr2 = myRankarr[myRankarr.Length - 1].Split('}');
+                    string myRank = myRankarr2[0];
+                    rank.text = "나의 등수: " + myRank+"등!!";
                 }
 
                 else
                 {
-
+                    rank.text = "클리어 정보가 입력되지 않았습니다. \n 인터넷을 연결해주세요.";
                 }
 
             }
@@ -128,10 +131,11 @@ public class PlayerAction : MonoBehaviour
             
             Timer.pauseTimer();
             TimerTextChange();
-            //StartCoroutine(sendClearInfoAPI());
+            
             if (PlayerPrefs.GetString("playMode") == "Play")
             {
                 Panel_preventEnds.SetActive(true);
+                StartCoroutine(sendClearInfoAPI());
             }
             else if (PlayerPrefs.GetString("playMode") == "Design")
             {
