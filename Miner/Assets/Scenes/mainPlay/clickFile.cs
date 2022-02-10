@@ -57,6 +57,9 @@ public class clickFile : MonoBehaviour
     private string playTime = "";
     private string pw = "";
 
+
+    //use;
+    private string selectSize = "";
     //playerCount
     private int mapCount = 0;
 
@@ -78,13 +81,22 @@ public class clickFile : MonoBehaviour
         else
         {
             //플레이화면으로 이동.
-            Debug.Log("go to IngamePlay");
-            PlayerPrefs.SetString("editorName", editorName);
-            PlayerPrefs.SetString("mapName", miroName);
-            PlayerPrefs.SetString("playMode", "Play");
-            SceneManager.LoadScene("InGamePlay");
+            goToInGamePlay();
         }
     }
+
+    public void goToInGamePlay()
+    {
+        PlayerPrefs.SetString("editorName", editorName);
+        PlayerPrefs.SetString("mapName", miroName);
+        PlayerPrefs.SetString("playMode", "Play");
+        int sizeMode = Convert.ToInt32(selectSize);
+        PlayerPrefs.SetInt("loadSize", sizeMode);
+
+        PlayerPrefs.SetInt("loadMode", 7);
+        SceneManager.LoadScene("loadingScene");
+    }
+
 
     public void clickComplete_getPW()
     {
@@ -92,11 +104,7 @@ public class clickFile : MonoBehaviour
         if(str == pw)
         {
             //플래이화면으로 이동.
-            PlayerPrefs.SetString("editorName", editorName);
-            PlayerPrefs.SetString("mapName", miroName);
-            PlayerPrefs.SetString("playMode", "Play");
-            SceneManager.LoadScene("InGamePlay");
-            Debug.Log("complete");
+            goToInGamePlay();
         }
         else if(str.Length != 4)
         {
@@ -178,6 +186,7 @@ public class clickFile : MonoBehaviour
         string[] tmpAvgArr = words[5].Split(':');
         string tmpPassword = tmpPasswordArr[tmpPasswordArr.Length - 1];
         string tmpSize = tmpSizeArr[tmpSizeArr.Length - 1];
+        selectSize = tmpSize;
         int avgTime = Convert.ToInt32(tmpAvgArr[tmpAvgArr.Length - 1]);
         int avgMinute = avgTime / 60;
         int avgSecond = avgTime % 60;

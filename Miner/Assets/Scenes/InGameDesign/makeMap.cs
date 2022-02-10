@@ -206,7 +206,8 @@ public class makeMap : MonoBehaviour
         {
             mapToArrSave();
             PlayerPrefs.SetString("playMode", "Design");
-            SceneManager.LoadScene("InGamePlay");
+            PlayerPrefs.SetInt("loadMode", 2);
+            SceneManager.LoadScene("loadingScene");
         }
         else
         {
@@ -353,13 +354,17 @@ public class makeMap : MonoBehaviour
 
     public void noSave()
     {
-        SceneManager.LoadScene("mainDesign");
+        //SceneManager.LoadScene("mainDesign");
+        PlayerPrefs.SetInt("loadMode", 4);
+        SceneManager.LoadScene("loadingScene");
     }
 
     public void yesSave()
     {
         mapToArrSave();
-        SceneManager.LoadScene("mainDesign");
+        PlayerPrefs.SetInt("loadMode", 4);
+        SceneManager.LoadScene("loadingScene");
+        //SceneManager.LoadScene("mainDesign");
     }
     public void confirmValidation()
     {

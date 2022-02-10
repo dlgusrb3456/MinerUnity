@@ -82,17 +82,25 @@ public class CanvasScripts : MonoBehaviour
 
     public void ggClick()
     {
-        SceneManager.LoadScene("mainPlay");
+        //SceneManager.LoadScene("mainPlay");
+
+        PlayerPrefs.SetInt("loadMode", 6);
+        SceneManager.LoadScene("loadingScene");
     }
 
     public void reGame()
     {
-        SceneManager.LoadScene("InGamePlay");
+        //SceneManager.LoadScene("InGamePlay");
+
+        PlayerPrefs.SetInt("loadMode", 5);
+        SceneManager.LoadScene("loadingScene");
     }
 
     public void goDesign()
     {
-        SceneManager.LoadScene("InGameDesign");
+        PlayerPrefs.SetInt("loadMode", 3);
+        SceneManager.LoadScene("loadingScene");
+        //SceneManager.LoadScene("InGameDesign");
     }
 
     public void clickSettings()
