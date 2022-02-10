@@ -31,13 +31,14 @@ public class ScriptPrint : MonoBehaviour
                 //{
                 //    //캔버스 이미지 mapCount로 갈기;
                 //}
+
+                if (currentPageIndex == TutorialScript.scripts.Length)
+                {
+                    // 마지막 장에서 터치했을때 여기로 옵니다. 여기에 설계/플레이 화면으로 넘어가는 코드를 넣어주세요
+                    //SceneManager.LoadScene("mainDesign");
+                }
                 currentPageString = TutorialScript.scripts[++currentPageIndex];
                 currentPageStringIndex = 0;
-            }
-            else
-            {
-                // 마지막 장에서 터치했을때 여기로 옵니다. 여기에 설계/플레이 화면으로 넘어가는 코드를 넣어주세요
-                //SceneManager.LoadScene("mainDesign");
             }
         }
 
