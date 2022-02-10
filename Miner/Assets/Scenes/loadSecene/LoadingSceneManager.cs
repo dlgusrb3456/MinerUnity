@@ -10,48 +10,55 @@ public class LoadingSceneManager : MonoBehaviour
 
     [SerializeField]
     Image progressBar;
+    bool IsDone = false;
+    float timer = 0.0f;
+    AsyncOperation op;
+    
+        
 
     private void Start()
     {
+        progressBar.fillAmount = 0;
         StartCoroutine(LoadScene());
+        
     }
 
     public static void LoadScene(int index)
     {
-        nextScene = index;
+        //nextScene = index;
         SceneManager.LoadScene("LoadingScene");
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+        progressBar.fillAmount = timer; 
+
+        if(timer >= 10)
+        {
+            op.allowSceneActivation = true;
+        }
+
     }
 
     IEnumerator LoadScene()
     {
         yield return null;
-        AsyncOperation op;
-        op = SceneManager.LoadSceneAsync("InGameDesign");
+        op = SceneManager.LoadSceneAsync("InGameDesign"); // ""에 nextScene 있던거
         op.allowSceneActivation = false;
-        float timer = 0.0f;
 
-        while (!op.isDone)
+        if (IsDone == false)
         {
-            yield return null;
-            timer += Time.deltaTime;
+            IsDone = true;
 
-            if(op.progress < 0.9f)
+            while(op.progress < 0.9f)
             {
-                progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, op.progress, timer);
-                if(progressBar.fillAmount >= op.progress)
-                {
-                    timer = 0f;
-                }
-            }else
-            {
-                progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, 1f, timer);
-                if(progressBar.fillAmount == 1.0f)
-                {
-                    op.allowSceneActivation = true;
-                    yield break;
-                }
+                progressBar.fillAmount = op.progress;
+
+                yield return true;
             }
         }
+        
 
         // 다른 코드에서 호출할 때 >LoadingSceneManager.LoadScene(1); <
         // 인수로 전달할 값은 빌드세팅에 있는 각 씬의 인덱스를 작성
