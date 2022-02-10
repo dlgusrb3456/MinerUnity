@@ -29,8 +29,8 @@ public class mapMaker : MonoBehaviour
     int xSize = 0;
     int ySize = 0;
     int small = 22;
-    int middle = 52;
-    int large = 102;
+    int middle = 34;
+    int large = 52;
     //배열;
     int[,] mapArr;
 
@@ -77,10 +77,10 @@ public class mapMaker : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
 
@@ -88,11 +88,13 @@ public class mapMaker : MonoBehaviour
                 {
                     string[] mapStrArr = words[3].Split('"');
                     string mapStr = mapStrArr[5];
-                    Debug.Log("mapStr: "+mapStr);
+                    //Debug.Log("mapStr: "+mapStr);
                     string[] mapSizeArr = words[4].Split(':');
                     string mapSize = mapSizeArr[1];
                     mapSize = mapSize[0].ToString();
-                    Debug.Log("mapSize: " + mapSize);
+                    int intMapSize = Convert.ToInt32(mapSize);
+                    PlayerPrefs.SetInt("InmapSize", intMapSize);
+                    //Debug.Log("mapSize: " + mapSize);
                     arrToMapPlay(mapStr, mapSize);
                 }
 
@@ -131,7 +133,7 @@ public class mapMaker : MonoBehaviour
             for (int j = 0; j < designArr.GetLength(1); j++)
             {
 
-                Vector3 position = new Vector3(-1.0f + (float)(-0.6) * i, -1.0f + (float)0.6 * j, 0);
+                Vector3 position = new Vector3(-1.0f + (float)(0.6) * i, -1.0f + (float)(-0.6) * j, 0);
                 if (designArr[i, j] == 1)
                 {
                     grass_obj = Instantiate(grassPrefab);
@@ -182,6 +184,19 @@ public class mapMaker : MonoBehaviour
         xSize = Convert.ToInt32(mapSize[0]);
         ySize = Convert.ToInt32(mapSize[1]);
 
+        if(xSize == 18)
+        {
+            PlayerPrefs.SetInt("InmapSize", 1);
+        }
+        else if(xSize == 34)
+        {
+            PlayerPrefs.SetInt("InmapSize", 2);
+        }
+        else if (xSize == 52)
+        {
+            PlayerPrefs.SetInt("InmapSize", 3);
+        }
+
         designArr = new int[xSize, ySize];
 
         for (int i = 0; i < Map.localMaps.Count; i++)
@@ -197,7 +212,7 @@ public class mapMaker : MonoBehaviour
             for (int j = 0; j < designArr.GetLength(1); j++)
             {
              
-                Vector3 position = new Vector3(-1.0f + (float)(-0.6) * i, -1.0f + (float)0.6 * j, 0);
+                Vector3 position = new Vector3(-1.0f + (float)(0.6) * j, -1.0f + (float)(-0.6) * i, 0);
                 if (designArr[i, j] == 1)
                 {
                     grass_obj = Instantiate(grassPrefab);
@@ -284,40 +299,6 @@ public class mapMaker : MonoBehaviour
         if (PlayerPrefs.GetString("playMode") == "Play")
         {
             StartCoroutine(getmapInfoAPI());
-            //for (int i = 0; i < testarr.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < testarr.GetLength(1); j++)
-            //    {
-            //        //Debug.Log("i :" + i + "j :" + j);
-
-            //        Vector3 position = new Vector3(-1.0f + (float)(-0.6) * i, -1.0f + (float)0.6 * j, 0);
-            //        //Debug.Log(position.x);
-            //        //Debug.Log(position.y);
-            //        if (testarr[i, j] == 1)
-            //        {
-            //            grass_obj = Instantiate(grassPrefab);
-            //            grass_obj.transform.position = position;
-
-            //        }
-            //        else if (testarr[i, j] == 2)
-            //        {
-
-            //            endPrefab.transform.position = position;
-            //        }
-            //        else if (testarr[i, j] == 3)
-            //        {
-            //            start_obj = Instantiate(startPrefab);
-            //            start_obj.transform.position = position;
-            //            Players.transform.position = position;
-            //        }
-            //        else if (testarr[i, j] == 4)
-            //        {
-            //            rock_obj = Instantiate(rockPrefab);
-            //            rock_obj.transform.position = position;
-            //        }
-
-            //    }
-            //}
         }
         else if(PlayerPrefs.GetString("playMode") == "Design")
         {

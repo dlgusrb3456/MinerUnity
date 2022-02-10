@@ -34,7 +34,7 @@ public class makeMap : MonoBehaviour
 
     private GameObject obstacle;
     string selectedFileName = "";
-    private float zoomSpeed = 0.01f;
+    private float zoomSpeed = 0.008f;
 
     private static string mapCompressionBase64String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     //UI 토글들.
@@ -147,6 +147,7 @@ public class makeMap : MonoBehaviour
 
         xSize = Convert.ToInt32(mapSize[0]);
         ySize = Convert.ToInt32(mapSize[1]);
+        Debug.Log("xSize: " + xSize);
         Panel_maps.GetComponent<GridLayoutGroup>().constraintCount = xSize;
         mapArr = new int[xSize, ySize];
 
@@ -398,7 +399,21 @@ public class makeMap : MonoBehaviour
             
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
             float moveSpeed = -deltaMagnitudeDiff * zoomSpeed;
-            if(Panel_maps.transform.localScale.x + moveSpeed > 0.15)
+            float contentScale = 0.0f;
+            if(xSize == 18)
+            {
+                contentScale = 0.35f;
+            }
+            else if(xSize == 34)
+            {
+                contentScale = 0.18f;
+            }
+            else if(xSize == 52)
+            {
+                contentScale = 0.118f;
+            }
+
+            if(Panel_maps.transform.localScale.x + moveSpeed > contentScale)
             {
                 Panel_maps.transform.localScale += new Vector3(moveSpeed, moveSpeed, 0);
             }

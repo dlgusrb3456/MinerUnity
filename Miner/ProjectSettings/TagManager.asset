@@ -6,7 +6,11 @@ TagManager:
   tags:
   - ColliderTile
   - mainBGM
+<<<<<<< HEAD
   - LoadingPlayer
+=======
+  - inGameBGM
+>>>>>>> 07a0ef9d38ce0b9f80cc1518858a0f7bf177fd9f
   layers:
   - Default
   - TransparentFX
