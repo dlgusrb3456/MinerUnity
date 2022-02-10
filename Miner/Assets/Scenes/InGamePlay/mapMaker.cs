@@ -28,7 +28,7 @@ public class mapMaker : MonoBehaviour
     //크기.
     int xSize = 0;
     int ySize = 0;
-    int small = 22;
+    int small = 18;
     int middle = 34;
     int large = 52;
     //배열;

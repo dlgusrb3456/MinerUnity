@@ -13,38 +13,107 @@ public class LoadingSceneManager : MonoBehaviour
     bool IsDone = false;
     float timer = 0.0f;
     AsyncOperation op;
-    
-        
+    float loadTime = 2.0f;
+    GameObject BackgroundMusic;
+    AudioSource backmusic;
+    int loadMode = 0;
+    //loadMode 1 : 메인설계 => 인게임 설계
 
     private void Start()
     {
+
+        BackgroundMusic = GameObject.FindGameObjectWithTag("mainBGM");
+        backmusic = BackgroundMusic.GetComponent<AudioSource>(); //배경음악 저장해둠
+
         progressBar.fillAmount = 0;
-        StartCoroutine(LoadScene());
-        
+        int sizeMode = PlayerPrefs.GetInt("loadSize");
+        Debug.Log("sizeMode = " + sizeMode);
+        if(sizeMode == 1)
+        {
+            loadTime = 2.0f;
+        }
+        else if(sizeMode == 2)
+        {
+            loadTime = 5.0f;
+        }
+        else if(sizeMode == 3)
+        {
+            loadTime = 12.0f;
+        }
+
+        loadMode = PlayerPrefs.GetInt("loadMode");
+        StartCoroutine(LoadScene(loadMode));
     }
 
-    public static void LoadScene(int index)
-    {
-        //nextScene = index;
-        SceneManager.LoadScene("LoadingScene");
-    }
+    //public static void LoadScene(int index)
+    //{
+    //    //nextScene = index;
+    //    SceneManager.LoadScene("LoadingScene");
+    //}
 
     void Update()
     {
-        timer += Time.deltaTime;
+        timer += (1.0f / loadTime)*Time.deltaTime;
         progressBar.fillAmount = timer; 
 
-        if(timer >= 10)
+        if(timer >= loadTime)
         {
             op.allowSceneActivation = true;
+        }
+        else
+        {
+            if(loadMode == 4 || loadMode == 6)
+            {
+                if (PlayerPrefs.GetInt("mainBGM") == 0)
+                {
+                    backmusic.Play();
+                }
+                else
+                {
+                    backmusic.Pause();
+                }
+            }
         }
 
     }
 
-    IEnumerator LoadScene()
+    IEnumerator LoadScene(int mode)
     {
+
+        if(mode == 1)
+        {
+            backmusic.Pause();
+            op = SceneManager.LoadSceneAsync("InGameDesign");
+        }
+        else if(mode == 2 || mode == 5)
+        {
+            op = SceneManager.LoadSceneAsync("InGamePlay");
+        }
+        else if (mode == 3)
+        {
+            op = SceneManager.LoadSceneAsync("InGameDesign");
+        }
+        else if(mode == 4)
+        {
+            
+            op = SceneManager.LoadSceneAsync("mainDesign");
+        }
+        else if(mode == 6)
+        {
+            
+            op = SceneManager.LoadSceneAsync("mainPlay");
+        }
+        else if(mode == 7)
+        {
+            backmusic.Pause();
+            op = SceneManager.LoadSceneAsync("InGamePlay");
+        }
+        else
+        {
+            op = SceneManager.LoadSceneAsync("mainDesign");
+        }
         yield return null;
-        op = SceneManager.LoadSceneAsync("InGameDesign"); // ""에 nextScene 있던거
+         // ""에 nextScene 있던거
         op.allowSceneActivation = false;
 
         if (IsDone == false)

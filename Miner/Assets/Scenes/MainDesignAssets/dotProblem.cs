@@ -57,9 +57,9 @@ public class dotProblem : MonoBehaviour
     private string selectedFileName="";
     private string mapInfos = "";
     private string mapSizes = "";
-    private string smallMap = "22X22";
-    private string middleMap = "52X52";
-    private string largeMap = "102X102";
+    private string smallMap = "18X18";
+    private string middleMap = "34X34";
+    private string largeMap = "52X52";
     private string mapPasswords = "";
 
 
