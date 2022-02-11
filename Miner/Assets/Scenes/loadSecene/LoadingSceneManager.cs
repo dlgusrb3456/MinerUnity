@@ -27,19 +27,19 @@ public class LoadingSceneManager : MonoBehaviour
 
         progressBar.fillAmount = 0;
         int sizeMode = PlayerPrefs.GetInt("loadSize");
-        Debug.Log("sizeMode = " + sizeMode);
-        if(sizeMode == 1)
-        {
-            loadTime = 2.0f;
-        }
-        else if(sizeMode == 2)
-        {
-            loadTime = 5.0f;
-        }
-        else if(sizeMode == 3)
-        {
-            loadTime = 12.0f;
-        }
+        //Debug.Log("sizeMode = " + sizeMode);
+        //if(sizeMode == 1)
+        //{
+        //    loadTime = 2.0f;
+        //}
+        //else if(sizeMode == 2)
+        //{
+        //    loadTime = 5.0f;
+        //}
+        //else if(sizeMode == 3)
+        //{
+        //    loadTime = 12.0f;
+        //}
 
         loadMode = PlayerPrefs.GetInt("loadMode");
         StartCoroutine(LoadScene(loadMode));

@@ -18,6 +18,8 @@ public class CanvasScripts : MonoBehaviour
     public Camera MainCamera;
 
     public GameObject Player;
+    public GameObject startPosition;
+
 
     public GameObject postionPrefabs;
     private GameObject positions;
