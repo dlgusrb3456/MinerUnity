@@ -31,7 +31,7 @@ public class PlayerAction : MonoBehaviour
     public GameObject SpriteEnd;
 
     //성공여부;
-    private int success = 0;
+    public static int success = 0;
 
     public void Awake()
     {

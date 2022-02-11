@@ -70,6 +70,6 @@ public class Timer : MonoBehaviour
 
     public static void startTimer() => stopwatch.Start();
     public static void pauseTimer() => stopwatch.Stop();
-
+    public static void resetTimer() => stopwatch.Reset();
     void Update() { }
 }

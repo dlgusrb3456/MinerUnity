@@ -14,6 +14,7 @@ public class CanvasScripts : MonoBehaviour
     public GameObject Panel_settings;
     public GameObject Panel_preventSettings;
     public GameObject Panel_preventEndsDesign;
+    public GameObject Panel_preventEnds;
     //카메라
     public Camera MainCamera;
 
@@ -93,9 +94,17 @@ public class CanvasScripts : MonoBehaviour
     public void reGame()
     {
         //SceneManager.LoadScene("InGamePlay");
-
-        PlayerPrefs.SetInt("loadMode", 5);
-        SceneManager.LoadScene("loadingScene");
+        Timer.resetTimer();
+        Player.transform.position = startPosition.transform.position;
+        setStartPositionCount();
+        PlayerAction.success = 0;
+        Panel_settings.SetActive(false);
+        Panel_preventSettings.SetActive(false);
+        Panel_preventEndsDesign.SetActive(false);
+        Panel_preventEnds.SetActive(false);
+        Timer.startTimer();
+        //PlayerPrefs.SetInt("loadMode", 5);
+        //SceneManager.LoadScene("loadingScene");
     }
 
     public void goDesign()

@@ -41,7 +41,7 @@ public class fileClicked : MonoBehaviour
 
         }
         PlayerPrefs.SetInt("loadMode", 1);
-        //SceneManager.LoadScene("InGameDesign");
+        SceneManager.LoadScene("loadingScene");
 
     }
     void Start()

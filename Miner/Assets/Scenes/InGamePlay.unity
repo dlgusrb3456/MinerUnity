@@ -486,6 +486,7 @@ MonoBehaviour:
   Panel_settings: {fileID: 1794157420}
   Panel_preventSettings: {fileID: 1599833820}
   Panel_preventEndsDesign: {fileID: 821613633}
+  Panel_preventEnds: {fileID: 66669747}
   MainCamera: {fileID: 5878735}
   Player: {fileID: 311007247}
   startPosition: {fileID: 924652168}

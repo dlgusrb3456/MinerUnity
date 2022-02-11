@@ -146,8 +146,7 @@ public class mapMaker : MonoBehaviour
                 }
                 else if (designArr[i, j] == 3)
                 {
-                    start_obj = Instantiate(startPrefab);
-                    start_obj.transform.position = position;
+                    startPrefab.transform.position = position;
                     Players.transform.position = position;
                 }
                 else if (designArr[i, j] == 4)
@@ -225,8 +224,7 @@ public class mapMaker : MonoBehaviour
                 }
                 else if (designArr[i, j] == 3)
                 {
-                    start_obj = Instantiate(startPrefab);
-                    start_obj.transform.position = position;
+                    startPrefab.transform.position = position;
                     Players.transform.position = position;
                 }
                 else if (designArr[i, j] == 4)
