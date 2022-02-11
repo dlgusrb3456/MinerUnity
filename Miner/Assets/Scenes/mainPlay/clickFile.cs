@@ -67,7 +67,9 @@ public class clickFile : MonoBehaviour
 
     public void clickPlay()
     {
-        if(isPrivate == "private")
+        Destroy(fileInfo);
+
+        if (isPrivate == "private")
         {
             getPWPanel = Instantiate(Panel_getPW) as GameObject;
             getPWPanel.transform.parent = fileInfo.transform.parent;

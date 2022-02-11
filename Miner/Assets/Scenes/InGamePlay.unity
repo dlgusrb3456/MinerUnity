@@ -226,7 +226,7 @@ MonoBehaviour:
   startPrefab: {fileID: 7267352763646207278, guid: 7e7ec2f0be08c9740aada14fe61d20d4,
     type: 3}
   endPrefab: {fileID: 1210478804}
-  rockPrefab: {fileID: 7172634597135467229, guid: e2934cf54883fe645a7c07aa546c8326,
+  rockPrefab: {fileID: 1967482814386278357, guid: 5f81fdc538d53f141b60c97b0a6ad353,
     type: 3}
   Players: {fileID: 311007247}
 --- !u!114 &5878738
@@ -3954,7 +3954,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210478804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

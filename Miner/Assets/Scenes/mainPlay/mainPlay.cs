@@ -65,7 +65,7 @@ public class mainPlay : MonoBehaviour
     //mapInfo list
     List<mapInfos> maps = new List<mapInfos>();
 
-
+    public GameObject canvas;
     //bgm;
     GameObject BackgroundMusic;
     AudioSource backmusic;
@@ -74,6 +74,7 @@ public class mainPlay : MonoBehaviour
 
     private int totalMapNum=0;
     private int currentPage = 1;
+    private int canvasChild = 12;
 
     public void ExitYes()
     {
@@ -82,6 +83,15 @@ public class mainPlay : MonoBehaviour
 
     public void ExitNo()
     {
+        
+        int canvasChildCount = canvas.transform.childCount;
+        if (canvasChildCount > canvasChild)
+        {
+            for (int i = canvasChild; i < canvasChildCount; i++)
+            {
+                canvas.transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
         ExitPanel.SetActive(false);
     }
 
@@ -494,8 +504,8 @@ public class mainPlay : MonoBehaviour
     {
         backmusic.Pause();
         PlayerPrefs.SetInt("mainBGM", 1);
-        Debug.Log("mainBGM off");
     }
+
     void Update()
     {
         //안드로이드인 경우
@@ -510,6 +520,14 @@ public class mainPlay : MonoBehaviour
                 else
                 {
                     ExitPanel.SetActive(true);
+                    int canvasChildCount = canvas.transform.childCount;
+                    if (canvasChildCount > canvasChild)
+                    {
+                        for(int i = canvasChild; i < canvasChildCount; i++)
+                        {
+                            canvas.transform.GetChild(i).gameObject.SetActive(false);
+                        }
+                    }
                 }
             }
         }

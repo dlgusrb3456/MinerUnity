@@ -30,6 +30,9 @@ public class PlayerAction : MonoBehaviour
     //충돌 이벤트;
     public GameObject SpriteEnd;
 
+    //성공여부;
+    private int success = 0;
+
     public void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();
@@ -135,7 +138,11 @@ public class PlayerAction : MonoBehaviour
             if (PlayerPrefs.GetString("playMode") == "Play")
             {
                 Panel_preventEnds.SetActive(true);
-                StartCoroutine(sendClearInfoAPI());
+                if(success == 0)
+                {
+                    StartCoroutine(sendClearInfoAPI());
+                }
+                success = 1;
             }
             else if (PlayerPrefs.GetString("playMode") == "Design")
             {
