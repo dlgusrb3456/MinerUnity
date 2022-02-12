@@ -13,7 +13,7 @@ public class LoadingSceneManager : MonoBehaviour
     bool IsDone = false;
     float timer = 0.0f;
     AsyncOperation op;
-    float loadTime = 1.0f;
+    float loadTime = 2.0f;
     GameObject BackgroundMusic;
     AudioSource backmusic;
     int loadMode = 0;
