@@ -33,7 +33,7 @@ public class onClickButton : MonoBehaviour
                 Text_status.text = "1";
                 //버튼 이미지 장애물로
                 obstacles.GetComponent<Image>().sprite = image_grass;
-                obstacles.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                obstacles.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
             else if (Text_status.text == "1")
             {
@@ -59,7 +59,7 @@ public class onClickButton : MonoBehaviour
                 Text_status.text = "3";
                 //버튼 이미지 출발로
                 obstacles.GetComponent<Image>().sprite = image_start;
-                obstacles.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                obstacles.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
             else if (Text_status.text == "3")
             {
@@ -82,7 +82,7 @@ public class onClickButton : MonoBehaviour
                 Text_status.text = "2";
                 //버튼 이미지 도착으로
                 obstacles.GetComponent<Image>().sprite = image_end;
-                obstacles.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                obstacles.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
             else if (Text_status.text == "2")
             {
