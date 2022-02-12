@@ -112,7 +112,7 @@ public class mainPlay : MonoBehaviour
 
     public void LoadfilestoPanel(int listCount)
     {
-        Debug.Log("maps.Count = " + listCount);
+        //Debug.Log("maps.Count = " + listCount);
         //기존의 판넬에 들어있는 파일들 모두 삭제.
         Transform[] childList = Panel_files.GetComponentsInChildren<Transform>();
         if (childList != null)
@@ -132,7 +132,7 @@ public class mainPlay : MonoBehaviour
             GameObject file = Instantiate(Button_PlayFile) as GameObject;
             file.transform.parent = Panel_files.transform;
             file.transform.GetChild(0).GetComponent<Text>().text = maps[i].mapName + "/"+maps[i].editorName;
-            Debug.Log(maps[i].mapPassword);
+            //Debug.Log(maps[i].mapPassword);
             if(maps[i].mapPassword == "0") // 이 미로가 공유파일인지 확인하는 절차 => 공유인경우
             {
                 file.transform.GetChild(1).GetComponent<Image>().sprite = image_unLock;
@@ -211,7 +211,7 @@ public class mainPlay : MonoBehaviour
                     maps.Clear();
                     if (words.Length == 12)
                     {
-                        Debug.Log("없음");
+                        //Debug.Log("없음");
                     } 
                     else if(words.Length == 20) {
                         maps = getInfotoAPI(1,words);
@@ -361,7 +361,7 @@ public class mainPlay : MonoBehaviour
         {
             if (searchInputField.text[i] == ' ')
             {
-                Debug.Log("띄어쓰기는 입력할 수 없습니다.");
+                //Debug.Log("띄어쓰기는 입력할 수 없습니다.");
                 return;
             }
         }
@@ -386,7 +386,7 @@ public class mainPlay : MonoBehaviour
         {
             if(searchInputField.text[i]==' ')
             {
-                Debug.Log("띄어쓰기는 입력할 수 없습니다.");
+                //Debug.Log("띄어쓰기는 입력할 수 없습니다.");
                 return;
             }
         }
@@ -451,7 +451,7 @@ public class mainPlay : MonoBehaviour
     public void testClick()
     {
         //기존에 있는 애들을 다 지워야함. Destroy;
-        Debug.Log(PlayerPrefs.GetInt("currentPage"));
+        //Debug.Log(PlayerPrefs.GetInt("currentPage"));
         currentPage = PlayerPrefs.GetInt("currentPage");
         search();
     }
@@ -461,7 +461,7 @@ public class mainPlay : MonoBehaviour
     public void OnDropdownEvent(int index)
     {
         chooseSearchType = index;
-        Debug.Log(chooseSearchType);
+        //Debug.Log(chooseSearchType);
         PlayerPrefs.SetInt("dropBox", index);
     }
 
@@ -497,7 +497,7 @@ public class mainPlay : MonoBehaviour
     {
         backmusic.Play();
         PlayerPrefs.SetInt("mainBGM", 0);
-        Debug.Log("mainBGM on");
+        //Debug.Log("mainBGM on");
     }
 
     public void bgmOff()

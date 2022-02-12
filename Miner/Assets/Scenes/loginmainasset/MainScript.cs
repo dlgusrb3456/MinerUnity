@@ -86,23 +86,23 @@ public class MainScript : MonoBehaviour
                     LoginExceptiontxt.text = isFailed[3];
                     LoginExceptiontxt.color = Color.red;
                     Invoke("changeColorSuccess", 2f);
-                    Debug.Log(isFailed[3]); //틀렸을때 나오는 오류.
+                    //Debug.Log(isFailed[3]); //틀렸을때 나오는 오류.
                 }
                 else
                 {
                     string[] nickNames = words[5].Split('"');
-                    Debug.Log(nickNames[3]); //성공시 닉네임
+                    //Debug.Log(nickNames[3]); //성공시 닉네임
                     PlayerPrefs.SetString("nickName", nickNames[3]);
                     //Debug.Log(PlayerPrefs.GetString("nickName"));
                     if (toggle.isOn)
                     {
                         PlayerPrefs.SetInt("autoLogin", 1);
-                        Debug.Log(PlayerPrefs.GetInt("autoLogin"));
+                        //Debug.Log(PlayerPrefs.GetInt("autoLogin"));
                     }
                     else
                     {
                         PlayerPrefs.SetInt("autoLogin", 0);
-                        Debug.Log(PlayerPrefs.GetInt("autoLogin"));
+                        //Debug.Log(PlayerPrefs.GetInt("autoLogin"));
                     }
                     SceneManager.LoadScene("mainDesign");
 
@@ -139,7 +139,7 @@ public class MainScript : MonoBehaviour
     void changeColorSuccess()
     {
         LoginExceptiontxt.color = Color.clear;
-        Debug.Log("changeColor");
+        //Debug.Log("changeColor");
     }
 
     void Start()
@@ -155,14 +155,14 @@ public class MainScript : MonoBehaviour
     {
         backmusic.Play();
         PlayerPrefs.SetInt("mainBGM", 0);
-        Debug.Log("mainBGM on");
+        //Debug.Log("mainBGM on");
     }
 
     public void bgmOff()
     {
         backmusic.Pause();
         PlayerPrefs.SetInt("mainBGM", 1);
-        Debug.Log("mainBGM off");
+        //Debug.Log("mainBGM off");
     }
 
     void Update()

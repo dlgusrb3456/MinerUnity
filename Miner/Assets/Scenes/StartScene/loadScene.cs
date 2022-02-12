@@ -11,7 +11,7 @@ public class loadScene : MonoBehaviour
     private int autos = 0;
     void Start()
     {
-        Debug.Log("asdf loaded");
+        //Debug.Log("asdf loaded");
         // MinerEnvironments 로 초기 디렉터리를 설정합니다.
         MinerEnvironment.initEnvironment();
 

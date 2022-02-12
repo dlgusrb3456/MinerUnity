@@ -9,7 +9,7 @@ public class inDesMusic : MonoBehaviour
     
     void Start()
     {
-        Debug.Log(PlayerPrefs.GetInt("InGameBGM"));
+        //Debug.Log(PlayerPrefs.GetInt("InGameBGM"));
         if (PlayerPrefs.GetInt("InGameBGM") == 0)
         {
             main.GetComponent<AudioSource>().Play();

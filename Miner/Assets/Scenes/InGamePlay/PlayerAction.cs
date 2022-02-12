@@ -46,7 +46,7 @@ public class PlayerAction : MonoBehaviour
         int sec = Convert.ToInt32(timerTextArr[1]);
         min = min % 60;
         string changeTime = hour.ToString() + ":" + min.ToString() + ":" + sec.ToString();
-        Debug.Log(changeTime);
+        //Debug.Log(changeTime);
         return changeTime;
     }
 
@@ -54,8 +54,8 @@ public class PlayerAction : MonoBehaviour
     IEnumerator sendClearInfoAPI()
     {
         string URL = "https://miner22.shop/miner/playmaps/savePlayInfo";
-        Debug.Log("miroNames: " + PlayerPrefs.GetString("mapName"));
-        Debug.Log("editorNames: " + PlayerPrefs.GetString("editorName"));
+        //Debug.Log("miroNames: " + PlayerPrefs.GetString("mapName"));
+        //Debug.Log("editorNames: " + PlayerPrefs.GetString("editorName"));
         string times = TimerTextChange();
         sendClearInfoClass myObject = new sendClearInfoClass {mapName = PlayerPrefs.GetString("mapName"), editorName = PlayerPrefs.GetString("editorName"), playerName = PlayerPrefs.GetString("nickName"),playTime = times };
 
@@ -77,10 +77,10 @@ public class PlayerAction : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
 

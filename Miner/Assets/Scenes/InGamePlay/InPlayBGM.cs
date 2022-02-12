@@ -8,7 +8,7 @@ public class InPlayBGM : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(PlayerPrefs.GetInt("InPlayBGM"));
+        //Debug.Log(PlayerPrefs.GetInt("InPlayBGM"));
         if (PlayerPrefs.GetInt("InPlayBGM") == 0)
         {
             main.GetComponent<AudioSource>().Play();

@@ -85,12 +85,12 @@ public class mainDesignMain : MonoBehaviour
         }
 
         Map.reloadLocalMaps();
-        Debug.Log(Map.localMaps.Count);
+        //Debug.Log(Map.localMaps.Count);
         for (int i = 0; i < Map.localMaps.Count; i++)
         {
             GameObject file = Instantiate(Button_mapPrefab) as GameObject;
             file.transform.parent = contentPanel.transform;
-            Debug.Log(file.transform.GetChild(0).name);
+            //Debug.Log(file.transform.GetChild(0).name);
             file.transform.GetChild(0).GetComponent<Text>().text = Map.localMaps[i].name;
             file.transform.GetChild(1).GetComponent<Text>().text = Map.localMaps[i].lastClearDate;
             //file.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(dotdotdot);
@@ -248,14 +248,14 @@ public class mainDesignMain : MonoBehaviour
     {
         backmusic.Play();
         PlayerPrefs.SetInt("mainBGM", 0);
-        Debug.Log("mainBGM on");
+        //Debug.Log("mainBGM on");
     }
 
     public void bgmOff()
     {
         backmusic.Pause();
         PlayerPrefs.SetInt("mainBGM", 1);
-        Debug.Log("mainBGM off");
+        //Debug.Log("mainBGM off");
     }
 
     // Update is called once per frame

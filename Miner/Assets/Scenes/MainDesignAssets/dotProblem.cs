@@ -73,7 +73,7 @@ public class dotProblem : MonoBehaviour
     {
         
         selectedFileName = Text_mironame.text;
-        Debug.Log(selectedFileName);
+        //Debug.Log(selectedFileName);
         for (int i = 0; i < Map.localMaps.Count; i++)
         {
             if (Map.localMaps[i].name == selectedFileName)
@@ -83,7 +83,7 @@ public class dotProblem : MonoBehaviour
                 //Debug.Log(i);
                 if (Map.localMaps[i].isShared)
                 {
-                    Debug.Log("isShared");
+                    //Debug.Log("isShared");
                     sharePanel = Instantiate(Panel_setFilePrefab1) as GameObject;
                     sharePanel.transform.parent = Button_mapPrefab.transform;
                     sharePanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(closesharePanel);
@@ -96,7 +96,7 @@ public class dotProblem : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("isNoneShared");
+                    //Debug.Log("isNoneShared");
                     nonesharePanel = Instantiate(Panel_setFilePrefab2) as GameObject;
                     nonesharePanel.transform.parent = Button_mapPrefab.transform;
                     nonesharePanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(closeNonesharePanel);
@@ -133,7 +133,7 @@ public class dotProblem : MonoBehaviour
         loading.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
         loading.transform.position = new Vector3(Camera.main.pixelWidth / 2, (Camera.main.pixelHeight / 2), 0);
         string URL = "https://miner22.shop/miner/playmaps/stop";
-        Debug.Log(PlayerPrefs.GetString("nickName"));
+        //Debug.Log(PlayerPrefs.GetString("nickName"));
         shareStopClass myObject = new shareStopClass{nickName = PlayerPrefs.GetString("nickName"),mapName = selectedFileName};
 
         string json = JsonUtility.ToJson(myObject);
@@ -155,10 +155,10 @@ public class dotProblem : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
@@ -259,10 +259,10 @@ public class dotProblem : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
 
@@ -296,7 +296,7 @@ public class dotProblem : MonoBehaviour
 
     public int[,] decodeMapData(Map map, int height, int width)
     {
-        Debug.Log("문자 배열화 시작");
+        //Debug.Log("문자 배열화 시작");
         string raw = map.mapData;
 
         //int height = mapSizeStringToArray(map.mapSize)[0];
@@ -320,7 +320,7 @@ public class dotProblem : MonoBehaviour
 
 
         //d.mapData = rl;
-        Debug.Log("문자 배열화 종료");
+        //Debug.Log("문자 배열화 종료");
         return rl;
     }
 
@@ -355,7 +355,7 @@ public class dotProblem : MonoBehaviour
 
         if (endCount == 1 && startCount == 1)
         {
-            Debug.Log("count OK");
+            //Debug.Log("count OK");
             startToEnd(mapArr, startPosX, startPosY);
             if (isOK)
             {
@@ -363,8 +363,8 @@ public class dotProblem : MonoBehaviour
                 return true;
             }
         }
-        Debug.Log("endCount: "+endCount);
-        Debug.Log("startCount: " + startCount);
+        //Debug.Log("endCount: "+endCount);
+        //Debug.Log("startCount: " + startCount);
         return false;
     }
 
@@ -454,14 +454,14 @@ public class dotProblem : MonoBehaviour
             Destroy(checkPrivatePrefabs);
             if (checkPrivatePrefabs.transform.GetChild(6).GetComponent<Transform>().transform.GetChild(0).GetComponent<Toggle>().isOn)
             {
-                Debug.Log("public 공유");
+                //Debug.Log("public 공유");
                 mapPasswords = "0";
                 StartCoroutine(shareAPI());
                 //api로 공유 진행
             }
             else
             {
-                Debug.Log("private 공유");
+                //Debug.Log("private 공유");
                 getPrivate = Instantiate(Panel_getPrivate) as GameObject;
                 getPrivate.transform.parent = Button_mapPrefab.transform.parent.parent.parent.parent;
                 getPrivate.transform.position = new Vector3(Camera.main.pixelWidth / 2, (Camera.main.pixelHeight / 2), 0);
@@ -515,8 +515,8 @@ public class dotProblem : MonoBehaviour
         {
             mapSizes = "3";
         }
-        Debug.Log("mapSizes : " + mapSizes);
-        Debug.Log(PlayerPrefs.GetString("nickName"));
+        //Debug.Log("mapSizes : " + mapSizes);
+        //Debug.Log(PlayerPrefs.GetString("nickName"));
         shareClass myObject = new shareClass { mapName = selectedFileName, mapInfo = mapInfos, mapSize = Convert.ToInt32(mapSizes),mapPassword = Convert.ToInt32(mapPasswords),nickName = PlayerPrefs.GetString("nickName"),playCount =0 };
 
         string json = JsonUtility.ToJson(myObject);
@@ -537,10 +537,10 @@ public class dotProblem : MonoBehaviour
             {
                 string returns = www.downloadHandler.text;
                 string[] words = returns.Split(',');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    Debug.Log(words[i]);
-                }
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    Debug.Log(words[i]);
+                //}
 
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")

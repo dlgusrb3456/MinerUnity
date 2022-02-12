@@ -17,7 +17,7 @@ public class chooseMapInit : MonoBehaviour
     // called when the game is terminated
     void OnDisable()
     {
-        Debug.Log("OnDisable");
+        //Debug.Log("OnDisable");
     }
 
     // Debug.Log("경로: " + Application.persistentDataPath);

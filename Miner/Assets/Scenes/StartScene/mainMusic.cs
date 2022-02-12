@@ -7,7 +7,7 @@ public class mainMusic : MonoBehaviour
     private AudioSource _audioSource;
     private void Awake()
     {
-        Debug.Log(PlayerPrefs.GetInt("mainBGM"));
+        //Debug.Log(PlayerPrefs.GetInt("mainBGM"));
         DontDestroyOnLoad(transform.gameObject);
         _audioSource = GetComponent<AudioSource>();
         if (PlayerPrefs.GetInt("mainBGM") == 0)

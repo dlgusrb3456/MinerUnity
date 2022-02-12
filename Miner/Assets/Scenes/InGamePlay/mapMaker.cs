@@ -55,8 +55,8 @@ public class mapMaker : MonoBehaviour
     IEnumerator getmapInfoAPI()
     {
         string URL = "https://miner22.shop/miner/playmaps/info";
-        Debug.Log("miroNames: " + PlayerPrefs.GetString("mapName"));
-        Debug.Log("editorNames: " + PlayerPrefs.GetString("editorName"));
+        //Debug.Log("miroNames: " + PlayerPrefs.GetString("mapName"));
+        //Debug.Log("editorNames: " + PlayerPrefs.GetString("editorName"));
 
         getmapInfoClass myObject = new getmapInfoClass { editorName = PlayerPrefs.GetString("editorName"), mapName = PlayerPrefs.GetString("mapName") };
 
@@ -169,7 +169,7 @@ public class mapMaker : MonoBehaviour
         Map.loadLocalMaps();
         string[] mapSize = new string[2];
         string selectedFileName = PlayerPrefs.GetString("DesSelectedFile");
-        Debug.Log("DesSelectedFile: " + selectedFileName);
+        //Debug.Log("DesSelectedFile: " + selectedFileName);
         for (int i = 0; i < Map.localMaps.Count; i++)
         {
             if (Map.localMaps[i].name == selectedFileName)
@@ -291,7 +291,7 @@ public class mapMaker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(PlayerPrefs.GetString("playMode"));
+        //Debug.Log(PlayerPrefs.GetString("playMode"));
         if (PlayerPrefs.GetString("playMode") == "Play")
         {
             StartCoroutine(getmapInfoAPI());

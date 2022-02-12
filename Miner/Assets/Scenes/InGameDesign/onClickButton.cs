@@ -21,7 +21,7 @@ public class onClickButton : MonoBehaviour
         obstacles.GetComponent<AudioSource>().Play();
         int test_statuss = PlayerPrefs.GetInt("Toggle");
         string test_status = test_statuss.ToString();
-        Debug.Log(test_status);
+        //Debug.Log(test_status);
         //Debug.Log("clicked");
         //Debug.Log("test_status " + test_status);
         if (test_status == "1") //설계하기 버튼이 눌린 상태

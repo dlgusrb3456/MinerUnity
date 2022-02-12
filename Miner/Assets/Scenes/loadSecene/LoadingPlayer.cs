@@ -39,7 +39,7 @@ public class LoadingPlayer : MonoBehaviour
         while (true)
         {
             player1.SetActive(true);
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.5f);
             player1.SetActive(false);
             
             //player2.SetActive(true);

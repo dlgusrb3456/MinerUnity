@@ -21,6 +21,8 @@ public class CanvasScripts : MonoBehaviour
     public GameObject Player;
     public GameObject startPosition;
 
+    //캔버스
+    public GameObject canvas;
 
     public GameObject postionPrefabs;
     private GameObject positions;
@@ -93,7 +95,6 @@ public class CanvasScripts : MonoBehaviour
 
     public void reGame()
     {
-        //SceneManager.LoadScene("InGamePlay");
         Timer.resetTimer();
         Player.transform.position = startPosition.transform.position;
         setStartPositionCount();
@@ -102,9 +103,13 @@ public class CanvasScripts : MonoBehaviour
         Panel_preventSettings.SetActive(false);
         Panel_preventEndsDesign.SetActive(false);
         Panel_preventEnds.SetActive(false);
+        GameObject [] obj = GameObject.FindGameObjectsWithTag("Bread");
+        for(int i = 0; i < obj.Length; i++)
+        {
+            Destroy(obj[i]);
+        }
+        //Destroy(canvas.FindWithTag("Bread"));
         Timer.startTimer();
-        //PlayerPrefs.SetInt("loadMode", 5);
-        //SceneManager.LoadScene("loadingScene");
     }
 
     public void goDesign()

@@ -147,7 +147,7 @@ public class makeMap : MonoBehaviour
 
         xSize = Convert.ToInt32(mapSize[0]);
         ySize = Convert.ToInt32(mapSize[1]);
-        Debug.Log("xSize: " + xSize);
+        //Debug.Log("xSize: " + xSize);
         Panel_maps.GetComponent<GridLayoutGroup>().constraintCount = xSize;
         mapArr = new int[xSize, ySize];
 
@@ -178,22 +178,22 @@ public class makeMap : MonoBehaviour
                 else if (mapArr[i, j] == 1)
                 {
                     obstacle.GetComponent<Image>().sprite = image_grass;
-                    obstacle.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                    obstacle.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 }
                 else if (mapArr[i, j] == 2)
                 {
                     obstacle.GetComponent<Image>().sprite = image_end;
-                    obstacle.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                    obstacle.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 }
                 else if (mapArr[i, j] == 3)
                 {
                     obstacle.GetComponent<Image>().sprite = image_start;
-                    obstacle.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                    obstacle.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 }
                 else if (mapArr[i, j] == 4)
                 {
                     obstacle.GetComponent<Image>().sprite = image_block;
-                    obstacle.GetComponent<Image>().color = new Color32(225, 225, 225, 225);
+                    obstacle.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 }
             }
         }
@@ -212,7 +212,7 @@ public class makeMap : MonoBehaviour
         else
         {
             Panel_validationCheck.SetActive(true);
-            Debug.Log("validation error");
+            //Debug.Log("validation error");
         }
     }
 

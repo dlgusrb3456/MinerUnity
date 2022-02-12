@@ -74,7 +74,7 @@ public class modifyPW : MonoBehaviour
             Text_Buttonmodify.color = Color.clear;
             string modifyPW = InputField_PWconfirm.text;
             StartCoroutine(modifyPWs(modifyPW));
-            Debug.Log("success");
+            //Debug.Log("success");
         }
         else
         {
@@ -135,7 +135,7 @@ public class modifyPW : MonoBehaviour
         blackPanel.gameObject.SetActive(false);
         ExitPanel.SetActive(false);
         testPanel.SetActive(false);
-        Debug.Log(PlayerPrefs.GetString("modifyuserIdx"));
+        //Debug.Log(PlayerPrefs.GetString("modifyuserIdx"));
     }
 
     // Update is called once per frame

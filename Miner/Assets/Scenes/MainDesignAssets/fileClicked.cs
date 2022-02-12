@@ -33,7 +33,7 @@ public class fileClicked : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("사이즈 오류");
+                    //Debug.Log("사이즈 오류");
                 }
 
             }
