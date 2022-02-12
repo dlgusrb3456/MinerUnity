@@ -4507,7 +4507,7 @@ MonoBehaviour:
     m_Options:
     - m_Text: "\uB2C9\uB124\uC784"
       m_Image: {fileID: 0}
-    - m_Text: "\uBBF8\uB85C"
+    - m_Text: "\uBBF8\uB85C\uBA85"
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
