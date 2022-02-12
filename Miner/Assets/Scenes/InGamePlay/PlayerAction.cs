@@ -18,6 +18,7 @@ public class PlayerAction : MonoBehaviour
     [SerializeField]
     private VirtualJoystick virtualJoystick;
     public float moveSpeed = 5;
+    AudioSource walkAudio;
     SpriteRenderer spriteRenderer;
 
     private Rigidbody2D rigid2D;
@@ -36,6 +37,7 @@ public class PlayerAction : MonoBehaviour
     public void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();
+        walkAudio = GetComponent<AudioSource>();
     }
 
     public string TimerTextChange()
@@ -115,6 +117,14 @@ public class PlayerAction : MonoBehaviour
         {
             //transform.position += new Vector3(x, y, 0) * moveSpeed * Time.deltaTime; 스리꺼
             rigid2D.velocity = new Vector3(x, y, 0) * moveSpeed;
+
+            // 걸을때 소리
+            if (!walkAudio.isPlaying)
+                walkAudio.Play();
+        }
+        else
+        {
+            walkAudio.Stop();
         }
 
         //방향전환
