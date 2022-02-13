@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class ScriptPrint : MonoBehaviour
 {
-    public Text scriptText; 
+    public Text scriptText;
+    public GameObject mainPanel;
     public Image scriptImage;
     public Sprite[] pages;
 
@@ -19,7 +20,7 @@ public class ScriptPrint : MonoBehaviour
 
     void Start()
     {
-        scriptImage.sprite = pages[currentPageIndex];
+        mainPanel.GetComponent<Image>().sprite= pages[currentPageIndex];
     }
 
     public void onCanvasClick() => isCanvasClicked = true;
@@ -45,7 +46,7 @@ public class ScriptPrint : MonoBehaviour
                 }
                 currentPageString = TutorialScript.scripts[++currentPageIndex];
                 currentPageStringIndex = 0;
-                scriptImage.sprite = pages[currentPageIndex];
+                mainPanel.GetComponent<Image>().sprite = pages[currentPageIndex];
             }
         }
 
