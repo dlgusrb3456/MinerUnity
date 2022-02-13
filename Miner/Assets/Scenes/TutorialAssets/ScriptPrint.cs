@@ -6,13 +6,24 @@ using UnityEngine.SceneManagement;
 public class ScriptPrint : MonoBehaviour
 {
     public Text scriptText; 
+    public Image scriptImage;
+    public Sprite[] pages;
 
     private int currentPageIndex = 0;
     private string currentPageString = TutorialScript.scripts[0];
     private int currentPageStringIndex = 0;
 
+    private bool isCanvasClicked = false;
+
     private float timer = 0;
-    private int mapCount = 0;
+
+    void Start()
+    {
+        scriptImage.sprite = pages[currentPageIndex];
+    }
+
+    public void onCanvasClick() => isCanvasClicked = true;
+
     void Update()
     {
         timer -= Time.deltaTime;
@@ -24,21 +35,17 @@ public class ScriptPrint : MonoBehaviour
             if (currentPageStringIndex < currentPageString.Length) 
                 scriptText.text = currentPageString.Substring(0, currentPageStringIndex++);
 
-            if (Input.touchCount > 0)
+            if (isCanvasClicked)
             {
-                mapCount++;
-                //if(mapCount == ?)
-                //{
-                //    //캔버스 이미지 mapCount로 갈기;
-                //}
-
-                if (currentPageIndex == TutorialScript.scripts.Length)
+                isCanvasClicked = false;
+                if (currentPageIndex == TutorialScript.scripts.Length - 1)
                 {
-                    // 마지막 장에서 터치했을때 여기로 옵니다. 여기에 설계/플레이 화면으로 넘어가는 코드를 넣어주세요
                     SceneManager.LoadScene("mainDesign");
+                    return;
                 }
                 currentPageString = TutorialScript.scripts[++currentPageIndex];
                 currentPageStringIndex = 0;
+                scriptImage.sprite = pages[currentPageIndex];
             }
         }
 
