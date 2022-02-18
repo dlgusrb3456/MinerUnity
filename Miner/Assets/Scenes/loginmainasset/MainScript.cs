@@ -57,6 +57,12 @@ public class MainScript : MonoBehaviour
     {
         Panel_loginMainSettings.SetActive(false);
     }
+
+    public void privateURL()
+    {
+        Application.OpenURL("https://miners.netlify.app/privacy");
+    }
+
     IEnumerator loginAPI(string emails, string passwords)
     {
         string URL = "https://miner22.shop/miner/users/login";

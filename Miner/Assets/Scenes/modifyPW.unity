@@ -391,7 +391,7 @@ MonoBehaviour:
   Text_Buttonmodify: {fileID: 1994678677}
   alertPanel: {fileID: 250551630}
   blackPanel: {fileID: 2009997768}
-  ExitPanel: {fileID: 0}
+  ExitPanel: {fileID: 1427411106}
   testPanel: {fileID: 1576437736}
   circleProgress: {fileID: 714152340}
 --- !u!1 &57682434
@@ -694,8 +694,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Play
+      - m_Target: {fileID: 22916987}
+        m_MethodName: ExitYes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -705,8 +705,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ExitYes
+      - m_Target: {fileID: 924612194}
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3671,8 +3671,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Play
+      - m_Target: {fileID: 22916987}
+        m_MethodName: ExitYes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3682,8 +3682,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ExitNo
+      - m_Target: {fileID: 924612194}
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
