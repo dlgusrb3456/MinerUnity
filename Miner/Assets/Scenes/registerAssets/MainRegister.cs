@@ -50,7 +50,8 @@ public class MainRegister : MonoBehaviour
 
     public GameObject preventPanel;
     public GameObject alertPanel;
-    public Toggle toggle;
+    public Toggle toggle_user;
+    public Toggle toggle_pri;
 
     private string checkID = "";
     private string checkNickName = "";
@@ -70,6 +71,19 @@ public class MainRegister : MonoBehaviour
     private float progress = 0.0f;
     public Image circleProgress;
 
+    public void privateURL()
+    {
+        Application.OpenURL("https://miners.netlify.app/privacy");
+    }
+    public void UseprivateURL()
+    {
+        Application.OpenURL("https://miners.netlify.app/usePrivacy");
+    }
+    public void checkAll()
+    {
+        toggle_user.isOn = true;
+        toggle_pri.isOn = true;
+    }
 
     public void ExitYes()
     {
@@ -445,7 +459,7 @@ public class MainRegister : MonoBehaviour
 
     public void agreeConfirm()
     {
-        if (toggle.isOn)
+        if (toggle_user.isOn && toggle_pri.isOn)
         {
             StartCoroutine(registApi(checkID, PWCheckfield.text,checkPhoneNum,checkNickName,1));
         }

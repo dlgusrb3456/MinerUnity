@@ -175,6 +175,12 @@ public class FindPW : MonoBehaviour
             return;
         }
 
+        if(userIdxs == "-1")
+        {
+            Text_emailCode.text = "이메일 입력을 진행하세요.";
+            Text_emailCode.color = Color.red;
+            return;
+        }
         StartCoroutine(checkEmailCode(InputField_emailCode.text));
 
     }
@@ -183,6 +189,7 @@ public class FindPW : MonoBehaviour
         testPanel.SetActive(true);
         string realURL = "https://miner22.shop/miner/email/compareAuth";
         checkPWinfo myObject = new checkPWinfo {userIdx = userIdxs , authNum = authNum};
+        userIdxs = "-1";
         string json = JsonUtility.ToJson(myObject);
 
 

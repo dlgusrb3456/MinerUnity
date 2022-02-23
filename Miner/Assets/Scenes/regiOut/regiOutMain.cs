@@ -96,6 +96,7 @@ public class regiOutMain : MonoBehaviour
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
                 {
+                    deleteLocalFile();
                     outResutText.text = "탈퇴 완료!";
                 }
                 else
@@ -110,6 +111,16 @@ public class regiOutMain : MonoBehaviour
             }
         }
     }
+
+    public void deleteLocalFile()
+    {
+        Map.reloadLocalMaps();
+        for (int i = 0; i < Map.localMaps.Count; i++)
+        {
+            Map.deleteLocalMap(Map.localMaps[i]);
+        }
+    }
+
 
     public void confirmresultOut()
     {
