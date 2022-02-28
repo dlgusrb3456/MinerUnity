@@ -502,6 +502,7 @@ public class MainRegister : MonoBehaviour
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
                 {
+                    PlayerPrefs.SetString("nickName", checkID);
                     PlayerPrefs.SetString("userIdx", checkID);
                     SceneManager.LoadScene("Tutorial");
 

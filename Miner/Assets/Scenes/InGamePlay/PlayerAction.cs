@@ -92,11 +92,13 @@ public class PlayerAction : MonoBehaviour
                     string[] myRankarr2 = myRankarr[myRankarr.Length - 1].Split('}');
                     string myRank = myRankarr2[0];
                     rank.text = "나의 등수: " + myRank+"등!!";
+                    Panel_preventEnds.SetActive(true);
                 }
 
                 else
                 {
                     rank.text = "클리어 정보가 입력되지 않았습니다. \n 인터넷을 연결해주세요.";
+                    Panel_preventEnds.SetActive(true);
                 }
 
             }
@@ -147,12 +149,11 @@ public class PlayerAction : MonoBehaviour
             
             if (PlayerPrefs.GetString("playMode") == "Play")
             {
-                Panel_preventEnds.SetActive(true);
-                if(success == 0)
+                if (success == 0)
                 {
                     StartCoroutine(sendClearInfoAPI());
                 }
-                success = 1;
+                success = 1;                       
             }
             else if (PlayerPrefs.GetString("playMode") == "Design")
             {

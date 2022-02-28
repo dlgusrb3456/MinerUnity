@@ -99,7 +99,6 @@ public class CanvasScripts : MonoBehaviour
         Player.transform.position = startPosition.transform.position;
         setStartPositionCount();
         PlayerAction.success = 0;
-        Panel_settings.SetActive(false);
         Panel_preventSettings.SetActive(false);
         Panel_preventEndsDesign.SetActive(false);
         Panel_preventEnds.SetActive(false);

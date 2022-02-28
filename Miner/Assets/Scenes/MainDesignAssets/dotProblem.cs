@@ -559,7 +559,11 @@ public class dotProblem : MonoBehaviour
                             {
                                 Map.localMaps[i].isPrivate = false;
                             }
-                            Map.localMaps[i].isPrivate = true;
+                            else
+                            {
+                                Map.localMaps[i].isPrivate = true;
+                            }
+                            
                             Map.saveToJson(Map.localMaps[i]);
                             break;
                         }
