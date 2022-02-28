@@ -117,7 +117,7 @@ public class PlayerAction : MonoBehaviour
 
         if(x != 0 || y != 0)
         {
-            //transform.position += new Vector3(x, y, 0) * moveSpeed * Time.deltaTime; 스리꺼
+            //transform.position += new Vector3(x, y, 0) * moveSpeed * Time.deltaTime;
             rigid2D.velocity = new Vector3(x, y, 0) * moveSpeed;
 
             // 걸을때 소리
