@@ -440,16 +440,16 @@ public class makeMap : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
             {
-                if (Panel_settings.activeSelf) // 판넬 켜져있으면
-                {
-                    Panel_settings.SetActive(false);
-                    Panel_prevent.SetActive(false);
-                }
-                else
-                {
+                //if (Panel_settings.activeSelf) // 판넬 켜져있으면
+                //{
+                //    Panel_settings.SetActive(false);
+                //    Panel_prevent.SetActive(false);
+                //}
+                //else
+                //{
                     Panel_settings.SetActive(true);
                     Panel_prevent.SetActive(true);
-                }
+                //}
             }
         }
     }

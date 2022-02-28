@@ -502,7 +502,7 @@ public class MainRegister : MonoBehaviour
                 string[] returncode = words[1].Split(':');
                 if (returncode[1] == "1000")
                 {
-                    PlayerPrefs.SetString("nickName", checkID);
+                    PlayerPrefs.SetString("nickName", checkNickName);
                     PlayerPrefs.SetString("userIdx", checkID);
                     SceneManager.LoadScene("Tutorial");
 
@@ -549,14 +549,14 @@ public class MainRegister : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
             {
-                if (ExitPanel.activeSelf) // 판넬 켜져있으면
-                {
-                    ExitPanel.SetActive(false);
-                }
-                else
-                {
+                //if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                //{
+                //    ExitPanel.SetActive(false);
+                //}
+                //else
+                //{
                     ExitPanel.SetActive(true);
-                }
+                //}
             }
         }
 

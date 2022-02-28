@@ -107,6 +107,7 @@ public class PlayerAction : MonoBehaviour
     private void Start()
     {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
+        success = 0;
         Panel_preventEnds.SetActive(false);
     }
 
@@ -149,8 +150,10 @@ public class PlayerAction : MonoBehaviour
             
             if (PlayerPrefs.GetString("playMode") == "Play")
             {
+                Debug.Log("뀨잉");
                 if (success == 0)
                 {
+                    Debug.Log("뀨잉뀨잉");
                     StartCoroutine(sendClearInfoAPI());
                 }
                 success = 1;                       

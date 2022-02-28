@@ -164,29 +164,29 @@ public class CanvasScripts : MonoBehaviour
 
                 if (PlayerPrefs.GetString("playMode") == "Play")
                 {
-                    if (Panel_preventSettings.activeSelf) // 판넬 켜져있으면
-                    {
-                        Panel_preventSettings.SetActive(false);
-                        Panel_preventSettings.SetActive(false);
-                    }
-                    else
-                    {
+                    //if (Panel_preventSettings.activeSelf) // 판넬 켜져있으면
+                    //{
+                    //    Panel_preventSettings.SetActive(false);
+                    //    Panel_preventSettings.SetActive(false);
+                    //}
+                    //else
+                    //{
                         Panel_preventSettings.SetActive(true);
                         Panel_preventSettings.SetActive(true);
-                    }
+                    //}
                 }
                 else if (PlayerPrefs.GetString("playMode") == "Design")
                 {
-                    if (Panel_preventEndsDesign.activeSelf) // 판넬 켜져있으면
-                    {
-                        Panel_preventEndsDesign.SetActive(false);
-                        Panel_preventEndsDesign.SetActive(false);
-                    }
-                    else
-                    {
+                    //if (Panel_preventEndsDesign.activeSelf) // 판넬 켜져있으면
+                    //{
+                    //    Panel_preventEndsDesign.SetActive(false);
+                    //    Panel_preventEndsDesign.SetActive(false);
+                    //}
+                    //else
+                    //{
                         Panel_preventEndsDesign.SetActive(true);
                         Panel_preventEndsDesign.SetActive(true);
-                    }
+                    //}
                 }
                 
             }

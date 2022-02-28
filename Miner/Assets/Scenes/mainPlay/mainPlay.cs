@@ -513,12 +513,12 @@ public class mainPlay : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
             {
-                if (ExitPanel.activeSelf) // 판넬 켜져있으면
-                {
-                    ExitPanel.SetActive(false);
-                }
-                else
-                {
+                //if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                //{
+                //    ExitPanel.SetActive(false);
+                //}
+                //else
+                //{
                     ExitPanel.SetActive(true);
                     int canvasChildCount = canvas.transform.childCount;
                     if (canvasChildCount > canvasChild)
@@ -528,7 +528,7 @@ public class mainPlay : MonoBehaviour
                             canvas.transform.GetChild(i).gameObject.SetActive(false);
                         }
                     }
-                }
+                //}
             }
         }
     }
