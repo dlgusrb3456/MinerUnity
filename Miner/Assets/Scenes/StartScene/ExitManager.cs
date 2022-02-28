@@ -20,12 +20,14 @@ public class ExitManager : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape)) // 뒤로가기 키 입력
             {
-                if (ExitPanel.activeSelf) // 판넬 켜져있으면
+                ExitPanel.SetActive(true);
+
+                /*if (ExitPanel.activeSelf) // 판넬 켜져있으면
                 {
                     ExitPanel.SetActive(false); 
                 }else {
                     ExitPanel.SetActive(true);
-                }
+                }*/
             }
         }
     }
