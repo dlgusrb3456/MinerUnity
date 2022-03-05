@@ -63,9 +63,7 @@ public class MainRegister : MonoBehaviour
     private string checkPhoneNum = "";
 
     private bool isCodeCheck = false;
-
-    private Regex regex = new Regex(@"^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$");
-
+    private Regex regex = new Regex(@"^(?=.*[A - Za - z])(?=.*\d)(?=.*[$@$!% *#?&^])[A-Za-z\d$@$!%*#?&^]{8,20}$");
     public GameObject ExitPanel;
     public GameObject testPanel;
     private float progress = 0.0f;
@@ -566,7 +564,7 @@ public class MainRegister : MonoBehaviour
             
                 if (!regex.IsMatch(PWfield.text)) //조건 추가 가능, 추가하면 하단의 경고 문구도 바꾸기
                 {
-                    PWconditionText.text = "숫자/특수문자/영어 포함, 한글 미포함, 8~20자 입니다.";
+                    PWconditionText.text = "숫자,특수문자($@!%*#?&^),영어O,한글X,8~20글자입니다.";
                     PWconditionText.color = Color.red;
                     PWconfitioncheck = false;
                 }
