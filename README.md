@@ -53,7 +53,7 @@
 
 | Unity | Spring-Boot |
 | :--------: | :--------: |
-|  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c7d1bf8c-4f5d-49b2-8a82-7b2d4c42d205/Untitled.png) |     |  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c56a7984-047c-48a6-9101-d32b961d0e12/Untitled.png)|
+| ![image](https://user-images.githubusercontent.com/77333310/208293490-ee2ba8f6-4cfa-4741-8182-9baf9f2332ff.png)| ![image](https://user-images.githubusercontent.com/77333310/208293500-1ea9361c-de19-49ca-a042-3813a42863da.png)|  
 
 Unity를 사용해 각 화면과 UI 그리고 게임 기능을 구현했습니다.
 
