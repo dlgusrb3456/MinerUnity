@@ -40,8 +40,8 @@
  나만의 미로를 설계,제작 그리고 공유할 수 있는 미로 게임 앱입니다
 </p>
 </aside>
-    ![image](https://user-images.githubusercontent.com/77333310/208293407-5d78b89c-1868-4df7-b0dd-ebd998cdedeb.png)
 
+![image](https://user-images.githubusercontent.com/77333310/208293462-34c682bf-71a4-4447-99ee-7a2d69e153f3.png)
 
 
 
