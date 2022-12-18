@@ -94,7 +94,8 @@ UMC에서 10주동안 배우고 실습한 경험을 바탕으로 각자 맡은 A
 > 
 
 미로 공유 및 주의사항
-![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/77333310/208293704-404043e0-ddee-45f4-9699-dc2aa106225a.gif)
+
+                      ![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/77333310/208293704-404043e0-ddee-45f4-9699-dc2aa106225a.gif)
 
 
 공유된 미로 수정
