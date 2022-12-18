@@ -1,29 +1,5 @@
 # MinerUnity
 
-목차
-
-## 프로젝트 소개
-
-<p align="justify">
- 나만의 미로를 설계,제작 그리고 공유할 수 있는 미로 게임 앱입니다
-</p>
-
-![image](https://user-images.githubusercontent.com/77333310/208292316-60767263-ced4-4ee8-b6e1-147305351b4a.png)
-
-
-<br>
-
-## 기술 스택
-
-| Unity | Spring-Boot |
-| :--------: | :--------: |
-|  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c7d1bf8c-4f5d-49b2-8a82-7b2d4c42d205/Untitled.png) |     |  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c56a7984-047c-48a6-9101-d32b961d0e12/Untitled.png)|
-
-
-
-
-# Miner 최종 렌더링 페이지
-
 **미로 설계의 즐거움**, **미로 플레이의 즐거움**
 
 # Miner 팀 소개
@@ -60,7 +36,10 @@
 # Miner 서비스 소개
 
 <aside>
-🎮 미로를 **설계**하고, 자신이 만든 미로를 **공유**하여 다른 사람들과 **플레이**를 즐길 수 있습니다.
+🎮 <p align="justify">
+ 나만의 미로를 설계,제작 그리고 공유할 수 있는 미로 게임 앱입니다
+</p>
+ ![image](https://user-images.githubusercontent.com/77333310/208292316-60767263-ced4-4ee8-b6e1-147305351b4a.png)
 
 </aside>
 
@@ -76,13 +55,9 @@
 
 ## 💻 개발
 
-`프론트엔드`
-
-`백엔드`
-
-![Untitled](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/Untitled.png)
-
-![Untitled](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/Untitled%201.png)
+| Unity | Spring-Boot |
+| :--------: | :--------: |
+|  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c7d1bf8c-4f5d-49b2-8a82-7b2d4c42d205/Untitled.png) |     |  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c56a7984-047c-48a6-9101-d32b961d0e12/Untitled.png)|
 
 Unity를 사용해 각 화면과 UI 그리고 게임 기능을 구현했습니다.
 
@@ -97,7 +72,7 @@ UMC에서 10주동안 배우고 실습한 경험을 바탕으로 각자 맡은 A
 
 맵의 크기는 `16X16`  `32X32` `50X50` 세가지로 준비되어 있습니다.
 
-미로 추가 및 기본 설정
+#### 미로 추가 및 기본 설정
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/77333310/208292535-c7bf56b0-92aa-4d47-9c26-fd65da555869.gif)"
 
