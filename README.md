@@ -93,22 +93,22 @@ UMC에서 10주동안 배우고 실습한 경험을 바탕으로 각자 맡은 A
 > 직접 설계한 미로를 많은 사람들이 즐길 수 있도록 공유가 가능합니다!
 > 
 
-미로 공유 및 주의사항
+#### 미로 공유 및 주의사항
 
 ![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/77333310/208293704-404043e0-ddee-45f4-9699-dc2aa106225a.gif)
 
 
-공유된 미로 수정
+#### 공유된 미로 수정
 
 ![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/77333310/208293783-d80b8096-1e49-4f2f-99fa-447d02e447cf.gif)
 
 
-공유 중지
+#### 공유 중지
 
 ![ezgif com-gif-maker (5)](https://user-images.githubusercontent.com/77333310/208293807-d63a3c0a-e047-482f-b903-931e05581be9.gif)
 
 
-공유된 미로 삭제
+#### 공유된 미로 삭제
 
 ![ezgif com-gif-maker (6)](https://user-images.githubusercontent.com/77333310/208293856-3d6f0420-026e-4c56-84a3-d3fea03561fa.gif)
 
@@ -129,33 +129,36 @@ UMC에서 10주동안 배우고 실습한 경험을 바탕으로 각자 맡은 A
 > 
 
 ![ezgif com-gif-maker (7)](https://user-images.githubusercontent.com/77333310/208293940-ce017c2f-92f7-4516-b243-a7d65c6619b6.gif)
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6b530bfc-766e-4d64-b907-14894c82060e/Untitled.png)
 
 
 
 ## 그 외
 
-회원가입
+#### 회원가입
 
-[회원가입.mp4](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.mp4)
+![ezgif com-gif-maker (8)](https://user-images.githubusercontent.com/77333310/208293992-62dd472d-5939-45c2-91c2-6de1bbb57563.gif)
 
-회원탈퇴
 
-[회원탈퇴.mp4](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/%ED%9A%8C%EC%9B%90%ED%83%88%ED%87%B4.mp4)
+#### 회원탈퇴
 
-로그인
+![ezgif com-gif-maker (9)](https://user-images.githubusercontent.com/77333310/208294022-fcfed10a-b298-42d5-b0bb-0661932a3684.gif)
 
-[로그인.mp4](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/%EB%A1%9C%EA%B7%B8%EC%9D%B8.mp4)
+#### 로그인
 
-배경음 on/off
+![ezgif com-gif-maker (10)](https://user-images.githubusercontent.com/77333310/208294040-6ddaeb37-885b-4ed6-b6a2-b6ac23646fa7.gif)
 
-[배경음.mp4](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/%EB%B0%B0%EA%B2%BD%EC%9D%8C.mp4)
 
-아이디/비밀번호 찾기
+#### 배경음 on/off
 
-[아이디.mp4](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/%EC%95%84%EC%9D%B4%EB%94%94.mp4)
+![ezgif com-gif-maker (11)](https://user-images.githubusercontent.com/77333310/208294065-e9a6c63d-b3c0-43ce-a135-0bbf116e1827.gif)
 
-아이템으로 지나온 길목을 표시해두어 길을 헤매지 않을 수 있습니다.
+
+#### 아이디/비밀번호 찾기
+
+![ezgif com-gif-maker (12)](https://user-images.githubusercontent.com/77333310/208294088-a658c49f-9e4d-46aa-b665-f80c46aa447d.gif)
+
+
+#### 아이템으로 지나온 길목을 표시해두어 길을 헤매지 않을 수 있습니다.
 
 <aside>
 🍞 사용가능한 횟수가 제한되어 있기 때문에 신중하게 사용해주세요-!
