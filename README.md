@@ -95,7 +95,7 @@ UMC에서 10주동안 배우고 실습한 경험을 바탕으로 각자 맡은 A
 
 미로 공유 및 주의사항
 
-                      ![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/77333310/208293704-404043e0-ddee-45f4-9699-dc2aa106225a.gif)
+![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/77333310/208293704-404043e0-ddee-45f4-9699-dc2aa106225a.gif)
 
 
 공유된 미로 수정
@@ -128,9 +128,10 @@ UMC에서 10주동안 배우고 실습한 경험을 바탕으로 각자 맡은 A
 > 다른 사람들이 공유한 미로로 많은 사람들과 다양하게 즐겨보세요!
 > 
 
-[검색&플레이.mp4](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/%EA%B2%80%EC%83%89%ED%94%8C%EB%A0%88%EC%9D%B4.mp4)
+![ezgif com-gif-maker (7)](https://user-images.githubusercontent.com/77333310/208293940-ce017c2f-92f7-4516-b243-a7d65c6619b6.gif)
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6b530bfc-766e-4d64-b907-14894c82060e/Untitled.png)
 
-![Untitled](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/Untitled%202.png)
+
 
 ## 그 외
 
