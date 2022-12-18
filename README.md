@@ -99,7 +99,7 @@ UMC에서 10주동안 배우고 실습한 경험을 바탕으로 각자 맡은 A
 
 미로 추가 및 기본 설정
 
-<img src="![ezgif com-gif-maker](https://user-images.githubusercontent.com/77333310/208292535-c7bf56b0-92aa-4d47-9c26-fd65da555869.gif)">
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/77333310/208292535-c7bf56b0-92aa-4d47-9c26-fd65da555869.gif)"
 
 
 제작 후 테스트 진행
