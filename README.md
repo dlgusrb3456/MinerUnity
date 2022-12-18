@@ -39,19 +39,15 @@
 🎮 <p align="justify">
  나만의 미로를 설계,제작 그리고 공유할 수 있는 미로 게임 앱입니다
 </p>
- ![image](https://user-images.githubusercontent.com/77333310/208292316-60767263-ced4-4ee8-b6e1-147305351b4a.png)
-
 </aside>
+    ![image](https://user-images.githubusercontent.com/77333310/208293407-5d78b89c-1868-4df7-b0dd-ebd998cdedeb.png)
+
+
+
 
 ## 📝 기획
 
 어린 시절, 친구들과 모눈종이에 미로를 만들며 놀던 **즐거운 기억**을 시작으로 사용자들에게도 공유하고 싶어 기획하게 되었습니다.
-
-**초기 프로토타입**
-
-[프로토타입.mp4](Miner%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%20%E1%84%85%E1%85%A6%E1%86%AB%E1%84%83%E1%85%A5%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%203fa26fd11c7f4703acf918d734d80099/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85.mp4)
-
-[https://www.figma.com/embed?embed_host=notion&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FaJkzqc77VXHSCeTLdc0x0U%2FUntitled%255B%3Fnode-id%3D0%253A1](https://www.figma.com/embed?embed_host=notion&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FaJkzqc77VXHSCeTLdc0x0U%2FUntitled%255B%3Fnode-id%3D0%253A1)
 
 ## 💻 개발
 
