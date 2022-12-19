@@ -2,7 +2,7 @@
 
 **미로 설계의 즐거움**, **미로 플레이의 즐거움**
 
-### 노션에서 깔끔하게  : https://southern-shawl-659.notion.site/Miner-3fa26fd11c7f4703acf918d734d80099
+### 노션에서 깔끔하게 소개 보기  : https://southern-shawl-659.notion.site/Miner-3fa26fd11c7f4703acf918d734d80099
 
 # Miner 팀 소개
 
